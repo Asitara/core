@@ -52,6 +52,7 @@ CREATE TABLE `__users` (
 	`failed_login_attempts` INT(3) NOT NULL DEFAULT '0',
 	`exchange_key` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
 	`hide_nochar_info` TINYINT(1) NULL DEFAULT '0',
+	`hide_tour_info` TINYINT(1) NULL DEFAULT '0',
 	`notifications` TEXT NULL COLLATE 'utf8_bin',
 	`awaymode_enabled` tinyint(1) NOT NULL DEFAULT 0,
 	`awaymode_startdate` INT(11) NULL DEFAULT '0',

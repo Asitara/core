@@ -163,7 +163,7 @@ if(!class_exists('pdh_w_user')) {
 				$this->pdh->enqueue_hook('user');
 				return true;
 			}
-			return false;		
+			return false;
 		}
 		
 		public function disable_gravatar($user_id){
@@ -178,13 +178,13 @@ if(!class_exists('pdh_w_user')) {
 				
 				$this->pdh->enqueue_hook('user');
 				return true;
-			}	
-			return false;		
+			}
+			return false;
 		}
 
 		public function delete_authaccount($user_id, $strMethod){
 			$arrAccounts = $this->pdh->get('user', 'auth_account', array($user_id));
-			unset($arrAccounts[$strMethod]);			
+			unset($arrAccounts[$strMethod]);
 			$objQuery = $this->db->prepare("UPDATE __users :p WHERE user_id=?")->set(array(
 					'auth_account'	=> $this->crypt->encrypt(serialize($arrAccounts))
 			))->execute($user_id);
@@ -229,7 +229,7 @@ if(!class_exists('pdh_w_user')) {
 			);
 			$this->email->Set_Language($this->pdh->get('user', 'lang', array($user_id)));
 			if ($active && $oldState === 0){
-				$result = $this->email->SendMailFromAdmin($this->pdh->get('user', 'email', array($user_id)), $this->user->lang('email_subject_activation_none'), 'register_account_activated.html', $bodyvars);		
+				$result = $this->email->SendMailFromAdmin($this->pdh->get('user', 'email', array($user_id)), $this->user->lang('email_subject_activation_none'), 'register_account_activated.html', $bodyvars);
 				if (!$result) return false;
 			}
 			
@@ -248,6 +248,15 @@ if(!class_exists('pdh_w_user')) {
 		public function hide_nochar_info($user_id) {
 			$objQuery = $this->db->prepare("UPDATE __users :p WHERE user_id=?")->set(array(
 					'hide_nochar_info'	=> 1
+			))->execute($user_id);
+			if(!$objQuery) return false;
+			$this->pdh->enqueue_hook('user');
+			return true;
+		}
+
+		public function hide_tour_info($user_id){
+			$objQuery = $this->db->prepare("UPDATE __users :p WHERE user_id=?")->set(array(
+					'hide_tour_info'	=> 1
 			))->execute($user_id);
 			if(!$objQuery) return false;
 			$this->pdh->enqueue_hook('user');
@@ -312,7 +321,7 @@ if(!class_exists('pdh_w_user')) {
 			$log_action = array(
 				'{L_USER}'		=> $this->pdh->get('user', 'name', array($user_id)),
 				'{L_EMAIL}'		=> $this->pdh->get('user', 'email', array($user_id)),
-			);	
+			);
 			
 			if ($delete_member){
 				$members = $this->pdh->get('member', 'connection_id', array($user_id));

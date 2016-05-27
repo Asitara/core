@@ -46,6 +46,7 @@
 		
 		{STATIC_HTMLCODE}
 		<!-- IF S_NORMAL_HEADER -->
+		<!-- IF S_EQDKP_TOUR -->{EQDKP_TOUR}<!-- ENDIF -->
 		<header>
 			<div id="personalArea">
 				<div id="personalAreaInner">
