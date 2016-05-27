@@ -24,7 +24,7 @@ if(!defined('EQDKP_INC')){
 }
 
 $lang = array(
-	'hide_tour_info'=> '<a href="&tour=step_%d">Du hast die EQdkp Plus Tour übersprungen oder abgebrochen, klicken um die Tour zu starten.</a><br /><br /><a href="&tour=deny">Hier klicken, um diese Meldung zukünftig auszublenden.</a>',
+	'hide_tour_info'=> '<a href="&tour=step_%d">Du hast die EQdkp Plus Tour übersprungen oder abgebrochen, klicken um die Tour zu starten.</a><br /><br /><a href="&tour=hide">Hier klicken, um diese Meldung zukünftig auszublenden.</a>',
 	
 	//Step 0 - Start
 	'step_0_title'	=> 'Die Einführung',

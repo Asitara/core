@@ -38,10 +38,8 @@ class tour extends gen_class {
 			$blnForceExecute	= false;
 			$blnRedirect		= false;
 			
-			// TODO: check why he redirect and restart the tour if tour-deny
-			
 			if($strHandle) switch($strHandle){
-				case 'deny':
+				case 'hide':
 					set_cookie('tour', '', 0);
 					$this->pdh->put('user', 'hide_tour_info', array($this->user->id));
 					$this->user->data['hide_tour_info'] = 1;
@@ -73,8 +71,8 @@ class tour extends gen_class {
 				default:
 					$result = preg_match('/step_(\d+)/', $strHandle, $match);
 					if($result && $match[1] >= 0){
-						set_cookie('tour', base64_encode(serialize(['step' => $match[1]])), $this->cookie_time);
-						$this->cookie['step'] = $match[1];
+						set_cookie('tour', base64_encode(serialize(['step' => (int)$match[1]])), $this->cookie_time);
+						$this->cookie['step'] = (int)$match[1];
 						$blnForceExecute = true;
 						$blnRedirect = true;
 					} break;
@@ -93,9 +91,6 @@ class tour extends gen_class {
 	}
 	
 	private function init_steps(){
-		
-		// TODO: info_box_position the css code minfy to codewords like 'bottom-right' or 'top-left'
-		
 		$bottom_right_400 = 'position: fixed;width: 400px;bottom: 90px;right: 30px;';
 		
 		$arrSteps = array(
@@ -250,6 +245,11 @@ class tour extends gen_class {
 	
 	public function execute_step($intStep, $blnRedirect){
 		if(!$blnRedirect){
+			if(!isset($this->steps[$intStep])){
+				set_cookie('tour', '', 0);
+				$this->pdh->put('user', 'hide_tour_info', array($this->user->id));
+				redirect($this->controller_path_plain.$this->SID, false, false, false);die;
+			}
 			
 			// TODO: maybe we should block all link & submit actions
 			// TODO: grats message use lang_var + other text if tour finished
@@ -274,10 +274,10 @@ class tour extends gen_class {
 							$("#eqdkp-tour .tour-shadow").animate({
 			    				"display": "block",
 			  				}, 2000, "swing", function(){
-								if('.$intStep.' > '.count($this->steps).'){
-									window.location = window.location+"&tour=deny";
+								if('.((isset($this->steps[($intStep+1)]))? "true" : "false").'){
+									window.location.search = "?tour=next";
 								}else{
-									window.location = window.location+"&tour=next";
+									window.location.search = "?tour=hide";
 								}
 							});
 						}
@@ -326,7 +326,7 @@ class tour extends gen_class {
 			$intActiveStep = $intStep;
 			$strHTML .= '<div class="tour-pagination"><ul>';
 			foreach($this->steps as $intStep => $arrStep){
-				$strHTML .= '<li'.(($intStep < $intActiveStep)?' class="completed"':'').'><span onclick="window.location = window.location+\'&step_'.$intStep.'\'" data-tooltip="'.$arrStep['title'].'">'.($intStep+1).'</span></li>';
+				$strHTML .= '<li'.(($intStep < $intActiveStep)?' class="completed"':'').'><span onclick="window.location.search = \'?tour=step_'.$intStep.'\'" data-tooltip="'.$arrStep['title'].'">'.($intStep+1).'</span></li>';
 			}
 			$strHTML .= '</ul></div>
 					<div class="tour-shadow"></div>
@@ -341,7 +341,7 @@ class tour extends gen_class {
 			$this->tpl->add_js($strJS, 'static_docready');
 			
 		}else{
-			redirect($this->steps[$intStep]['url'].$this->SID.'&tour=show', false, false, false);
+			redirect($this->steps[$intStep]['url'].$this->SID.'&tour=show', false, false, false);die;
 		}
 	}
 }
