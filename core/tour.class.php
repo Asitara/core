@@ -319,7 +319,7 @@ class tour extends gen_class {
 						<h3>STEP '.($intStep+1).': '.$arrStep['title'].'<span>(1/'.count($arrStep['sub_steps']).')</span></h3>
 						<span class="tour-text"></span>
 						<a class="tour-hint" href="">(Um fortzufahren klicke auf die markierte Stelle)</a>
-						<a class="button tour-exit" href="javascript:window.location = window.location+\'&tour=abort\';">Tour beenden</a>
+						<a class="button tour-exit" href="javascript:window.location.search = \'?tour=abort\';">Tour beenden</a>
 					</div>
 			';
 			

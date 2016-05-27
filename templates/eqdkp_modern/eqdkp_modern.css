@@ -4513,6 +4513,7 @@ label.isBoolean > input[type="radio"]:checked + span.green, label.isBoolean > sp
 	position: absolute;
 	bottom: 2px;
 	right: 0;
+    top: unset;
 	font-size: 10px;
 	float: right;
 	pointer-events: all;
