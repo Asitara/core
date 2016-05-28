@@ -275,9 +275,9 @@ class tour extends gen_class {
 			    				"display": "block",
 			  				}, 2000, "swing", function(){
 								if('.((isset($this->steps[($intStep+1)]))? "true" : "false").'){
-									window.location.search = "?tour=next";
+									window.location.search = mmocms_sid+"&tour=next";
 								}else{
-									window.location.search = "?tour=hide";
+									window.location.search = mmocms_sid+"&tour=hide";
 								}
 							});
 						}
@@ -319,25 +319,24 @@ class tour extends gen_class {
 						<h3>STEP '.($intStep+1).': '.$arrStep['title'].'<span>(1/'.count($arrStep['sub_steps']).')</span></h3>
 						<span class="tour-text"></span>
 						<a class="tour-hint" href="">(Um fortzufahren klicke auf die markierte Stelle)</a>
-						<a class="button tour-exit" href="javascript:window.location.search = \'?tour=abort\';">Tour beenden</a>
+						<a class="button tour-exit" href="javascript:window.location.search = mmocms_sid+\'&tour=abort\';">Tour beenden</a>
 					</div>
 			';
 			
 			$intActiveStep = $intStep;
 			$strHTML .= '<div class="tour-pagination"><ul>';
 			foreach($this->steps as $intStep => $arrStep){
-				$strHTML .= '<li'.(($intStep < $intActiveStep)?' class="completed"':'').'><span onclick="window.location.search = \'?tour=step_'.$intStep.'\'" data-tooltip="'.$arrStep['title'].'">'.($intStep+1).'</span></li>';
+				$strHTML .= '<li'.(($intStep < $intActiveStep)?' class="completed"':'').'><span onclick="window.location.search = mmocms_sid+\'&tour=step_'.$intStep.'\';" data-tooltip="'.$arrStep['title'].'">'.($intStep+1).'</span></li>';
 			}
 			$strHTML .= '</ul></div>
 					<div class="tour-shadow"></div>
 					<div class="tour-completed" style="display:none;">
-						<h1>Gratulation, ..sekunde</h1>
-						<span>Sie werden nun weitergeleitet zum nächsten Abschnit</span>
+						'.$this->lang['tour_step_completed'].'
 					</div>
 				</div>
 			';
 			
-			$this->tpl->assign_vars(['S_EQDKP_TOUR' => true, 'EQDKP_TOUR' => trim($strHTML)]);
+			$this->tpl->assign_vars(['S_EQDKP_TOUR' => true, 'EQDKP_TOUR' => $strHTML]);
 			$this->tpl->add_js($strJS, 'static_docready');
 			
 		}else{
