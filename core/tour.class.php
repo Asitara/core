@@ -251,8 +251,11 @@ class tour extends gen_class {
 				redirect($this->controller_path_plain.$this->SID, false, false, false);die;
 			}
 			
+			// TODO: check the perm_checks
+			// TODO: check the marker selectors
+			// TODO: add a step_counter --> intStep != userStep :: perm errors
 			// TODO: maybe we should block all link & submit actions
-			// TODO: grats message use lang_var + other text if tour finished
+			// TODO: other grats message if tour finished
 			
 			$arrStep = $this->steps[$intStep];
 			
