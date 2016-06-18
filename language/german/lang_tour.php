@@ -26,6 +26,9 @@ if(!defined('EQDKP_INC')){
 $lang = array(
 	'hide_tour_info'		=> '<a href="javascript&#58;window&#46;location&#46;search&#61;mmocms_sid&#43;&#39;&#38;tour&#61;step_%d&#39&#59;">Du hast die EQdkp Plus Tour übersprungen oder abgebrochen, klicken um die Tour zu starten.</a><br /><br /><a href="javascript&#58;window&#46;location&#46;search&#61;mmocms_sid&#43;&#39;&#38;tour&#61;hide&#39&#59;">Hier klicken, um diese Meldung zukünftig auszublenden.</a>',
 	'tour_step_completed'	=> '<h1>Gratulation, ..sekunde</h1><span>Sie werden nun weitergeleitet zum nächsten Abschnit</span>',
+	'tour_step'				=> 'Schritt',
+	'tour_exit'				=> 'Tour beenden',
+	'tour_hint'				=> '(Um fortzufahren klicke auf die markierte Stelle)',
 	
 	//Step 0 - Start
 	'step_0_title'	=> 'Die Einführung',

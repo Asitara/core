@@ -630,7 +630,7 @@ $lang = array(
 "adminc_support_wiki" => "Das WIKI ist ein Online Dokumentationssystem. Es gibt viele Artikel, FAQ und Antworten. Benutzer werden dazu ermuntert, eigene Artikel zu schreiben und somit der Community zu helfen.<br /><b><a href='".EQDKP_WIKI_URL."' target='blank'>Zum WIKI</a></b>",
 "adminc_support_bugtracker" => "Du hast einen Bug gefunden? Dann hilf uns: Durchsuche zuerst den Bugtracker, und melde nicht vorhandene Fehler.<br /><b><a href='".EQDKP_BUGTRACKER_URL."' target='blank'>Zum Bugtracker</a></b>",
 "adminc_support_forums" => "Du hast Fragen rund um das EQDKP-PLUS? Benötigst Hilfe und das WIKI hat dir nicht weitergeholfen? Besuche das offizielle Forum!<br />Damit dir möglichst schnell geholfen werden kann, halte dich bitte an die Forumsregeln und fülle dein Forums-Profil aus!<br /><b><a href='".EQDKP_BOARD_URL."' target='blank'>Zum Forum</a></b>",
-"adminc_support_tour" => "Du bist neu bei EQDKP-PLUS? Du hast noch nie Raids eingetragen oder DKP-Punkte vergeben? Du bist einfach nur neugierig?<br /><b><a href='?tour=start'>Dann starte jetzt die Tour durch das EQdkp Plus</a></b>",
+"adminc_support_tour" => "Du bist neu bei EQDKP-PLUS? Du hast noch nie Raids eingetragen oder DKP-Punkte vergeben? Du bist einfach nur neugierig?<br /><b><a href='javascript:window.location.search = mmocms_sid+\"&tour=start\";'>Dann starte jetzt die Tour durch das EQdkp Plus</a></b>",
 "title_manageusers" => "Benutzer verwalten",
 "title_mysqlinfo" => "MySQL Info",
 "title_resetdkp" => "EQdkp Plus zurücksetzen",

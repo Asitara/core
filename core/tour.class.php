@@ -96,7 +96,8 @@ class tour extends gen_class {
 		$arrSteps = array(
 			0	=> array(
 				'url'	=> 'admin/index.php',
-				'check'	=> 'a_',
+				'check'	=> '',
+				'icon'	=> 'fa-flag',
 				'title'	=> $this->lang['step_0_title'],
 				'sub_steps' => array([
 					'marker_js_selector'	=> '#personalAreaUser .admin-tooltip-container',
@@ -106,10 +107,11 @@ class tour extends gen_class {
 			),
 			1	=> array(
 				'url'	=> 'admin/manage_settings.php',
-				'check'	=> 'a_',
+				'check'	=> 'a_config_man',
+				'icon'	=> 'fa-wrench',
 				'title'	=> $this->lang['step_1_title'],
 				'sub_steps' => array([
-					'marker_js_selector'	=> '#core_sett_tabs > ul',
+					'marker_js_selector'	=> '#core_settings',
 					'info_box_position'		=> $bottom_right_400,
 					'text'					=> $this->lang['step_1_0_text'],
 				],[
@@ -120,7 +122,8 @@ class tour extends gen_class {
 			),
 			2	=> array(
 				'url'	=> 'admin/manage_pagelayouts.php',
-				'check'	=> 'a_',
+				'check'	=> 'a_config_man',
+				'icon'	=> 'fa-table',
 				'title'	=> $this->lang['step_2_title'],
 				'sub_steps' => array([
 					'marker_js_selector'	=> '#lm_tabs',
@@ -130,31 +133,34 @@ class tour extends gen_class {
 			),
 			3	=> array(
 				'url'	=> 'admin/manage_extensions.php',
-				'check'	=> 'a_',
+				'check'	=> 'a_extensions_man',
+				'icon'	=> 'fa-cogs',
 				'title'	=> $this->lang['step_3_title'],
 				'sub_steps' => array([
-					'marker_js_selector'	=> '#plus_plugins_tab > ul',
+					'marker_js_selector'	=> '#plus_plugins_tab',
 					'info_box_position'		=> $bottom_right_400,
 					'text'					=> $this->lang['step_3_0_text'],
 				]),
 			),
 			4	=> array(
 				'url'	=> 'admin/manage_portal.php',
-				'check'	=> 'a_',
+				'check'	=> 'a_extensions_man',
+				'icon'	=> 'fa-columns',
 				'title'	=> $this->lang['step_4_title'],
 				'sub_steps' => array([
 					'marker_js_selector'	=> '#portal_tabs',
 					'info_box_position'		=> $bottom_right_400,
 					'text'					=> $this->lang['step_4_0_text'],
 				],[
-					'marker_js_selector'	=> '#layouts button.mainoption',
+					'marker_js_selector'	=> '#layouts .tableHeader',
 					'info_box_position'		=> $bottom_right_400,
 					'text'					=> $this->lang['step_4_1_text'],
 				]),
 			),
 			5	=> array(
 				'url'	=> 'admin/manage_users.php',
-				'check'	=> 'a_',
+				'check'	=> 'a_users_man',
+				'icon'	=> 'fa-user',
 				'title'	=> $this->lang['step_5_title'],
 				'sub_steps' => array([
 					'marker_js_selector'	=> 'form[name="post"]',
@@ -164,7 +170,8 @@ class tour extends gen_class {
 			),
 			6	=> array(
 				'url'	=> 'admin/manage_user_groups.php',
-				'check'	=> 'a_',
+				'check'	=> 'a_usergroups_',
+				'icon'	=> 'fa-group',
 				'title'	=> $this->lang['step_6_title'],
 				'sub_steps' => array([
 					'marker_js_selector'	=> 'form[name="post"]',
@@ -182,7 +189,8 @@ class tour extends gen_class {
 			),
 			7	=> array(
 				'url'	=> 'admin/manage_raids.php',
-				'check'	=> 'a_',
+				'check'	=> 'a_raid_',
+				'icon'	=> 'fa-trophy',
 				'title'	=> $this->lang['step_6_title'],
 				'sub_steps' => array([
 					'marker_js_selector'	=> '.page-adminmanage_raids form[method="post"]',
@@ -192,7 +200,8 @@ class tour extends gen_class {
 			),
 			8	=> array(
 				'url'	=> 'admin/manage_article_categories.php',
-				'check'	=> 'a_',
+				'check'	=> 'a_articles_man',
+				'icon'	=> 'fa-file-text',
 				'title'	=> $this->lang['step_8_title'],
 				'sub_steps' => array([
 					'marker_js_selector'	=> 'form[name="post"]',
@@ -202,7 +211,8 @@ class tour extends gen_class {
 			),
 			9	=> array(
 				'url'	=> 'admin/manage_backup.php',
-				'check'	=> 'a_',
+				'check'	=> 'a_backup',
+				'icon'	=> 'fa-floppy-o',
 				'title'	=> $this->lang['step_9_title'],
 				'sub_steps' => array([
 					'marker_js_selector'	=> '#backup_tabs',
@@ -212,7 +222,8 @@ class tour extends gen_class {
 			),
 			10	=> array(
 				'url'	=> 'admin/index.php',
-				'check'	=> 'a_',
+				'check'	=> '',
+				'icon'	=> 'fa-flag-checkered',
 				'title'	=> $this->lang['step_10_title'],
 				'sub_steps' => array([
 					'marker_js_selector'	=> '#admininfos_tabs li[aria-controls="fragment-4"]',
@@ -225,12 +236,10 @@ class tour extends gen_class {
 		foreach($arrSteps as $arrStep){
 			if(empty($arrStep['check']) || $this->user->check_auth($arrStep['check'], false)){
 				$this->steps[] = $arrStep;
-			} else {
-				$this->steps[] = $arrStep;
 			}
 		}
 		
-		return (count($this->steps) > 0)? true : false;
+		return (count($this->steps) > 2)? true : false;
 	}
 	
 	public function init_language(){
@@ -251,13 +260,11 @@ class tour extends gen_class {
 				redirect($this->controller_path_plain.$this->SID, false, false, false);die;
 			}
 			
-			// TODO: check the perm_checks
-			// TODO: check the marker selectors
 			// TODO: add a step_counter --> intStep != userStep :: perm errors
-			// TODO: maybe we should block all link & submit actions
 			// TODO: other grats message if tour finished
 			
-			$arrStep = $this->steps[$intStep];
+			$arrStep	= $this->steps[$intStep];
+			$strTitle	= $this->lang['tour_step'].' '.($intStep+1).': '.(($arrStep['icon'])?'<i class="fa '.$arrStep['icon'].'"></i> ' : ' ').$arrStep['title'];
 			
 			$strJS = '
 				$("#eqdkp-tour .tour-marker").on("click", function(){
@@ -301,17 +308,18 @@ class tour extends gen_class {
 					    .animate({borderColor: "transparent"}, 1000);
 				});
 				var tour_process_step = function(step){
-					var steps = '.json_encode($arrStep['sub_steps']).';
+					var steps	= '.json_encode($arrStep['sub_steps']).';
+					var marker	= ($(steps[step]["marker_js_selector"]).length > 0)? $(steps[step]["marker_js_selector"]) : $("body");
+					
 					$("#eqdkp-tour .tour-info > span").html(steps[step]["text"]);
 					$("#eqdkp-tour .tour-info > h3 span").text("("+(parseInt(step) + 1)+"/'.count($arrStep['sub_steps']).')");
 					$("#eqdkp-tour .tour-info").attr("style", steps[step]["info_box_position"]);
-					if(steps[step]["marker_js_selector"].length > 0){
-						var marker_position = $(steps[step]["marker_js_selector"]).offset();
-						$("#eqdkp-tour .tour-marker").css("left", marker_position.left - 6+"px");
-						$("#eqdkp-tour .tour-marker").css("top", marker_position.top - 6+"px");
-						$("#eqdkp-tour .tour-marker").css("height", $(steps[step]["marker_js_selector"]).height()+6+"px");
-						$("#eqdkp-tour .tour-marker").css("width", $(steps[step]["marker_js_selector"]).width()+6+"px");
-					}
+					
+					$("#eqdkp-tour .tour-marker").css("top", marker.offset().top - 6+"px");
+					$("#eqdkp-tour .tour-marker").css("left", marker.offset().left - 6+"px");
+					$("#eqdkp-tour .tour-marker").css("height", marker.height()+6+"px");
+					$("#eqdkp-tour .tour-marker").css("width", marker.width()+6+"px");
+					
 				}; tour_process_step(0);
 			';
 			
@@ -319,10 +327,10 @@ class tour extends gen_class {
 				<div id="eqdkp-tour" data-step-id="'.$intStep.'">
 					<div class="tour-marker"></div>
 					<div class="tour-info">
-						<h3>STEP '.($intStep+1).': '.$arrStep['title'].'<span>(1/'.count($arrStep['sub_steps']).')</span></h3>
+						<h3>'.$strTitle.'<span>(1/'.count($arrStep['sub_steps']).')</span></h3>
 						<span class="tour-text"></span>
-						<a class="tour-hint" href="">(Um fortzufahren klicke auf die markierte Stelle)</a>
-						<a class="button tour-exit" href="javascript:window.location.search = mmocms_sid+\'&tour=abort\';">Tour beenden</a>
+						<a class="tour-hint" href="">'.$this->lang['tour_hint'].'</a>
+						<a class="button tour-exit" href="javascript:window.location.search = mmocms_sid+\'&tour=abort\';">'.$this->lang['tour_exit'].'</a>
 					</div>
 			';
 			
@@ -340,6 +348,7 @@ class tour extends gen_class {
 			';
 			
 			$this->tpl->assign_vars(['S_EQDKP_TOUR' => true, 'EQDKP_TOUR' => $strHTML]);
+			$this->tpl->add_css('body { pointer-events: none !important; }');
 			$this->tpl->add_js($strJS, 'static_docready');
 			
 		}else{

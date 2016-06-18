@@ -636,7 +636,7 @@ $lang = array(
 	"adminc_support_wiki" => 'The WIKI is an online documentation System. There are several answers, faq and other. Users are encouraged to write their own articles and help the community.<br><a href=\'http://eqdkp-plus.eu/wiki/\' target=\'blank\'>To the WIKI</a>',
 	"adminc_support_bugtracker" => 'You encountered a bug? Help us by first searching in the bugtracker, open a new report if nessessary<br><a href=\'http://eqdkp-plus.eu/bugtracker/\' target=\'blank\'>To the Bugtracker</a>',
 	"adminc_support_forums" => 'You\'ve got Questions? Need Help? Searched the WIKI without any answer? Then visit the official Forums for help!<br><a href=\'http://eqdkp-plus.eu/forum\' target=\'blank\'>To the Forums</a>',
-	"adminc_support_tour" => 'You are new to EQdkp Plus? You never ever added a raid or gave dkp points? You are just curious?<br /><b><a href=\'?tour=start\'>Then NOW start your tour through EQdkp Plus</a></b>',
+	"adminc_support_tour" => 'You are new to EQdkp Plus? You never ever added a raid or gave dkp points? You are just curious?<br /><b><a href=\'javascript:window.location.search = mmocms_sid+"&tour=start";\'>Then NOW start your tour through EQdkp Plus</a></b>',
 	"title_manageusers" => 'Manage Users',
 	"title_mysqlinfo" => 'MySQL Info',
 	"title_resetdkp" => 'Reset',
