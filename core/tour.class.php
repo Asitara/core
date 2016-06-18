@@ -29,6 +29,7 @@ class tour extends gen_class {
 	private $cookie_time	= 0;
 	private $lang			= array();
 	private $steps			= array();
+	private $step_keys		= array();
 	
 	public function init(){
 		if($this->user->is_signedin() && $this->init_language() && $this->init_steps()){
@@ -47,11 +48,17 @@ class tour extends gen_class {
 				
 				case 'abort':
 					if(!$this->cookie['step']) $this->cookie['step'] = 0;
-					set_cookie('tour', base64_encode(serialize(['step' => $this->cookie['step']])), $this->cookie_time);
+					set_cookie('tour', base64_encode(serialize([
+						'step'		=> $this->cookie['step'],
+						'step_keys'	=> $this->step_keys,
+					])), $this->cookie_time);
 					break;
 				
 				case 'start':
-					set_cookie('tour', base64_encode(serialize(['step' => 0])), $this->cookie_time);
+					set_cookie('tour', base64_encode(serialize([
+						'step'		=> 0,
+						'step_keys'	=> $this->step_keys,
+					])), $this->cookie_time);
 					$this->cookie['step'] = 0;
 					$blnForceExecute = true;
 					$blnRedirect = true;
@@ -59,7 +66,10 @@ class tour extends gen_class {
 				
 				case 'next':
 					$this->cookie['step'] = (is_int($this->cookie['step']))? $this->cookie['step'] + 1 : 0;
-					set_cookie('tour', base64_encode(serialize(['step' => $this->cookie['step']])), $this->cookie_time);
+					set_cookie('tour', base64_encode(serialize([
+						'step'		=> $this->cookie['step'],
+						'step_keys'	=> $this->step_keys,
+					])), $this->cookie_time);
 					$blnForceExecute = true;
 					$blnRedirect = true;
 					break;
@@ -71,7 +81,10 @@ class tour extends gen_class {
 				default:
 					$result = preg_match('/step_(\d+)/', $strHandle, $match);
 					if($result && $match[1] >= 0){
-						set_cookie('tour', base64_encode(serialize(['step' => (int)$match[1]])), $this->cookie_time);
+						set_cookie('tour', base64_encode(serialize([
+							'step'		=> (int)$match[1],
+							'step_keys'	=> $this->step_keys,
+						])), $this->cookie_time);
 						$this->cookie['step'] = (int)$match[1];
 						$blnForceExecute = true;
 						$blnRedirect = true;
@@ -80,6 +93,8 @@ class tour extends gen_class {
 			
 			if(!$this->user->data['hide_tour_info'] || $blnForceExecute){
 				if($blnForceExecute){
+					#$this->compare_steps();
+					if($this->compare_steps()) $blnRedirect = true;
 					$this->execute_step($this->cookie['step'], $blnRedirect);
 				}else{
 					$this->core->message(sprintf($this->lang['hide_tour_info'], $this->cookie['step']));
@@ -233,12 +248,10 @@ class tour extends gen_class {
 			),
 		);
 		
-		$intStepCounter = 1;
-		foreach($arrSteps as $arrStep){
+		foreach($arrSteps as $intStep => $arrStep){
 			if(empty($arrStep['check']) || $this->user->check_auth($arrStep['check'], false)){
-				$arrStep['step']		= $intStepCounter;
-				$this->steps[]	= $arrStep;
-				$intStepCounter++;
+				$this->steps[]		= $arrStep;
+				$this->step_keys[]	= $intStep;
 			}
 		}
 		
@@ -266,7 +279,7 @@ class tour extends gen_class {
 			// TODO: other grats message if tour finished
 			
 			$arrStep	= $this->steps[$intStep];
-			$strTitle	= $this->lang['tour_step'].' '.$arrStep['step'].': '.(($arrStep['icon'])?'<i class="fa '.$arrStep['icon'].'"></i> ' : ' ').$arrStep['title'];
+			$strTitle	= $this->lang['tour_step'].' '.($intStep+1).': '.(($arrStep['icon'])?'<i class="fa '.$arrStep['icon'].'"></i> ' : ' ').$arrStep['title'];
 			
 			$strJS = '
 				$("#eqdkp-tour .tour-marker").on("click", function(){
@@ -339,7 +352,7 @@ class tour extends gen_class {
 			$intActiveStep = $intStep;
 			$strHTML .= '<div class="tour-pagination"><ul>';
 			foreach($this->steps as $intStep => $arrStep){
-				$strHTML .= '<li'.(($intStep < $intActiveStep)?' class="completed"':'').'><span onclick="window.location.search = mmocms_sid+\'&tour=step_'.$intStep.'\';" data-tooltip="'.$arrStep['title'].'">'.$arrStep['step'].'</span></li>';
+				$strHTML .= '<li'.(($intStep < $intActiveStep)?' class="completed"':'').'><span onclick="window.location.search = mmocms_sid+\'&tour=step_'.$intStep.'\';" data-tooltip="'.$arrStep['title'].'">'.($intStep+1).'</span></li>';
 			}
 			$strHTML .= '</ul></div>
 					<div class="tour-shadow"></div>
@@ -355,6 +368,18 @@ class tour extends gen_class {
 			
 		}else{
 			redirect($this->steps[$intStep]['url'].$this->SID.'&tour=show', false, false, false);die;
+		}
+	}
+	
+	private function compare_steps(){
+		if(isset($this->cookie['step_keys']) && ($this->step_keys != $this->cookie['step_keys'])){
+			set_cookie('tour', base64_encode(serialize([
+				'step'		=> 0,
+				'step_keys'	=> $this->step_keys,
+			])), $this->cookie_time);
+			$this->cookie['step'] = 0;
+			
+			return true;
 		}
 	}
 }
