@@ -191,7 +191,7 @@ class tour extends gen_class {
 				'url'	=> 'admin/manage_raids.php',
 				'check'	=> 'a_raid_',
 				'icon'	=> 'fa-trophy',
-				'title'	=> $this->lang['step_6_title'],
+				'title'	=> $this->lang['step_7_title'],
 				'sub_steps' => array([
 					'marker_js_selector'	=> '.page-adminmanage_raids form[method="post"]',
 					'info_box_position'		=> $bottom_right_400,
@@ -233,9 +233,12 @@ class tour extends gen_class {
 			),
 		);
 		
+		$intStepCounter = 1;
 		foreach($arrSteps as $arrStep){
 			if(empty($arrStep['check']) || $this->user->check_auth($arrStep['check'], false)){
-				$this->steps[] = $arrStep;
+				$arrStep['step']		= $intStepCounter;
+				$this->steps[]	= $arrStep;
+				$intStepCounter++;
 			}
 		}
 		
@@ -260,11 +263,10 @@ class tour extends gen_class {
 				redirect($this->controller_path_plain.$this->SID, false, false, false);die;
 			}
 			
-			// TODO: add a step_counter --> intStep != userStep :: perm errors
 			// TODO: other grats message if tour finished
 			
 			$arrStep	= $this->steps[$intStep];
-			$strTitle	= $this->lang['tour_step'].' '.($intStep+1).': '.(($arrStep['icon'])?'<i class="fa '.$arrStep['icon'].'"></i> ' : ' ').$arrStep['title'];
+			$strTitle	= $this->lang['tour_step'].' '.$arrStep['step'].': '.(($arrStep['icon'])?'<i class="fa '.$arrStep['icon'].'"></i> ' : ' ').$arrStep['title'];
 			
 			$strJS = '
 				$("#eqdkp-tour .tour-marker").on("click", function(){
@@ -337,7 +339,7 @@ class tour extends gen_class {
 			$intActiveStep = $intStep;
 			$strHTML .= '<div class="tour-pagination"><ul>';
 			foreach($this->steps as $intStep => $arrStep){
-				$strHTML .= '<li'.(($intStep < $intActiveStep)?' class="completed"':'').'><span onclick="window.location.search = mmocms_sid+\'&tour=step_'.$intStep.'\';" data-tooltip="'.$arrStep['title'].'">'.($intStep+1).'</span></li>';
+				$strHTML .= '<li'.(($intStep < $intActiveStep)?' class="completed"':'').'><span onclick="window.location.search = mmocms_sid+\'&tour=step_'.$intStep.'\';" data-tooltip="'.$arrStep['title'].'">'.$arrStep['step'].'</span></li>';
 			}
 			$strHTML .= '</ul></div>
 					<div class="tour-shadow"></div>
