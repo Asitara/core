@@ -32,7 +32,7 @@ class tour extends gen_class {
 	private $step_keys		= array();
 	
 	public function init(){
-		if($this->user->is_signedin() && $this->init_language() && $this->init_steps()){
+		if($this->init_language() && $this->init_steps()){
 			$strHandle			= $this->in->get('tour');
 			$this->cookie		= unserialize(base64_decode($this->in->getEQdkpCookie('tour')));
 			$this->cookie_time	= time() + 3600 * 24 * 30; // 30 Days
@@ -93,7 +93,6 @@ class tour extends gen_class {
 			
 			if(!$this->user->data['hide_tour_info'] || $blnForceExecute){
 				if($blnForceExecute){
-					#$this->compare_steps();
 					if($this->compare_steps()) $blnRedirect = true;
 					$this->execute_step($this->cookie['step'], $blnRedirect);
 				}else{
@@ -273,10 +272,8 @@ class tour extends gen_class {
 			if(!isset($this->steps[$intStep])){
 				set_cookie('tour', '', 0);
 				$this->pdh->put('user', 'hide_tour_info', array($this->user->id));
-				redirect($this->controller_path_plain.$this->SID, false, false, false);die;
+				redirect($this->controller_path_plain.$this->SID, false, false, false); die;
 			}
-			
-			// TODO: other grats message if tour finished
 			
 			$arrStep	= $this->steps[$intStep];
 			$strTitle	= $this->lang['tour_step'].' '.($intStep+1).': '.(($arrStep['icon'])?'<i class="fa '.$arrStep['icon'].'"></i> ' : ' ').$arrStep['title'];
@@ -299,11 +296,7 @@ class tour extends gen_class {
 							$("#eqdkp-tour .tour-shadow").animate({
 			    				"display": "block",
 			  				}, 2000, "swing", function(){
-								if('.((isset($this->steps[($intStep+1)]))? "true" : "false").'){
-									window.location.search = mmocms_sid+"&tour=next";
-								}else{
-									window.location.search = mmocms_sid+"&tour=hide";
-								}
+								window.location.search = mmocms_sid+"&tour='.((isset($this->steps[($intStep+1)]))? "next" : "hide").'";
 							});
 						}
 						
@@ -357,7 +350,7 @@ class tour extends gen_class {
 			$strHTML .= '</ul></div>
 					<div class="tour-shadow"></div>
 					<div class="tour-completed" style="display:none;">
-						'.$this->lang['tour_step_completed'].'
+						'.((isset($this->steps[($intActiveStep+1)]))? $this->lang['tour_step_completed'] : $this->lang['tour_completed']).'
 					</div>
 				</div>
 			';
@@ -367,7 +360,7 @@ class tour extends gen_class {
 			$this->tpl->add_js($strJS, 'static_docready');
 			
 		}else{
-			redirect($this->steps[$intStep]['url'].$this->SID.'&tour=show', false, false, false);die;
+			redirect($this->steps[$intStep]['url'].$this->SID.'&tour=show', false, false, false); die;
 		}
 	}
 	
