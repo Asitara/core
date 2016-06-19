@@ -240,9 +240,10 @@ class tour extends gen_class {
 				'icon'	=> 'fa-flag-checkered',
 				'title'	=> $this->lang['step_10_title'],
 				'sub_steps' => array([
-					'marker_js_selector'	=> '#admininfos_tabs li[aria-controls="fragment-4"]',
+					'marker_js_selector'	=> '#fragment-4',
 					'info_box_position'		=> $bottom_right_400,
 					'text'					=> $this->lang['step_10_0_text'],
+					'action'				=> '$("a[href=\"#fragment-4\"]").click();',
 				]),
 			),
 		);
@@ -275,8 +276,16 @@ class tour extends gen_class {
 				redirect($this->controller_path_plain.$this->SID, false, false, false); die;
 			}
 			
-			$arrStep	= $this->steps[$intStep];
-			$strTitle	= $this->lang['tour_step'].' '.($intStep+1).': '.(($arrStep['icon'])?'<i class="fa '.$arrStep['icon'].'"></i> ' : ' ').$arrStep['title'];
+			$arrStep			= $this->steps[$intStep];
+			$strTitle			= $this->lang['tour_step'].' '.($intStep+1).': '.(($arrStep['icon'])?'<i class="fa '.$arrStep['icon'].'"></i> ' : ' ').$arrStep['title'];
+			$strSubStepAction	= '';
+			
+			foreach($arrStep['sub_steps'] as $intSubStep => $arrSubStep){
+				if(!empty($arrSubStep['action'])){
+					$strSubStepAction .= 'if(step == '.$intSubStep.'){'.$arrSubStep['action'].'}';
+					unset($arrSubStep['action']);
+				}
+			}
 			
 			$strJS = '
 				$("#eqdkp-tour .tour-marker").on("click", function(){
@@ -288,7 +297,7 @@ class tour extends gen_class {
 						if(match[1] < '.count($arrStep['sub_steps']).'){
 							tour_process_step(match[1]);
 						}else{
-							$("#eqdkp-tour .tour-marker").attr("style", "top:-10px;left:-10px;width:0px;height:0px;");
+							$("#eqdkp-tour .tour-marker").prop("style", "top:-10px;left:-10px;width:0px;height:0px;");
 							$("#eqdkp-tour .tour-info").hide();
 							$("#eqdkp-tour .tour-pagination").hide();
 							$("#eqdkp-tour .tour-completed").show();
@@ -318,6 +327,8 @@ class tour extends gen_class {
 				var tour_process_step = function(step){
 					var steps	= '.json_encode($arrStep['sub_steps']).';
 					var marker	= ($(steps[step]["marker_js_selector"]).length > 0)? $(steps[step]["marker_js_selector"]) : $("body");
+					
+					'.$strSubStepAction.'
 					
 					$("#eqdkp-tour .tour-info > span").html(steps[step]["text"]);
 					$("#eqdkp-tour .tour-info > h3 span").text("("+(parseInt(step) + 1)+"/'.count($arrStep['sub_steps']).')");
