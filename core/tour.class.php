@@ -105,7 +105,8 @@ class tour extends gen_class {
 	}
 	
 	private function init_steps(){
-		$bottom_right_400 = 'position: fixed;width: 400px;bottom: 90px;right: 30px;';
+		$bottom_right_400	= 'position: fixed; bottom: 90px; right: 30px; width: 400px;';
+		$bottom_left_400	= 'position: fixed; bottom: 90px; left: 30px; width: 400px;';
 		
 		$arrSteps = array(
 			0	=> array(
@@ -116,7 +117,7 @@ class tour extends gen_class {
 				'sub_steps' => array([
 					'marker_js_selector'	=> '#personalAreaUser .admin-tooltip-container',
 					'info_box_position'		=> $bottom_right_400,
-					'text'					=> $this->lang['step_0_0_text'],
+					'text'					=> sprintf($this->lang['step_0_0_text'], $this->pdh->get('user', 'name', array($this->user->id))),
 				]),
 			),
 			1	=> array(
@@ -129,9 +130,30 @@ class tour extends gen_class {
 					'info_box_position'		=> $bottom_right_400,
 					'text'					=> $this->lang['step_1_0_text'],
 				],[
-					'marker_js_selector'	=> '#adminmenu',
+					'marker_js_selector'	=> '#fragment-global',
 					'info_box_position'		=> $bottom_right_400,
 					'text'					=> $this->lang['step_1_1_text'],
+					'action'				=> '$("a[href=\"#fragment-global\"]").click();',
+				],[
+					'marker_js_selector'	=> '#fragment-system',
+					'info_box_position'		=> $bottom_right_400,
+					'text'					=> $this->lang['step_1_2_text'],
+					'action'				=> '$("a[href=\"#fragment-system\"]").click();',
+				],[
+					'marker_js_selector'	=> '#fragment-user',
+					'info_box_position'		=> $bottom_right_400,
+					'text'					=> $this->lang['step_1_3_text'],
+					'action'				=> '$("a[href=\"#fragment-user\"]").click();',
+				],[
+					'marker_js_selector'	=> '#fragment-game',
+					'info_box_position'		=> $bottom_right_400,
+					'text'					=> $this->lang['step_1_4_text'],
+					'action'				=> '$("a[href=\"#fragment-game\"]").click();',
+				],[
+					'marker_js_selector'	=> '#core_sett_tabs > ul',
+					'info_box_position'		=> $bottom_right_400,
+					'text'					=> $this->lang['step_1_5_text'],
+					'action'				=> '$("a[href=\"#fragment-portal\"]").click();',
 				]),
 			),
 			2	=> array(
@@ -143,6 +165,7 @@ class tour extends gen_class {
 					'marker_js_selector'	=> '#lm_tabs',
 					'info_box_position'		=> $bottom_right_400,
 					'text'					=> $this->lang['step_2_0_text'],
+					'action'				=> '$("a[href=\"#normal\"]").click();',
 				]),
 			),
 			3	=> array(
@@ -165,9 +188,10 @@ class tour extends gen_class {
 					'marker_js_selector'	=> '#portal_tabs',
 					'info_box_position'		=> $bottom_right_400,
 					'text'					=> $this->lang['step_4_0_text'],
+					'action'				=> '$("a[href=\"#layouts\"]").click();',
 				],[
 					'marker_js_selector'	=> '#layouts .tableHeader',
-					'info_box_position'		=> $bottom_right_400,
+					'info_box_position'		=> $bottom_left_400,
 					'text'					=> $this->lang['step_4_1_text'],
 				]),
 			),
@@ -192,8 +216,8 @@ class tour extends gen_class {
 					'info_box_position'		=> $bottom_right_400,
 					'text'					=> $this->lang['step_6_0_text'],
 				],[
-					'marker_js_selector'	=> '#user_group_perms',
-					'info_box_position'		=> $bottom_right_400,
+					'marker_js_selector'	=> 'form > .tableHeader',
+					'info_box_position'		=> $bottom_left_400,
 					'text'					=> $this->lang['step_6_1_text'],
 				],[
 					'marker_js_selector'	=> '#user_groups_table',
@@ -367,7 +391,7 @@ class tour extends gen_class {
 			';
 			
 			$this->tpl->assign_vars(['S_EQDKP_TOUR' => true, 'EQDKP_TOUR' => $strHTML]);
-			$this->tpl->add_css('body { pointer-events: none !important; }');
+			$this->tpl->add_css('body { pointer-events: none !important; } #notify_container { display: none !important; }');
 			$this->tpl->add_js($strJS, 'static_docready');
 			
 		}else{

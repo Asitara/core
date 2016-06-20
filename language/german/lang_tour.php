@@ -34,7 +34,7 @@ $lang = array(
 	//Step 0 - Start
 	'step_0_title'	=> 'Die Einführung',
 	'step_0_0_text'	=> '
-		Herzlich Willkommen zur EQdkp Plus Tour!
+		Herzlich Willkommen %s zur EQdkp Plus Tour!
 		<br />Diese Tour zeigt dir in einfachen Schritten, welche Punkte & Funktionen für dich wichtig sind.
 		<br /><br /> ...viel Spaß ;)',
 	
@@ -42,13 +42,32 @@ $lang = array(
 	'step_1_title'	=> 'Einstellungen',
 	'step_1_0_text'	=> '
 		Auf dieser Seite kannst du diverse Haupteinstellungen rund um dein EQdkp Plus tätigen.
-		<br /><br />Du findest hier Einstellungen wie z.B.
-		<br /><i class="fa fa-caret-right"></i> Spiel-Einstellungen
-		<br /><i class="fa fa-caret-right"></i> Email-Einstellungen
-		<br /><i class="fa fa-caret-right"></i> Registrierungs-Einstellungen
+		<br /><br />Ich werde dich nun bei den wichtigsten Einstellungen auf dieser Seite begleiten.
 		<br /><br /><i class="fa fa-blind">&nbsp Administration > Einstellungen</i>',
 	'step_1_1_text'	=> '
-		Und wirst du hier nicht fündig oder möchtest andere Einstellungen tätigen kannst du über dieses Menü durch alle Administrationsseiten navigieren.
+		Hier findest du die globalen Sachen.
+		<br /><br /><i class="fa fa-caret-right"> Seitenname
+		<br /><i class="fa fa-caret-right"> Punktesystem
+		<br /><i class="fa fa-caret-right"> Kommentare global erlauben
+		<br /><br /><i class="fa fa-blind">&nbsp Administration > Einstellungen</i>',
+	'step_1_2_text'	=> '
+		Hier findest du System Einstellungen.
+		<br /><br /><i class="fa fa-caret-right"> ReCaptcha (schützt vor Spam)
+		<br /><i class="fa fa-caret-right"> <a href="'.EQDKP_WIKI_URL.'/Loginmethoden_einrichten" target="_blank">Loginmethoden</a>
+		<br /><i class="fa fa-caret-right"> E-Mail Einstellungen
+		<br /><br /><i class="fa fa-blind">&nbsp Administration > Einstellungen</i>',
+	'step_1_3_text'	=> '
+		Hier kannst du grundlegende Account Einstellungen vornehmen.
+		<br /><br />Wie ein Account nach der Registration freigeschaltet wird.
+		<br />Ob ein Benutzer für sich ein anderen Style nutzen darf, u.v.m.
+		<br /><br />Anschließend Zugangsdaten für die Benachrichtigungen, wenn Benutzer bei Twitter oder Jabber informiert werden sollen und nicht hier oder per E-Mail.
+		<br /><br /><i class="fa fa-blind">&nbsp Administration > Einstellungen</i>',
+	'step_1_4_text'	=> '
+		Aber... was ist ein Gamer CMS ohne Spiele unterstützung, hier kannst du dein Spiel installieren.
+		<br /><br />PS: Möglicherweise erhälst du hier nach der Spielinstallation weitere Spielspezifische Einstellungen.
+		<br /><br /><i class="fa fa-blind">&nbsp Administration > Einstellungen</i>',
+	'step_1_5_text'	=> '
+		Das waren die wichtigsten Einstellungen, du findest hier aber natürlich noch reichlich mehr um dein EQdkp Plus anzupassen.
 		<br /><br /><i class="fa fa-blind">&nbsp Administration > Einstellungen</i>',
 	
 	//Step 2 - Tables
@@ -78,7 +97,7 @@ $lang = array(
 		<br /><i class="fa fa-caret-right"></i> Spiel spezifisches
 		<br /><br /><i class="fa fa-blind">&nbsp Portal > Portallayout verwalten</i>',
 	'step_4_1_text'	=> '
-		Möchtest du z.b. in der Artikelkategorie <span class="small">`Kalender`</span> nur die Portalmodule <span class="small">`...`</span> angezeigen <span class="small">(unabhängig deiner anderen Seiten)</span>?
+		Möchtest du z.b. in der Artikelkategorie <span class="small">`Kalender`</span> nur die Portalmodule <span class="small">`...`</span> anzeigen <span class="small">(unabhängig deiner anderen Seiten)</span>?
 		<br /><br />So kannst du hier weitere Layouts erstellen, welche dann in den Artikelkategorie-Einstellungen ausgewählt werden können.
 		<br /><br />Auch kannst du in den Haupteinstellungen ein anderes Standart-Layout definieren für Desktop & Mobil Nutzer.
 		<br /><br /><i class="fa fa-blind">&nbsp Portal > Portallayout verwalten</i>',
@@ -101,7 +120,7 @@ $lang = array(
 		<br /><br /><i class="fa fa-caret-right"></i> Kalendereinträge erstellen
 		<br /><i class="fa fa-caret-right"></i> Raids & Korrekturen erstellen
 		<br /><i class="fa fa-caret-right"></i> Artikel schreiben
-		<br /><br />so eignet es sich die Benutzer einer Gruppe zuzuweisen und die Rechte hier einzustellen.
+		<br /><br />zu geben, so eignet es sich die Benutzer einer Gruppe zuzuweisen und die Rechte hier einzustellen.
 		<br /><br /><i class="fa fa-blind">&nbsp Benutzer > Benutzergruppen verwalten</i>',
 	'step_6_1_text'	=> '
 		Eine Übersicht welche Benutzergruppen derzeit welche Rechte besitzen, kannst du hier einsehen.
@@ -130,6 +149,7 @@ $lang = array(
 		Mit Artikel kannst du vieles realisieren: News, Gildeninfos oder auch Blogs.
 		<br >Mit einem umfangreichen Editor und dem Medien-Manager bleiben beim Erstellen der Artikel keine Wünsche offen.
 		<br ><br >Doch nicht nur das - du kannst hier auch Gildenregeln erstellen, die jeder Benutzer bei der Registrierung bestätigen muss.
+		<br /><br />Mehr Informationen zum Thema "Artikel" findest du in <a href="'.EQDKP_WIKI_URL.'/Artikel" target="_blank">diesem Wiki-Artikel</a>
 		<br /><br /><i class="fa fa-blind">&nbsp Portal > Artikel verwalten</i>',
 	
 	//Step 9 - Backup
