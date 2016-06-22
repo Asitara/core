@@ -75,7 +75,8 @@ if (!class_exists("jquery")) {
 			$this->langfile('lang_jquery.js');
 
 			// set the custom UI for jquery.ui
-			$this->CustomUI((isset($this->user->style['template_path'])) ? $this->user->style['template_path'] : 'eqdkp_modern');
+			$style_code = (isset($this->user->style['template_path']))? $this->user->style['template_path'] : 'eqdkp_modern';
+			$this->CustomUI((defined('IN_ADMIN') && IN_ADMIN == true)? 'admin' : $style_code);
 
 			// set the static html for notification
 			$this->tpl->staticHTML('

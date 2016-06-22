@@ -191,6 +191,8 @@ class core extends gen_class {
 			}
 			
 			// some style additions (header, background image..)
+			if(defined('IN_ADMIN') && IN_ADMIN == true) $this->tpl->set_template('admin');
+			
 			$favicon = $this->user->style['favicon_img'];
 			switch(pathinfo($favicon, PATHINFO_EXTENSION)){
 				case 'png': $favicon_type = 'image/png';
@@ -233,14 +235,15 @@ class core extends gen_class {
 			}
 
 			// add the template specific JS file
-			$templatejs		= $this->root_path.'templates/'.$this->user->style['template_path'].'/'.$this->user->style['template_path'].'.js';
+			$style_code	= (defined('IN_ADMIN') && IN_ADMIN == true)? 'admin' : $this->user->style['template_path'];
+			$templatejs	= $this->root_path.'templates/'.$style_code.'/'.$style_code.'.js';
 			if(is_file($templatejs)){
 				$this->tpl->js_file($templatejs);
 			}
 			
 			// add the custom JS file
-			$customjs		= $this->root_path.'templates/'.$this->user->style['template_path'].'/custom.js';
-			if(is_file($customjs)){
+			$customjs = $this->root_path.'templates/'.$this->user->style['template_path'].'/custom.js';
+			if(is_file($customjs) && (!defined('IN_ADMIN') || IN_ADMIN == false)){
 				$this->tpl->js_file($customjs);
 			}
 			
@@ -995,19 +998,22 @@ class core extends gen_class {
 		}
 
 		public function page_tail(){
-			if ( !empty($this->template_path) ){
+			if(defined('IN_ADMIN') && IN_ADMIN == true){
+				$this->tpl->set_template('admin', '', (!empty($this->template_path))? $this->template_path : 'templates/admin/templates');
+			
+			}elseif(!empty($this->template_path)){
 				$this->tpl->set_template($this->user->style['template_path'], '', $this->template_path);
 			}
-
+			
 			$this->tpl->set_filenames(array(
-				'body' => $this->template_file)
-			);
-
+				'body' => $this->template_file,
+			));
+			
 			// Hiding the normal-footer-stuff, but show debug-info, since in normal usage debug mode is turned off, and for developing purposes debug-tabs help alot info if header is set to none..
 			$this->tpl->assign_vars(array(
 				'S_NORMAL_FOOTER' 			=> ($this->header_format != 'simple') ? true : false,
-				'EQDKP_PLUS_COPYRIGHT'		=> $this->Copyright())
-			);
+				'EQDKP_PLUS_COPYRIGHT'		=> $this->Copyright(),
+			));
 			
 			//Language Switcher
 			$arrLanguages = $this->user->getAvailableLanguages(false, true);
@@ -1024,10 +1030,10 @@ class core extends gen_class {
 			$default_img_link_rel = $this->root_path."templates/".$this->user->style['template_path']."/images/";
 			$image = ((is_file($this->pfh->FolderPath('logo','eqdkp').$this->config->get('custom_logo'))) ? $this->env->buildlink().$this->pfh->FolderPath('logo','eqdkp', true).$this->config->get('custom_logo') : ((file_exists($default_img_link_rel."logo.svg")) ? $default_img_link."logo.svg": $default_img_link."logo.png"));
 			$image = ($this->image != '') ? $this->image : $image;
-
+			
 			$description = ($this->description != '') ? $this->description : (($this->config->get('meta_description') && strlen($this->config->get('meta_description'))) ? $this->config->get('meta_description') : $this->config->get('guildtag'));
 			register('socialplugins')->callSocialPlugins($this->page_title, $description, $image);
-						
+			
 			//Notifications
 			$arrNotifications = $this->ntfy->createNotifications();
 			$this->tpl->assign_vars(array(
@@ -1037,7 +1043,7 @@ class core extends gen_class {
 				'NOTIFICATION_COUNT_TOTAL'	=> $arrNotifications['count'],
 				'NOTIFICATIONS'				=> $arrNotifications['html'],
 			));
-
+			
 			if(DEBUG) {
 				$this->user->objLanguage->output_unused();
 				$log = $this->pdl->get_log();
@@ -1048,7 +1054,7 @@ class core extends gen_class {
 					'EQDKP_QUERYCOUNT'		=> $this->db->query_count,
 					'EQDKP_MEM_PEAK'		=> number_format(memory_get_peak_usage(true)/1024, 0, '.', ',').' kb',
 				));
-
+				
 				//debug tabs
 				if(count($log) > 0) {
 					$this->jquery->Tab_header('plus_debug_tabs');
@@ -1072,7 +1078,7 @@ class core extends gen_class {
 						'DEBUG_TABS' => $debug_tabs_header . $debug_tabs,
 					));
 				}
-
+				
 			} else {
 				$this->tpl->assign_vars(array(
 					'S_SHOW_DEBUG'		=> false,
@@ -1080,22 +1086,24 @@ class core extends gen_class {
 				);
 			}
 			
-			//Add custom CSS file - as late as possible
-			$css_custom = $this->root_path.'templates/'.$this->user->style['template_path'].'/custom.css';
-			if(file_exists($css_custom)){
-				$this->tpl->css_file($css_custom);
-			}
-			
-			//Global CSS - Direct Output into template
-			if(strlen($this->config->get('global_css'))){
-				$this->tpl->add_css($this->config->get('global_css'), true);
-			}
-			
-			//Add additonal Template Links
-			$strAdditionalLinks = $this->user->style['additional_fields'];
-			$arrAdditionalLinks = ($strAdditionalLinks != "") ? unserialize($strAdditionalLinks) : array();
-			foreach($arrAdditionalLinks as $key => $val){
-				$this->tpl->assign_var('LINK_'.strtoupper($key), $val);
+			if(!defined('IN_ADMIN') || IN_ADMIN == false){
+				//Add custom CSS file - as late as possible
+				$css_custom = $this->root_path.'templates/'.$this->user->style['template_path'].'/custom.css';
+				if(file_exists($css_custom)){
+					$this->tpl->css_file($css_custom);
+				}
+				
+				//Global CSS - Direct Output into template
+				if(strlen($this->config->get('global_css'))){
+					$this->tpl->add_css($this->config->get('global_css'), true);
+				}
+				
+				//Add additonal Template Links
+				$strAdditionalLinks = $this->user->style['additional_fields'];
+				$arrAdditionalLinks = ($strAdditionalLinks != "") ? unserialize($strAdditionalLinks) : array();
+				foreach($arrAdditionalLinks as $key => $val){
+					$this->tpl->assign_var('LINK_'.strtoupper($key), $val);
+				}
 			}
 			
 			$this->tpl->display();

@@ -27,6 +27,7 @@ if (!class_exists("styles")){
 	class styles extends gen_class {
 		private $update_styles = array();
 		private $arrIgnoreFolder = array(
+			'admin',
 			'maintenance',
 			'install',
 			'base_template',
