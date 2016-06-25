@@ -38,7 +38,6 @@
 		<!-- IF S_NORMAL_HEADER -->
 		<header>
 			<div id="personalArea">
-				<div id="personalAreaInner">
 				<div id="personalAreaUser">
 					<!-- IF not S_LOGGED_IN -->
 					<ul>
@@ -182,7 +181,6 @@
 					</ul>
 				</div>
 				<div class="clear"></div>
-				</div>
 			</div> <!-- close personalArea -->
 		</header>
 		<div id="wrapper">
