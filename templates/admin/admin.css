@@ -73,7 +73,7 @@
     
     
     
-    /* Body
+    /* Global
     ****************************************/
     html { min-height: 100%; }
 
@@ -138,7 +138,7 @@
     	font: 13px 'Trebuchet MS', Arial, sans-serif;
     	text-align:left;
     }
-
+    
     #personalArea a { color: #AAA; text-decoration: none; }
     #personalArea a:hover { color: #FFF; text-decoration: underline; }
     #personalArea a:hover i { text-decoration: none; }
@@ -146,7 +146,7 @@
     #personalAreaUser { float: left; margin-top: 7px; }
     #personalAreaUser ul li { float: left; margin-left: 25px; }
     #personalAreaUser .user-avatar-smallest > img { margin: -5px 0; }
-
+    
     #personalAreaTime { float: right; margin-top: 4px; }
     #personalAreaTime ul li { float: left; margin-left: 25px; }
     #personalAreaTime #search_form {
@@ -157,14 +157,14 @@
     #personalAreaTime #search_form input {
     	background-color: #D9D7D7;
     	border: 1px solid #717171;
-    	border-radius: 4px 4px 4px 4px;
+    	border-radius: 4px;
     	color: #262B31;
     	height: 20px;
     	padding: 2px 5px;
     	width: 200px;
-    	font: 14px 'Trebuchet MS',Arial,sans-serif;
+    	font: 14px 'Trebuchet MS', Arial, sans-serif;
     }
-
+    
     #personalAreaTime button, #personalAreaTime button:hover {
     	background: none repeat scroll 0 0 transparent !important;
     	border: medium none;
@@ -175,7 +175,7 @@
     	color: #000;
     	box-shadow: none;
     }
-
+    
     #personalAreaTime .personalAreaTime {
     	margin-top: 6px;
     }
@@ -195,7 +195,7 @@
     	font-size: 12px;
     	margin-top: 20px;
     }
-
+    
     .copyright {
     	color: @eqdkpBodyLinkColor;
     }
@@ -214,49 +214,52 @@
     	margin: 0px 0px 10px 0px;
     }
 
-    /* General Portal Layout */
-    .portal .column {
-    	vertical-align: top;
-    }
-
-    .portal .second .columnInner {
-    	padding: 0;
-    }
-
-    .portal {
-    	border-collapse: collapse;
-    	display: table;
-    	width: 100%;
-    }
-    .columnContainer {
-    	display: table-row;
-    	border: none;
-    }
-
-    .column {
-    	display: table-cell;
-    	margin: 0;
-    	padding: 0;
-    }
-
-    .portal .first{
-    	padding:10px 0px 10px 10px;
-    }
-    .portal .third {
-    	padding:10px 10px 10px 0px;
-    }
-
-    .portal .first .columnInner, .portal .third .columnInner, .portal .second .columnInner {
-    	padding: 0;
-    }
-    .portal .second {
-    	padding:10px;
-    	width:100%;
-    }
-
-    .fixed_width #wrapper {
-    	min-width: T_PORTAL_WIDTH !important;
-    }
+    
+    //-REMOVE
+    //
+    // /* General Portal Layout */
+    // .portal .column {
+    // 	vertical-align: top;
+    // }
+    //
+    // .portal .second .columnInner {
+    // 	padding: 0;
+    // }
+    //
+    // .portal {
+    // 	border-collapse: collapse;
+    // 	display: table;
+    // 	width: 100%;
+    // }
+    // .columnContainer {
+    // 	display: table-row;
+    // 	border: none;
+    // }
+    //
+    // .column {
+    // 	display: table-cell;
+    // 	margin: 0;
+    // 	padding: 0;
+    // }
+    //
+    // .portal .first{
+    // 	padding:10px 0px 10px 10px;
+    // }
+    // .portal .third {
+    // 	padding:10px 10px 10px 0px;
+    // }
+    //
+    // .portal .first .columnInner, .portal .third .columnInner, .portal .second .columnInner {
+    // 	padding: 0;
+    // }
+    // .portal .second {
+    // 	padding:10px;
+    // 	width:100%;
+    // }
+    //
+    // .fixed_width #wrapper {
+    // 	min-width: T_PORTAL_WIDTH !important;
+    // }
 
     #wrapper {
     	margin-bottom:20px;
@@ -265,94 +268,32 @@
     	display:inline-block;
     	text-align: left;
     }
+    
+    //-REMOVE
+    //
+    // .fixed_width #wrapper .portal .second {
+    // 	width: T_PORTAL_WIDTH_WITHOUT_BOTH_COLUMNS !important;
+    // }
+    //
+    // .fixed_width #wrapper .portal .second.no_third_column {
+    // 	width: T_PORTAL_WIDTH_WITHOUT_LEFT_COLUMN !important;
+    // }
+    //
+    // .fixed_width #personalAreaInner {
+    // 	width: T_PORTAL_WIDTH !important;
+    // 	margin: auto;
+    // }
+    //
+    // .fixed_width.frontend table.scrollable-x {
+    // 	table-layout: fixed;
+    // }
+    //
+    // .fixed_width.frontend table.scrollable-x tbody {
+    // 	display: block;
+    // 	overflow-x: auto;
+    // }
 
-    .fixed_width #wrapper .portal .second {
-    	width: T_PORTAL_WIDTH_WITHOUT_BOTH_COLUMNS !important;
-    }
-
-    .fixed_width #wrapper .portal .second.no_third_column {
-    	width: T_PORTAL_WIDTH_WITHOUT_LEFT_COLUMN !important;
-    }
-
-    .fixed_width #personalAreaInner {
-    	width: T_PORTAL_WIDTH !important;
-    	margin: auto;
-    }
-
-    .fixed_width.frontend table.scrollable-x {
-    	table-layout: fixed;
-    }
-
-    .fixed_width.frontend table.scrollable-x tbody {
-    	display: block;
-    	overflow-x: auto;
-    }
-
-    /* Header and Site-Titles */
-    #wrapper header {
-    	background: url('@{eqdkpBannerImage}') no-repeat scroll ~"center top / 100%" transparent;
-    }
-
-    #header {
-    	text-align:center;
-    	min-height:140px;
-
-    }
-
-    #logoContainer {
-    	overflow: hidden;
-    	display:table;
-    }
-
-    #header .center {
-    	margin-left:auto;
-    	margin-right:auto;
-    }
-
-    #header .right {
-    	margin-left:auto;
-    	margin-right:0px;
-    }
-
-    #header .none {
-    	display:none;
-    }
-
-    #logoArea {
-    	float:left;
-    	text-align:right;
-    }
-
-    #titles {
-    	float:left;
-    	text-align:left;
-    	padding-left:40px;
-    	color: @eqdkpBodyFontColor;
-    	font-family: 'Trebuchet MS',Arial,sans-serif;
-    }
-
-    #titles h1 {
-    	padding-left:40px;
-    	padding-top:30px;
-    	font-size: 50px;
-    	font-weight: bold;
-    	text-shadow: 1px 1px 2px @eqdkpBodyFontColor;
-    	filter: dropshadow(color=@eqdkpBodyFontColor, offx=1, offy=1);
-    	border: none;
-    	color: @eqdkpBodyFontColor;
-    }
-
-    #titles h2 {
-    	padding-left:40px;
-    	font-size: 20px;
-    	color: darken(@eqdkpBodyFontColor, 10);
-    	border: none;
-    }
-
-    #header, #footer {
-    	padding: 0 40px 0px;
-    }
-
+    
     /* Content Container */
     #contentContainer {
     	background-color: @eqdkpContainerBackgroundColor;
