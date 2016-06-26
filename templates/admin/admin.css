@@ -129,6 +129,11 @@
     
     
     
+    
+    /* Personal Area
+    ****************************************/
+    #controlPanel .controlPanelMenus { position: relative; }
+    
     /* Personal Area
     ****************************************/
     #personalArea {
@@ -138,16 +143,20 @@
     	font: 13px 'Trebuchet MS', Arial, sans-serif;
     	text-align:left;
     }
-    
     #personalArea a { color: #AAA; text-decoration: none; }
     #personalArea a:hover { color: #FFF; text-decoration: underline; }
     #personalArea a:hover i { text-decoration: none; }
     
-    #personalAreaUser { float: left; margin-top: 7px; }
+    #personalArea .personalAreaInnerLeft { float: left; }
+    #personalArea .personalAreaInnerRight { float: right; overflow: hidden; }
+    #personalArea .personalAreaInnerLeft > *,
+    #personalArea .personalAreaInnerRight > * { display: inline-block; vertical-align: middle; }
+    
+    #personalAreaUser { margin-top: 7px; }
     #personalAreaUser ul li { float: left; margin-left: 25px; }
     #personalAreaUser .user-avatar-smallest > img { margin: -5px 0; }
     
-    #personalAreaTime { float: right; margin-top: 4px; }
+    #personalAreaTime { margin-top: 4px; }
     #personalAreaTime ul li { float: left; margin-left: 25px; }
     #personalAreaTime #search_form {
     	position: relative;
@@ -164,7 +173,6 @@
     	width: 200px;
     	font: 14px 'Trebuchet MS', Arial, sans-serif;
     }
-    
     #personalAreaTime button, #personalAreaTime button:hover {
     	background: none repeat scroll 0 0 transparent !important;
     	border: medium none;
@@ -175,10 +183,152 @@
     	color: #000;
     	box-shadow: none;
     }
-    
     #personalAreaTime .personalAreaTime {
     	margin-top: 6px;
     }
+    
+    #personalAreaMenuButton {
+        margin: 0 4px;
+        padding: 10px;
+        transition: all .2s ease;
+        cursor: pointer;
+    }
+    #personalAreaMenuButton:hover {
+        transform: rotate(180deg);
+    }
+    
+    /* Main Menu
+    ****************************************/
+    #mainmenu { margin-left: 50em; position: absolute; }    //TODO: change if we know the adminmenu wdith + think about JQ resize if admin extend/mini
+    ul.mainmenu {
+    	width: 100%;
+    	padding-bottom: 2px;
+    	background: #333;
+    	font-size: 12px;
+    }
+    ul.mainmenu li {
+    	position: relative;
+    	border-left: 1px solid #000;
+    	border-right: 1px solid #424242;
+    	transition: background .2s ease-out;
+    }
+    ul.mainmenu li:hover {
+    	background: @eqdkpMenuItemBackgroundColorHover;
+    	transition: none;
+    }
+    ul.mainmenu li:hover a {
+    	color: @eqdkpMenuItemFontColorHover;
+    }
+    ul.mainmenu > li {
+    	display: inline-block;
+    	vertical-align: top;
+    }
+    ul.mainmenu > li:first-child {
+    	border-left: none;
+    }
+    ul.mainmenu > li:last-child {
+    	border-right: none;
+    }
+    ul.mainmenu > li li {
+    	background: darken(@eqdkpMenuBackgroundColor, 10);
+    	border-top: 1px solid #000;
+    	font-size: 13px;
+    }
+    ul.mainmenu a,
+    ul.mainmenu a:visited {
+    	display: block;
+    	padding: .75em 1em;
+    	color: @eqdkpMenuFontColor;
+    }
+
+    ul.mainmenu ul.sub-menu {
+    	display: none;
+    	position: absolute;
+    	top: 100%;
+    	left: 0;
+    	z-index: 99;
+    	white-space: nowrap;
+    }
+    ul.mainmenu ul.sub-menu ul.sub-menu {
+    	top: 0;
+    	left: 100%;
+    }
+    ul.mainmenu li:hover > ul.sub-menu {
+    	display: block;
+    }
+
+    ul.mainmenu .sub-menu-arrow {
+    	padding-right: 1.8em;
+    }
+    ul.mainmenu .sub-menu-arrow:after {
+    	content: '';
+    	height: 0;
+    	width: 0;
+    	position: absolute;
+    	top: 50%;
+    	right: .6em;
+    	border: 4px solid transparent;
+    }
+    ul.mainmenu > li > .sub-menu-arrow:after {
+    	border-top-color: rgba(255, 255, 255, 0.5);
+    }
+    ul.mainmenu > li:hover > .sub-menu-arrow:after {
+    	border-top-color: #FFF;
+    }
+    ul.mainmenu ul.sub-menu .sub-menu-arrow:after {
+    	right: .3em;
+    	margin-top: -4px;
+    	border-left-color: rgba(255, 255, 255, 0.5);
+    }
+    ul.mainmenu ul.sub-menu li:hover > .sub-menu-arrow:after {
+    	border-left-color: #FFF;
+    }
+    
+    /* Admin Menu
+    ****************************************/
+    #adminmenu {
+        position: absolute;
+        width: 155px;
+    }
+    #adminmenu .menu-header {
+        height: 40px;
+        background: rgba(255, 0, 0, 0.35);
+        border-bottom: 1px solid #F00;
+        overflow: hidden;
+    }
+    #adminmenu .menu-header a:first-child {
+        padding: 7px 20px 16px 5px;
+    }
+    #adminmenu .menu-header a:last-child {
+        padding: 7px;
+        position: absolute;
+        right: -15px;
+        color: #0F0;
+        font-size: 24px;
+        border-left: 1px groove #F00;
+    }
+    #adminmenu .menu-header img {
+        height: 35px;
+    }
+    #adminmenu .menu-header .menu-trigger {
+        display: inline-block;
+        padding: 12.5px;
+        border-left: 1px groove #F00;
+    }
+    #adminmenu .menu-header:after {
+        display: block;
+        content: '';
+        position: absolute;
+        top: 0;
+        right: -41px;
+        height: 0;
+        width: 0;
+        border-left: 41px solid #F00;
+        border-bottom: 41px solid transparent;
+        z-index: -1;
+    }
+    
+    
     
     
     
