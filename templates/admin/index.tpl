@@ -199,22 +199,16 @@
 				<div class="controlPanelMenus">
 					<div id="mainmenu">
 						{MAIN_MENU} <!-- TODO: <responsive> check how to set the mobile_main_menu var -->
-						<div class="clear noheight">&nbsp;</div>
-					</div> <!-- close mainmenu -->
+					</div>
 					
 					<div id="adminmenu">
 						<div class="menu-header">
 							<a href=""><img src="{EQDKP_ROOT_PATH}templates/admin/images/logo.svg" /></a></li>
 							<a href=""><i class="fa fa-gitlab"></i></a>
 						</div>
-						<ul class="menu-content">
-							<li><i class="fa fa-gitlab fa-4"></i></li>
-							<li><i class="fa fa-gitlab fa-4"></i></li>
-							<li><i class="fa fa-gitlab fa-4"></i></li>
-							<li><i class="fa fa-gitlab fa-4"></i></li>
-							<li><i class="fa fa-gitlab fa-4"></i></li>
-							<li><i class="fa fa-gitlab fa-4"></i></li>
-						</ul>
+						<!-- <ul class="menu-content"> -->
+							{ADMIN_MENU}
+						<!-- </ul> -->
 					</div>
 				</div>
 			</header>
@@ -222,6 +216,10 @@
 		
 		
 		<br /><br /><br /><br /><br /><br /><br /><br />
+		<br /><br /><br /><br /><br /><br /><br /><br />
+		<br /><br /><br /><br /><br /><br /><br /><br />
+		<br /><br /><br /><br /><br /><br /><br /><br />
+		
 		
 		
 		<section id="contentContainer">

@@ -9,4 +9,11 @@ $(document).ready(function(){
         // wenn ja lass normal und registriere mit .scroll() ob menu-bottom reached
         // sonst posi:fixed mit einem empty berreich bis fenster bottom
     });
+    
+    
+    
+    
+    
+    // DEBUGGING
+    $('ul.adminmenu').addClass('menu-content').removeClass('adminmenu');
 });
