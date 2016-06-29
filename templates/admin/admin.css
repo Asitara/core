@@ -128,10 +128,14 @@
     /* AdminControlPanel
     ****************************************/
     #controlPanel {
-    	position: fixed;
+    	position: absolute;
     	top: 0;
     	left: 0;
     	right: 0;
+        z-index: 900;
+    }
+    #controlPanel * {
+        z-index: 1;
     }
     #controlPanel button {
     	margin: 0;
@@ -230,11 +234,12 @@
     #personalAreaMenuButton {
         margin: 0 4px !important;
         padding: 10px !important;
+    }
+    #personalAreaMenuButton i {
         font-size: 16px;
         transition: all .2s ease;
-        cursor: pointer;
     }
-    #personalAreaMenuButton:hover {
+    #personalAreaMenuButton:hover i {
         transform: rotate(180deg);
     }
     
@@ -261,7 +266,6 @@
     #mainmenu .mainmenu > li {
         border-left: 2px solid #15171A;
         cursor: pointer;
-        position: relative;
     }
     #mainmenu .mainmenu > li:last-child {
         margin-right: 20px;
@@ -274,8 +278,7 @@
     
     #mainmenu .mainmenu .sub-menu {
         display: none;
-        margin-top: 1px;
-        position: fixed;
+        position: absolute;
         left: 120px;
         right: 0;
         background: #25272a;
@@ -284,7 +287,6 @@
         white-space: nowrap;
     }
     #mainmenu .mainmenu .sub-menu li {
-        position: relative;
         border-right: 1px solid #15171A;
         cursor: pointer;
     }
@@ -295,23 +297,20 @@
     }
 
     #mainmenu .mainmenu .sub-menu-arrow {
-        margin-right: 10px;
+        margin-right: 2px;
     }
     #mainmenu .mainmenu .sub-menu-arrow:after {
         content: '\f107';
         font-family: 'FontAwesome';
-        position: absolute;
-        top: 2px;
-        right: 8px;
+        position: relative;
+        top: 0;
+        right: -8px;
     }
     #mainmenu .mainmenu .sub-menu .sub-menu-arrow {
-        margin-right: 12px;
-    }
-    #mainmenu .mainmenu .sub-menu .sub-menu-arrow:after {
-        top: 5px;
+        margin-right: 8px;
     }
     
-    #mainmenu .mainmenu .sub-menu .sub-menu { margin-top: 0; z-index: 1; }
+    #mainmenu .mainmenu .sub-menu .sub-menu { left: 0; }
     #mainmenu .mainmenu > li > .sub-menu > li:first-child > a { padding-left: 95px; }
     #mainmenu .mainmenu > li > .sub-menu > li > .sub-menu > li:first-child > a { padding-left: 75px; }
     #mainmenu .mainmenu > li > .sub-menu > li > .sub-menu > li > .sub-menu > li:first-child > a { padding-left: 45px; }
@@ -415,7 +414,6 @@
         font-family: 'Trebuchet MS', Arial, sans-serif;
         text-shadow: -1px -1px 0px #000;
         white-space: nowrap;
-        z-index: 1;
     }.update_available_before(@color) {
         display: block;
         height: 16px;

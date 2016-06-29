@@ -185,10 +185,10 @@
 							<!-- ENDIF -->
 						</ul>
 					</div>
-					<button id="personalAreaMenuButton" class="fa fa-gitlab" type="button" />
+					<button id="personalAreaMenuButton" type="button"><i class="fa fa-gitlab"></i></button>
 				</div>
 				<div class="clear"></div>
-			</div> <!-- close personalArea -->
+			</div>
 			
 			<!-- TODO: check if we need this sub-class because dynamic personalArea height & JQ re-height menus -->
 			<div class="controlPanelMenus">
