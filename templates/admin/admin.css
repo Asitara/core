@@ -125,10 +125,6 @@
     
     
     
-    
-    
-    
-    
     /* AdminControlPanel
     ****************************************/
     #controlPanel {
@@ -137,7 +133,15 @@
     	left: 0;
     	right: 0;
     }
-    
+    #controlPanel button {
+    	margin: 0;
+    	padding: 0;
+    	color: #AAA;
+    	border: none;
+        border-radius: 0;
+    	background: none;
+    	box-shadow: none;
+    }
     
     /* Personal Area
     ****************************************/
@@ -148,14 +152,12 @@
     	font: 13px 'Trebuchet MS', Arial, sans-serif;
     }
     #personalArea .personalAreaInnerLeft {
-    	margin-right: auto;
+    	display: flex;
+        margin-right: auto;
     }
     #personalArea .personalAreaInnerRight {
-    	margin-left: auto;
-    }
-    #personalArea .personalAreaInnerLeft > *,
-    #personalArea .personalAreaInnerRight > * {
-    	display: inline-flex;height: 100%;
+    	display: flex;
+        margin-left: auto;
     }
 
     #personalAreaUser {
@@ -182,54 +184,59 @@
     #personalAreaUser > ul > li:hover {
     	background: #444;
     }
-    // hotfix
     #personalAreaUser .user-avatar-smallest > img,
-    #personalAreaUser [class*="notification-bubble-"]{ margin: -5px 0; }
+    #personalAreaUser [class*="notification-bubble-"] { margin: -5px 0; }
 
     #personalAreaTime {
-    	padding-right: 10px;
     	color: #AAA;
     }
     #personalAreaTime > ul {
     	display: flex;
     	height: 100%;
+        align-items: flex-end;
+    }
+    #personalAreaTime .personalAreaTime {
+        padding-right: 5px;
+        padding-bottom: 6px;
+        font-size: 10px;
+    }
+    #personalAreaTime #search_form {
+        display: inline;
+        position: relative;
+    }
+    #personalAreaTime #search_form input {
+        width: 180px;
+        height: 20px;
+        padding: 2px 5px;
+        color: #262B31;
+        font: 14px 'Trebuchet MS', Arial, sans-serif;
+        border: 1px solid #717171;
+        border-radius: 0;
+        background-color: #D9D7D7;
+        box-shadow: none;
+    }
+    #personalAreaTime #search_form button {
+        padding: 5px 0px;
+        position: absolute;
+        right: 7px;
+        top: -4px;
+        color: rgba(0, 0, 0, 0.15);
+        transition: color .3s ease;
+    }
+    #personalAreaTime #search_form button:hover {
+        color: rgba(0, 0, 0, 0.65);
     }
     
-    // #personalAreaTime #search_form {
-    // 	position: relative;
-    // 	display: inline;
-    // 	margin-left: 10px;
-    // }
-    // #personalAreaTime #search_form input {
-    // 	background-color: #D9D7D7;
-    // 	border: 1px solid #717171;
-    // 	border-radius: 4px;
-    // 	color: #262B31;
-    // 	height: 20px;
-    // 	padding: 2px 5px;
-    // 	width: 200px;
-    // 	font: 14px 'Trebuchet MS', Arial, sans-serif;
-    // }
-    // #personalAreaTime button, #personalAreaTime button:hover {
-    // 	background: none repeat scroll 0 0 transparent !important;
-    // 	border: medium none;
-    // 	position: absolute;
-    // 	right: 2px;
-    // 	top: -4px;
-    // 	cursor:pointer;
-    // 	color: #000;
-    // 	box-shadow: none;
-    // }
-    //
-    // #personalAreaMenuButton {
-    //     margin: 0 4px;
-    //     padding: 10px;
-    //     transition: all .2s ease;
-    //     cursor: pointer;
-    // }
-    // #personalAreaMenuButton:hover {
-    //     transform: rotate(180deg);
-    // }
+    #personalAreaMenuButton {
+        margin: 0 4px !important;
+        padding: 10px !important;
+        font-size: 16px;
+        transition: all .2s ease;
+        cursor: pointer;
+    }
+    #personalAreaMenuButton:hover {
+        transform: rotate(180deg);
+    }
     
     /* Main Menu
     ****************************************/
@@ -239,6 +246,17 @@
         background: #25272a;
         border-top: 2px solid #15171A;
         border-bottom: 2px solid #15171A;
+    }
+    #mainmenu .mainmenu li:hover {
+        background: #444;
+    }
+    #mainmenu .mainmenu li:hover > a {
+        color: #FFF;
+    }
+    #mainmenu .mainmenu li:hover > .sub-menu {
+        display: flex;
+        height: 40px;        //maybe remove it, always small it's better
+        // height: 28px;     //or use a smaller
     }
     #mainmenu .mainmenu > li {
         border-left: 2px solid #15171A;
@@ -253,20 +271,29 @@
         padding: 2px 15px;
         color: #AAA;
     }
+    
     #mainmenu .mainmenu .sub-menu {
         display: none;
+        margin-top: 1px;
         position: fixed;
-        left: 0;
+        left: 120px;
         right: 0;
         background: #25272a;
-        border: 2px solid #15171A;
-        border-top: none;
+        border-top: 2px solid #15171A;
+        border-bottom: 2px solid #15171A;
         white-space: nowrap;
     }
     #mainmenu .mainmenu .sub-menu li {
-        padding: 5px 10px;
+        position: relative;
+        border-right: 1px solid #15171A;
         cursor: pointer;
     }
+    #mainmenu .mainmenu .sub-menu a {
+        display: block;
+        padding: 5px 10px;
+        color: #999;
+    }
+
     #mainmenu .mainmenu .sub-menu-arrow {
         margin-right: 10px;
     }
@@ -275,19 +302,21 @@
         font-family: 'FontAwesome';
         position: absolute;
         top: 2px;
-        right: 0;
+        right: 8px;
     }
-
-    #mainmenu .mainmenu li:hover {
-        background: #444;
+    #mainmenu .mainmenu .sub-menu .sub-menu-arrow {
+        margin-right: 12px;
     }
-    #mainmenu .mainmenu li:hover > a {
-        color: #FFF;
+    #mainmenu .mainmenu .sub-menu .sub-menu-arrow:after {
+        top: 5px;
     }
-    #mainmenu .mainmenu li:hover > .sub-menu {
-        display: block;
-    }
-
+    
+    #mainmenu .mainmenu .sub-menu .sub-menu { margin-top: 0; z-index: 1; }
+    #mainmenu .mainmenu > li > .sub-menu > li:first-child > a { padding-left: 95px; }
+    #mainmenu .mainmenu > li > .sub-menu > li > .sub-menu > li:first-child > a { padding-left: 75px; }
+    #mainmenu .mainmenu > li > .sub-menu > li > .sub-menu > li > .sub-menu > li:first-child > a { padding-left: 45px; }
+    #mainmenu .mainmenu > li > .sub-menu > li > .sub-menu > li > .sub-menu > li > .sub-menu > li:first-child > a { padding-left: 15px; }
+    
     #mainmenu .mainmenu li a.link_indexphp:before,
     #mainmenu .mainmenu li a.link_entry_home:before {
         content:"\f015";
@@ -295,12 +324,10 @@
         margin-right: 5px;
     }
     
-    
     /* Admin Menu
     ****************************************/
     #adminmenu {
         position: absolute;
-        width: 155px;
     }
     #adminmenu .menu-header {
     	height: 40px;
@@ -328,7 +355,7 @@
     	transform: skew(45deg);
     }
     #adminmenu .menu-header > a:last-child {
-    	width: 50px;
+    	width: 49px;
     	flex: 0 0 auto;
     	font-size: 22px;
     	border-left: 1px solid #15171A;
@@ -336,7 +363,7 @@
     #adminmenu .menu-header > a:last-child > i {
     	position: relative;
     	top: 5px;
-    	left: 10px;
+    	left: 11px;
     	transform: skew(45deg);
     }
     #adminmenu .menu-header > a {
@@ -413,57 +440,6 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // old menu-header style -- backup
-    //
-    // #adminmenu .menu-header {
-    //     height: 40px;
-    //     background: rgba(255, 0, 0, 0.35);
-    //     border-bottom: 1px solid #F00;
-    //     overflow: hidden;
-    // }
-    // #adminmenu .menu-header a:first-child {
-    //     padding: 7px 20px 16px 5px;
-    // }
-    // #adminmenu .menu-header a:last-child {
-    //     padding: 7px;
-    //     position: absolute;
-    //     right: -15px;
-    //     color: #0F0;
-    //     font-size: 24px;
-    //     border-left: 1px groove #F00;
-    // }
-    // #adminmenu .menu-header img {
-    //     height: 35px;
-    // }
-    // #adminmenu .menu-header .menu-trigger {
-    //     display: inline-block;
-    //     padding: 12.5px;
-    //     border-left: 1px groove #F00;
-    // }
-    // #adminmenu .menu-header:after {
-    //     display: block;
-    //     content: '';
-    //     position: absolute;
-    //     top: 0;
-    //     right: -41px;
-    //     height: 0;
-    //     width: 0;
-    //     border-left: 41px solid #F00;
-    //     border-bottom: 41px solid transparent;
-    //     z-index: -1;
-    // }
     
     
     

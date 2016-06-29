@@ -185,7 +185,7 @@
 							<!-- ENDIF -->
 						</ul>
 					</div>
-					<div id="personalAreaMenuButton" class="fa fa-gitlab"></div>
+					<button id="personalAreaMenuButton" class="fa fa-gitlab" type="button" />
 				</div>
 				<div class="clear"></div>
 			</div> <!-- close personalArea -->
@@ -212,11 +212,11 @@
 		
 		
 		
-		<section style="text-align:center;">
+		<section style="text-align:center;height: 80em;">
 			-- CONTENT --
 		</section>
 		
-		<footer style="text-align:center;">
+		<footer style="text-align:center;height: 2em;">
 			-- FOOTER --
 		</footer>
 	</body>
