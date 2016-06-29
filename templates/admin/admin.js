@@ -1,5 +1,23 @@
 $(document).ready(function(){
-    console.log();
+    
+    // DEBUGGING
+    $('ul.adminmenu').addClass('menu-content').removeClass('adminmenu');
+    
+    
+    // SKEW mainmenu
+    $('#mainmenu .mainmenu li > a').each(function(){
+        // lese den inneren html teil aus
+        // lege um diesen teil einen wrapper
+        // ersetze nun den inneren teil mit den neu erzeugten wrapper+inner
+        
+        // add .skew klasse und anshließend können wir
+        // a.skew { display: block; transform: skew(45deg); }
+        // a.skew > span { display: inline-block; transform: skew(-45deg); }
+    });
+    
+    
+    
+    
     // prüfe und richte ggf. wrapper, section, ... höhe aus
     // wenn controlPanel -> personalArea.height() != default_height
     $(window).scroll(function(){
@@ -36,10 +54,8 @@ $(document).ready(function(){
 //     });
 // }
     
-    
-    // DEBUGGING
-    $('ul.adminmenu').addClass('menu-content').removeClass('adminmenu');
 });
+
 
 function test_localstorage(){
     var testKey = 'test';

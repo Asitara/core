@@ -129,73 +129,107 @@
     
     
     
-    
-    /* Personal Area
+    /* AdminControlPanel
     ****************************************/
-    #controlPanel .controlPanelMenus { position: relative; }
+    #controlPanel {
+    	position: fixed;
+    	top: 0;
+    	left: 0;
+    	right: 0;
+    }
+    
     
     /* Personal Area
     ****************************************/
     #personalArea {
-        min-height: 35px;
-        padding-left: 5px 40px 0;
-        background: #25272a;
+    	display: flex;
+    	height: 35px;
+    	background: #25272a;
     	font: 13px 'Trebuchet MS', Arial, sans-serif;
-    	text-align:left;
     }
-    #personalArea a { color: #AAA; text-decoration: none; }
-    #personalArea a:hover { color: #FFF; text-decoration: underline; }
-    #personalArea a:hover i { text-decoration: none; }
-    
-    #personalArea .personalAreaInnerLeft { float: left; }
-    #personalArea .personalAreaInnerRight { float: right; overflow: hidden; }
+    #personalArea .personalAreaInnerLeft {
+    	margin-right: auto;
+    }
+    #personalArea .personalAreaInnerRight {
+    	margin-left: auto;
+    }
     #personalArea .personalAreaInnerLeft > *,
-    #personalArea .personalAreaInnerRight > * { display: inline-block; vertical-align: middle; }
+    #personalArea .personalAreaInnerRight > * {
+    	display: inline-flex;height: 100%;
+    }
+
+    #personalAreaUser {
+    	height: 100%;
+    	padding-left: 10px;
+    	color: #AAA;
+    }
+    #personalAreaUser a {
+    	color: #AAA;
+    }
+    #personalAreaUser li:hover a {
+    	color: #FFF;
+    }
+    #personalAreaUser > ul {
+    	display: flex;
+    	height: 100%;
+    }
+    // set the a tag height relative to this
+    #personalAreaUser > ul > li {
+    	padding: 7px 12px 0 12px;
+    	transition: all .3s ease-out;
+    	cursor: pointer;
+    }
+    #personalAreaUser > ul > li:hover {
+    	background: #444;
+    }
+    // hotfix
+    #personalAreaUser .user-avatar-smallest > img,
+    #personalAreaUser [class*="notification-bubble-"]{ margin: -5px 0; }
+
+    #personalAreaTime {
+    	padding-right: 10px;
+    	color: #AAA;
+    }
+    #personalAreaTime > ul {
+    	display: flex;
+    	height: 100%;
+    }
     
-    #personalAreaUser { margin-top: 7px; }
-    #personalAreaUser ul li { float: left; margin-left: 25px; }
-    #personalAreaUser .user-avatar-smallest > img { margin: -5px 0; }
-    
-    #personalAreaTime { margin-top: 4px; }
-    #personalAreaTime ul li { float: left; margin-left: 25px; }
-    #personalAreaTime #search_form {
-    	position: relative;
-    	display: inline;
-    	margin-left: 10px;
-    }
-    #personalAreaTime #search_form input {
-    	background-color: #D9D7D7;
-    	border: 1px solid #717171;
-    	border-radius: 4px;
-    	color: #262B31;
-    	height: 20px;
-    	padding: 2px 5px;
-    	width: 200px;
-    	font: 14px 'Trebuchet MS', Arial, sans-serif;
-    }
-    #personalAreaTime button, #personalAreaTime button:hover {
-    	background: none repeat scroll 0 0 transparent !important;
-    	border: medium none;
-    	position: absolute;
-    	right: 2px;
-    	top: -4px;
-    	cursor:pointer;
-    	color: #000;
-    	box-shadow: none;
-    }
-    #personalAreaTime .personalAreaTime {
-    	margin-top: 6px;
-    }
-    
-    #personalAreaMenuButton {
-        margin: 0 4px;
-        padding: 10px;
-        transition: all .2s ease;
-        cursor: pointer;
-    }
-    #personalAreaMenuButton:hover {
-        transform: rotate(180deg);
-    }
+    // #personalAreaTime #search_form {
+    // 	position: relative;
+    // 	display: inline;
+    // 	margin-left: 10px;
+    // }
+    // #personalAreaTime #search_form input {
+    // 	background-color: #D9D7D7;
+    // 	border: 1px solid #717171;
+    // 	border-radius: 4px;
+    // 	color: #262B31;
+    // 	height: 20px;
+    // 	padding: 2px 5px;
+    // 	width: 200px;
+    // 	font: 14px 'Trebuchet MS', Arial, sans-serif;
+    // }
+    // #personalAreaTime button, #personalAreaTime button:hover {
+    // 	background: none repeat scroll 0 0 transparent !important;
+    // 	border: medium none;
+    // 	position: absolute;
+    // 	right: 2px;
+    // 	top: -4px;
+    // 	cursor:pointer;
+    // 	color: #000;
+    // 	box-shadow: none;
+    // }
+    //
+    // #personalAreaMenuButton {
+    //     margin: 0 4px;
+    //     padding: 10px;
+    //     transition: all .2s ease;
+    //     cursor: pointer;
+    // }
+    // #personalAreaMenuButton:hover {
+    //     transform: rotate(180deg);
+    // }
     
     /* Main Menu
     ****************************************/
@@ -208,7 +242,6 @@
     }
     #mainmenu .mainmenu > li {
         border-left: 2px solid #15171A;
-        transform: skew(45deg);
         cursor: pointer;
         position: relative;
     }
@@ -219,19 +252,16 @@
         display: block;
         padding: 2px 15px;
         color: #AAA;
-        transform: skew(-45deg);
     }
     #mainmenu .mainmenu .sub-menu {
         display: none;
-        min-width: 130px;
-        position: absolute;
-        top: 100%;
-        right: 50%;
+        position: fixed;
+        left: 0;
+        right: 0;
         background: #25272a;
         border: 2px solid #15171A;
         border-top: none;
         white-space: nowrap;
-        transform: skew(-45deg);
     }
     #mainmenu .mainmenu .sub-menu li {
         padding: 5px 10px;
@@ -266,48 +296,6 @@
     }
     
     
-    
-    // show mainmenu between admin-header and personalArea
-    //
-    // #mainmenu .mainmenu {
-    //     display: flex;
-    //     justify-content: flex-end;
-    //     background: #25272a;
-    //     border-top: 2px solid #15171A;
-    //     border-bottom: 2px solid #15171A;
-    // }
-    
-    
-    // show mainmenu on admin-header height
-    //
-    // #mainmenu {
-    //     position: absolute;
-    //     left: 20em;
-    //     right: 0;
-    //     overflow: hidden;
-    // }
-    // #mainmenu > ul {
-    //     height: 40px;
-    //     display: flex;
-    //     position: relative;
-    //     right: -20px;
-    //     background: linear-gradient(to bottom, #25272a 5%, #444444 100%);
-    //     border-right: 2px solid #15171A;
-    //     border-bottom: 2px solid #15171A;
-    //     transform: skew(-45deg);
-    // }
-    // #mainmenu > ul > li {
-    //     transform: skew(45deg);
-    // }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     /* Admin Menu
     ****************************************/
     #adminmenu {
@@ -324,6 +312,7 @@
     	border-right: 2px solid #15171A;
     	border-bottom: 2px solid #15171A;
     	transform: skew(-45deg);
+        text-align: left;
     	overflow: hidden;
     }
     #adminmenu .menu-header > a:first-child {
@@ -385,16 +374,6 @@
     #adminmenu .menu-content > li:hover > a {
         background: #336699;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     #adminmenu .update_available,
     #adminmenu .update_available_yellow {
