@@ -1,8 +1,10 @@
+var localstorage_test = (test_localstorage());
+var acp_mainmenu = localStorage.getItem('acp_mainmenu');
+
 $(document).ready(function(){
     
     // DEBUGGING
     $('ul.adminmenu').addClass('menu-content').removeClass('adminmenu');
-    
     
     // SKEW mainmenu
     $('#mainmenu .mainmenu li > a').each(function(){
@@ -15,54 +17,46 @@ $(document).ready(function(){
         // a.skew > span { display: inline-block; transform: skew(-45deg); }
     });
     
+    ////////////////////////////////////////////////////////////////////////////////
     
     
+    // mainmenu - open/close -
+    if(acp_mainmenu === null || acp_mainmenu == 'close' || acp_mainmenu == false){
+        acp_mainmenu_handle('close', 0);
+    }
     
-    // prüfe und richte ggf. wrapper, section, ... höhe aus
-    // wenn controlPanel -> personalArea.height() != default_height
-    $(window).scroll(function(){
-        //----
-        // default ist das menü fest zum body/wrapper
-        // prüfe mit JS ob menü über fensterhöhe geht
-        // wenn ja lass normal und registriere mit .scroll() ob menu-bottom reached
-        // sonst posi:fixed mit einem empty berreich bis fenster bottom
+    $('#personalAreaMenuButton').click(function(){
+        if(acp_mainmenu == 'open'){
+            acp_mainmenu_handle('close');
+        }else{
+            acp_mainmenu_handle('open');
+        }
     });
     
-    
-    // re-posi the .mainmenu .sub_menu ;; so it'll be copy of .mainmenu design
-    // the width calculating is still a lil bit buggy
-//
-// var pos_admin  = $('#adminmenu .menu-content').width();
-// var pos_window = $(window).width();
-//
-//
-// mainmenu_pos_sub_menus();
-// $(window).resize(function(){
-//     mainmenu_pos_sub_menus();
-// });
-//
-// function mainmenu_pos_sub_menus(){
-//     $('#mainmenu .mainmenu .sub-menu').each(function(){
-//         $(this).prop('style', 'display:block;');
-//         var relative_pos = $(this).offsetParent().offset().left;
-//         $(this).prop('style', false);
-//
-//         var new_pos = (-Math.abs(relative_pos)) + pos_admin;
-//
-//         $(this).css('width', pos_window+'px');
-//         $(this).css('left', new_pos+'px');
-//     });
-// }
-    
+    // mainmenu - skew style -
+    $('#mainmenu .mainmenu > li > a').each(function(){
+        $(this).html('<span><span>'+$(this).html()+'</span></span>');
+    });
+    $('#mainmenu .mainmenu').addClass('skew');
 });
 
 
+function acp_mainmenu_handle(handle, duration = 1000){
+    if(handle == 'open'){
+        $('#mainmenu').slideDown({easing: 'easeOutBounce', duration: duration});
+        acp_mainmenu = 'open';
+        
+    }else{
+        $('#mainmenu').slideUp({easing: 'easeOutBounce', duration: duration});
+        acp_mainmenu = 'close';
+    }
+    if(localstorage_test) localStorage.setItem('acp_mainmenu', acp_mainmenu);
+}
+
 function test_localstorage(){
-    var testKey = 'test';
-    
     try {
-        localStorage.setItem(testKey, '1');
-        localStorage.removeItem(testKey);
+        localStorage.setItem('test', '1');
+        localStorage.removeItem('test');
         return true;
         
     }catch(error){

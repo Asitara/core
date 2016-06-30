@@ -147,6 +147,11 @@
     	box-shadow: none;
     }
     
+    // main selector is not absolute + maybe the CP sisters selectors is deprecated
+    #controlPanel ~ * { margin-left: 122px; }
+    main { margin-top: 55px; }
+    
+    
     /* Personal Area
     ****************************************/
     #personalArea {
@@ -323,11 +328,24 @@
         margin-right: 5px;
     }
     
+    
+    #mainmenu .mainmenu.skew > li { background: none; border: none; }
+    #mainmenu .mainmenu.skew > li > a { margin: 0; padding: 0; position: relative; }
+    #mainmenu .mainmenu.skew > li > a > span { display: block; padding: 2px 15px; border-left: 2px solid #15171A; transform: skew(45deg); }
+    #mainmenu .mainmenu.skew > li > a > span > span { display: block; transform: skew(-45deg); }
+    
+    #mainmenu .mainmenu.skew > li:hover > a > span { background: #444; }
+    
+    #mainmenu .mainmenu.skew > li > a.sub-menu-arrow::after { position: absolute; top: 1px; right: 10px; z-index: 2; }
+    #mainmenu .mainmenu.skew > li > a.sub-menu-arrow > span > span { margin-right: 10px; }
+    
+    #mainmenu .mainmenu.skew > li > a.link_indexphp::before,
+    #mainmenu .mainmenu.skew > li > a.link_entry_home::before { position: absolute; top: 2px; left: 15px; z-index: 2; }
+    #mainmenu .mainmenu.skew > li > a.link_indexphp > span > span,
+    #mainmenu .mainmenu.skew > li > a.link_entry_home > span > span { margin-left: 16px; }
+    
     /* Admin Menu
     ****************************************/
-    #adminmenu {
-        position: absolute;
-    }
     #adminmenu .menu-header {
     	height: 40px;
     	width: 210px;

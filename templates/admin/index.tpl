@@ -212,9 +212,9 @@
 		
 		
 		
-		<section style="text-align:center;height: 80em;">
+		<main id="wrapper" style="text-align:center;height: 80em;">
 			-- CONTENT --
-		</section>
+		</main>
 		
 		<footer style="text-align:center;height: 2em;">
 			-- FOOTER --
