@@ -216,8 +216,40 @@
 			-- CONTENT --
 		</main>
 		
-		<footer style="text-align:center;height: 2em;">
-			-- FOOTER --
+<!-- TODO: make nicer dropdown menus for style_changes like global color definiton from localstorage or responsive switcher -->
+		<footer id="footer">
+			<div class="footer-left">
+				<!-- LISTENER footer_left_top -->
+				
+				<!-- IF S_REPONSIVE -->
+				<div class="hiddenDesktop toggleResponsive"><a href="{SID}&toggleResponsive=desktop"><i class="fa fa-lg fa-desktop"></i> {L_desktop_version}</a></div>
+				<!-- ELSE -->
+				<div class="toggleResponsive"><a href="{SID}&toggleResponsive=mobile"><a href="{SID}&toggleResponsive=mobile"><i class="fa fa-lg fa-mobile-phone"></i> {L_mobile_version}</a></div>
+				<!-- ENDIF -->
+				
+				<!-- LISTENER footer_left_bottom -->
+			</div>
+			<div class="footer-center">
+				<!-- LISTENER footer_center_top -->
+				{EQDKP_PLUS_COPYRIGHT}
+				<!-- LISTENER footer_center_bottom -->
+			</div>
+			<div class="footer-right">
+				<!-- LISTENER footer_right_top -->
+				
+				<!-- IF S_GLOBAL_RSSFEEDS -->
+				<div class="rss-tooltip-container">
+					<a class="rss-tooltip-trigger tooltip-trigger" data-tooltip="rss-tooltip"><i class="fa hand fa-rss fa-lg"></i></a>
+					<ul class="dropdown-menu right-bottom rss-tooltip" role="menu" id="rss-tooltip">
+						<!-- BEGIN global_rss_row -->
+						<li><a href="{global_rss_row.LINK}"><i class="fa hand fa-rss fa-lg"></i> {global_rss_row.NAME}</a></li>
+						<!-- END global_rss_row -->
+					</ul>
+				</div>
+				<!-- ENDIF -->
+				
+				<!-- LISTENER footer_right_bottom -->
+			</div>
 		</footer>
 	</body>
 </html>

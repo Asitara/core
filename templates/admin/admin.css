@@ -147,10 +147,6 @@
     	box-shadow: none;
     }
     
-    // main selector is not absolute + maybe the CP sisters selectors is deprecated
-    #controlPanel ~ * { margin-left: 122px; }
-    main { margin-top: 55px; }
-    
     
     /* Personal Area
     ****************************************/
@@ -158,6 +154,7 @@
     	display: flex;
     	height: 35px;
     	background: #25272a;
+        border-bottom: 2px solid #15171A;
     	font: 13px 'Trebuchet MS', Arial, sans-serif;
     }
     #personalArea .personalAreaInnerLeft {
@@ -254,7 +251,6 @@
         display: flex;
         justify-content: flex-end;
         background: #25272a;
-        border-top: 2px solid #15171A;
         border-bottom: 2px solid #15171A;
     }
     #mainmenu .mainmenu li:hover {
@@ -463,36 +459,66 @@
     
     
     
+    // main -- content
+    //TODO: write a @style var for the margin-left etc.. & calc this var here and everywhere else
+    #controlPanel ~ * { margin-left: 122px; max-width: calc(~'100% - 122px'); }
+    #wrapper {  margin-top: 55px; }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     /* Footer
     ****************************************/
     #footer {
-    	text-align: center;
-    	color: @eqdkpBodyLinkColor;
-    	font-family:'Trebuchet MS',Arial,sans-serif;
-    	font-size: 12px;
+        display: flex;
+        justify-content: space-between;
     	margin-top: 20px;
+    	color: #AAA;
+    	font-size: 12px;
+    	font-family:'Trebuchet MS', Arial, sans-serif;
+        background: #25272A;
     }
+    #footer.max-size {  max-width: 100%; margin-left: 0;}
+    #footer a { color: #AAA; text-decoration: none; }
+    #footer a:hover { color: #FFF; text-decoration: none; }
+    #footer .footer-left { text-align: left; }
+    #footer .footer-center { text-align: center; }
+    #footer .footer-right { text-align: right; }
     
-    .copyright {
-    	color: @eqdkpBodyLinkColor;
-    }
-    #footer a, copyright a {
-    	color: @eqdkpBodyLinkColor;
-    	text-decoration: @eqdkpBodyLinkDecoration;
-    }
-    #footer a:hover, copyright a:hover, #impressum:hover {
-    	color: @eqdkpBodyLinkColorHover;
-    	text-decoration:underline;
-    }
-    #dialog_disclaimer{
-    	display: none;
-    }
-    #impressum{
-    	margin: 0px 0px 10px 0px;
-    }
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     //-REMOVE
     //
@@ -543,9 +569,9 @@
     #wrapper {
     	margin-bottom:20px;
     	text-align: left;
-    	min-width:100%;
-    	display:inline-block;
-    	text-align: left;
+    	// min-width:100%;
+    	// display:inline-block;
+    	// text-align: left;
     }
     
     //-REMOVE
