@@ -36,6 +36,7 @@
 		<!-- LISTENER body_top -->
 		{STATIC_HTMLCODE}
 
+<!-- TODO: check and rewrite the personalArea ul's -->
 <!-- TODO: maybe we need an innerWrapper class for #wrapper = position:relative;; .innerWrapper position:absolute; because debug informations and static html  -->
 		<header id="controlPanel">
 			<div id="personalArea">
@@ -190,7 +191,7 @@
 				<div class="clear"></div>
 			</div>
 			
-			<!-- TODO: check if we need this sub-class because dynamic personalArea height & JQ re-height menus -->
+<!-- TODO: check if we need this sub-class because dynamic personalArea height & JQ re-height menus -->
 			<div class="controlPanelMenus">
 				<div id="mainmenu">
 					{MAIN_MENU} <!-- TODO: <responsive> check how to set the mobile_main_menu var -->
@@ -207,20 +208,27 @@
 			</div>
 		</header>
 		
-		
-		
-		
-		
-		
+<!-- TODO: check the "header" segment, maybe it will colidate with page-templates,.. and breadcrumb.. and maybe we should move the global warnings from here to header/footer -->
 		<main id="wrapper">
-			-- CONTENT --
+			<article class="main-content {PAGE_CLASS}">
+				<!-- BEGIN global_warnings -->
+				<header>
+					<div class="infobox infobox-large infobox-{global_warnings.CLASS} clearfix">
+						<i class="{global_warnings.ICON} fa-4x pull-left"></i> {global_warnings.MESSAGE}
+						<!-- IF global_warnings.S_DISMISS -->
+						<i class="fa-times fa pull-right hand" onclick="$(this).parent().hide()"></i>
+						<!-- ENDIF -->
+					</div>
+				</header>
+				<!-- END global_warnings -->
+				
+				<!-- LISTENER content_body_top -->
+				{GBL_CONTENT_BODY}
+				<!-- LISTENER content_body_bottom -->
+			</article>
 		</main>
 		
-		
-		
-		
-		
-		
+<!-- TODO: add cookie hint in footer.. origin: https://github.com/EQdkpPlus/core/blob/master/templates/eqdkp_modern/index.tpl#L275-L280 -->
 <!-- TODO: make nicer dropdown menus for style_changes like global color definiton from localstorage or responsive switcher -->
 		<footer id="footer">
 			<div class="footer-left">
@@ -270,6 +278,139 @@
 			</div>
 			<!-- ENDIF -->
 		</footer>
+		
+<!-- TODO: simple-header debugging, maybe via a "small-console".. default: https://github.com/EQdkpPlus/core/blob/master/templates/eqdkp_modern/index.tpl#L379-L382 -->
+		
+<!-- TODO: check the html code, main css, jquery css etc... -->
+		<!-- IF not S_LOGGED_IN -->
+		<div id="dialog-login" title="{L_login}">
+			<form id="login" class="fv_checkit" name="login" action="{EQDKP_CONTROLLER_PATH}Login{SEO_EXTENSION}{SID}" method="post">
+				<!-- LISTENER login_popup -->
+				
+				<!-- IF S_BRIDGE_INFO -->
+				<div class="infobox infobox-large infobox-blue clearfix">
+					<i class="fa fa-info-circle fa-4x pull-left"></i> {L_login_bridge_notice}
+				</div>
+				<!-- ENDIF -->
+				
+				<fieldset class="settings mediumsettings">
+					<dl>
+						<dt><label>{L_username}:</label></dt>
+						<dd>
+							<div class="input-icon">
+								<i class="fa fa-user"></i><input type="text" name="username" size="30" maxlength="30" class="input username" id="username" placeholder="{L_username}" required />
+								<div class="fv_msg" data-errormessage="{L_fv_required_user}"></div>
+							</div>
+							
+						</dd>
+					</dl>
+					<dl>
+						<dt><label>{L_password}:</label></dt>
+						<dd>
+							<div class="input-icon">
+								<i class="fa fa-key"></i>
+								<input type="password" name="password" pattern=".{3,}" size="30" maxlength="32" class="input password" id="password" placeholder="{L_password}" required />
+								<div class="fv_msg" data-errormessage="{L_fv_required_password_pattern}"></div>
+							</div>
+							<!-- IF S_SHOW_PWRESET_LINK -->
+							<br />{U_PWRESET_LINK}<br />
+							<!-- ENDIF -->
+							<br /><label><input type="checkbox" name="auto_login" />{L_remember_password}</label>
+						</dd>
+					</dl>
+				</fieldset>
+				<input type="text" name="{HONEYPOT_VALUE}" size="30" maxlength="30" class="userpass" />
+				<button type="submit" name="login" class="mainoption"><i class="fa fa-sign-in"></i> {L_login}</button>
+				<!-- IF AUTH_LOGIN_BUTTON != "" -->
+				<br /><br />
+				<fieldset class="settings mediumsettings">
+					<legend>{L_login_use_authmethods}</legend>
+					{AUTH_LOGIN_BUTTON}
+				</fieldset>
+				<!-- ENDIF -->
+			</form>
+		</div>
+		<!-- ENDIF -->
+		
+		<script type="text/javascript">
+			//<![CDATA[
+			
+			<!-- IF not S_LOGGED_IN -->
+			$(document).ready(function(){
+				/* Login Dialog */
+				$( "#dialog-login" ).dialog({
+					height: <!-- IF S_BRIDGE_INFO -->450<!-- ELSE -->350<!-- ENDIF -->,
+					width: 530,
+					modal: true,
+					autoOpen: false,
+				});
+			});
+			<!-- ENDIF -->
+			
+			<!-- IF S_NORMAL_HEADER -->
+			var user_clock_format = "dddd, "+mmocms_user_dateformat_long+" "+ mmocms_user_timeformat;
+			var mymoment = moment(mmocms_user_timestamp_atom).utcOffset(mmocms_user_timezone);
+			
+			// function recalculate_notification_bubbles(){
+			// 	var red = 0; var green = 0; var yellow = 0;
+			// 	$('.notification-content ul li').each(function( index ) {
+			// 		var myclass = $(this).attr('class');
+			// 		var count = $(this).data('count');
+			//
+			// 		if (myclass == 'prio_0') green += parseInt(count);
+			// 		if(myclass == 'prio_1') yellow += parseInt(count);
+			// 		if(myclass == 'prio_2') red += parseInt(count);
+			// 	});
+			// 	if (green > 0) {
+			// 		$('.notification-bubble-green').html(green).show();
+			// 	} else {
+			// 		$('.notification-bubble-green').html(green).hide();
+			// 	}
+			// 	if (yellow > 0) {
+			// 		$('.notification-bubble-yellow').html(yellow).show();
+			// 	} else {
+			// 		$('.notification-bubble-yellow').html(yellow).hide();
+			// 	}
+			// 	if (red > 0) {
+			// 		$('.notification-bubble-red').html(red).show();
+			// 	} else {
+			// 		$('.notification-bubble-red').html(red).hide();
+			// 	}
+			//
+			// 	if (yellow ==0 && green==0 && red==0){
+			// 		$('.notification-content ul').html({L_notification_none|jsencode});
+			// 	}
+			//
+			// 	notification_favicon(red, yellow, green);
+			// }
+			
+			$(document).ready(function(){
+				$('.notification-mark-all-read').on('click', function(){
+				    $('.notification-content ul').html({L_notification_none|jsencode});
+					$('.notification-bubble-red, .notification-bubble-yellow, .notification-bubble-green').hide();
+					notification_favicon(0, 0, 0);
+					$.get(mmocms_controller_path+"Notifications"+mmocms_seo_extension+mmocms_sid+"&markallread");
+				});
+				
+				//Update Favicon
+				favicon = new Favico({animation:'none'});
+				notification_favicon({NOTIFICATION_COUNT_RED}, {NOTIFICATION_COUNT_YELLOW}, {NOTIFICATION_COUNT_GREEN});
+			});
+			<!-- ELSE -->
+				<!-- JS for simple header. Above is for normal header only -->
+			<!-- ENDIF -->
+			{JS_CODE_EOP}
+			
+			//Reset Favicon, for Bookmarks
+			$(window).on('unload', function(){
+	            if (typeof favicon !== 'undefined'){ favicon.reset(); }
+	   		 });
+			 
+	   		 //]]>
+		</script>
+		
+		<!-- LISTENER body_bottom -->
+		<a id="bottom"></a>
 	</body>
 </html>
 <!-- ENDIF -->
