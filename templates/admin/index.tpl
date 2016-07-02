@@ -34,9 +34,9 @@
 	</head>
 	<body id="top" class="<!-- IF S_REPONSIVE -->responsive <!-- ENDIF --><!-- IF not S_NORMAL_HEADER -->simple-header<!-- ENDIF --> {BROWSER_CLASS}">
 		<!-- LISTENER body_top -->
-		
 		{STATIC_HTMLCODE}
-		
+
+<!-- TODO: maybe we need an innerWrapper class for #wrapper = position:relative;; .innerWrapper position:absolute; because debug informations and static html  -->
 		<header id="controlPanel">
 			<div id="personalArea">
 				<div class="personalAreaInnerLeft">
@@ -212,9 +212,14 @@
 		
 		
 		
-		<main id="wrapper" style="text-align:center;height: 80em;">
+		<main id="wrapper">
 			-- CONTENT --
 		</main>
+		
+		
+		
+		
+		
 		
 <!-- TODO: make nicer dropdown menus for style_changes like global color definiton from localstorage or responsive switcher -->
 		<footer id="footer">
@@ -250,6 +255,20 @@
 				
 				<!-- LISTENER footer_right_bottom -->
 			</div>
+			
+			<!-- IF S_SHOW_DEBUG || S_SHOW_QUERIES -->
+			<div id="debug-console">
+				<!-- IF S_SHOW_QUERIES -->
+				<button onclick="acp_console_handle( $(this).data('handle'), true);" data-handle="open" type="button"><span>{L_CONSOLE}</span></button>
+				<div class="console">{DEBUG_TABS}</div>
+				<!-- ENDIF -->
+				<!-- IF S_SHOW_DEBUG -->
+				<div class="queries">
+					<span>SQL Querys: {EQDKP_QUERYCOUNT} | in {EQDKP_RENDERTIME} | {EQDKP_MEM_PEAK} | <a href="http://validator.w3.org/check/referer" target="_top">XHTML Validate</a></span>
+				</div>
+				<!-- ENDIF -->
+			</div>
+			<!-- ENDIF -->
 		</footer>
 	</body>
 </html>

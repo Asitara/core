@@ -1,26 +1,18 @@
 var localstorage_test = (test_localstorage());
 var acp_mainmenu = localStorage.getItem('acp_mainmenu');
+var acp_console = sessionStorage.getItem('acp_console');
 
 $(document).ready(function(){
     
     // DEBUGGING
     $('ul.adminmenu').addClass('menu-content').removeClass('adminmenu');
     
-    // SKEW mainmenu
-    $('#mainmenu .mainmenu li > a').each(function(){
-        // lese den inneren html teil aus
-        // lege um diesen teil einen wrapper
-        // ersetze nun den inneren teil mit den neu erzeugten wrapper+inner
-        
-        // add .skew klasse und anshließend können wir
-        // a.skew { display: block; transform: skew(45deg); }
-        // a.skew > span { display: inline-block; transform: skew(-45deg); }
-    });
-    
-    ////////////////////////////////////////////////////////////////////////////////
     
     
     
+    
+    // acp_console
+    if(acp_console == 'open') acp_console_handle('open', false);
     
     
     // mainmenu - open/close -
@@ -29,16 +21,9 @@ $(document).ready(function(){
     }
     
     $('#personalAreaMenuButton').click(function(){
-        if(acp_mainmenu == 'open'){
-            acp_mainmenu_handle('close');
-        }else{
-            acp_mainmenu_handle('open');
-        }
+        if(acp_mainmenu == 'open')  { acp_mainmenu_handle('close'); }
+        else                        { acp_mainmenu_handle('open');  }
     });
-    
-    
-    
-    
     
     // mainmenu - skew style -
     $('#mainmenu .mainmenu > li > a').each(function(){
@@ -47,7 +32,7 @@ $(document).ready(function(){
     $('#mainmenu .mainmenu').addClass('skew');
     
     
-    
+    //TODO: uncomment it -- only for debugging disabled
     // footer position
     // setInterval(function(){
     //     if($('#wrapper').height() > $('#controlPanel').height()){
@@ -57,18 +42,6 @@ $(document).ready(function(){
     //     }
     // }, 3000);
 });
-
-
-
-
-
-// function acp_footer_position(){
-//     if($('#wrapper').height() > $('#controlPanel').height()){
-//         if($('#footer').prop('style') != 'margin-left: 0; max-width: 100%;') $('#footer').prop('style', 'margin-left: 0; max-width: 100%;');
-//     }else{
-//         $('#footer').prop('style', false);
-//     }
-// }
 
 function acp_mainmenu_handle(handle, duration = 1000){
     if(handle == 'open'){
@@ -80,6 +53,27 @@ function acp_mainmenu_handle(handle, duration = 1000){
         acp_mainmenu = 'close';
     }
     if(localstorage_test) localStorage.setItem('acp_mainmenu', acp_mainmenu);
+}
+
+//TODO: need to rewrite, still buggy == inconsistent
+function acp_console_handle(handle, scroll = false){
+    if(handle == 'open'){
+        $('#debug-console .console').slideDown(400, function(){
+            // $('#debug-console').addClass('open');
+            
+            
+            if(scroll) $('html, body').animate({ scrollTop: $(document).height() }, 1000);
+        });
+        $('#debug-console > button').attr('data-handle', 'close');
+        acp_console = 'open';
+    }else{
+        $('#debug-console .console').slideUp(400, function(){
+            
+        });
+        $('#debug-console > button').attr('data-handle', 'open');
+        acp_console = 'close';
+    }
+    if(localstorage_test) sessionStorage.setItem('acp_console', acp_console);
 }
 
 function test_localstorage(){
