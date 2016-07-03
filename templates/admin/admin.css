@@ -18,73 +18,71 @@
  *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* CSS Reset
+****************************************/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video,
+table.table, .table caption, .table tbody, .table tfoot, .table thead, .table tr, .table th, .table td
+{ margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
 
-// Search with RegEx to find all segments
-//---------------------------------------------------
-//  (.*)/\* (.*)[\n\r]+(.*)\*/[\n\r]+
-
-
-// Style DEBUGGING
-#notify_container { display: none !important; }
-
-@import '@{eqdkpRootPath}templates/admin/deprecated.css';
-
-//TODO: check the personalArea Search .. core.class.php -- we can use "placeholder" instead "value" + JS
-
-//TODO: write less-vars for the 2-3 color themes and some "common" less-vars etc
-
-
-
-    /* CSS Reset
+/* HTML5 display-role reset for older browsers
+****************************************/
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section { display: block; }
+body { line-height: 1; }
+ol, ul { list-style: none; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+table { border-collapse: collapse; border-spacing: 0; }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    // Search with RegEx to find all segments
+    //---------------------------------------------------
+    //  (.*)/\* (.*)[\n\r]+(.*)\*/[\n\r]+
+    
+    
+    // Style DEBUGGING
+    #notify_container { display: none !important; }
+    @import '@{eqdkpRootPath}templates/admin/deprecated.css';
+    
+    
+    //TODO: check the personalArea Search .. core.class.php -- we can use "placeholder" instead "value" + JS
+    
+    
+    
+    /* Global Less Vars
     ****************************************/
-    html, body, div, span, applet, object, iframe,
-    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-    a, abbr, acronym, address, big, cite, code,
-    del, dfn, em, img, ins, kbd, q, s, samp,
-    small, strike, strong, sub, sup, tt, var,
-    b, u, i, center,
-    dl, dt, dd, ol, ul, li,
-    fieldset, form, label, legend,
-    article, aside, canvas, details, embed,
-    figure, figcaption, footer, header, hgroup,
-    menu, nav, output, ruby, section, summary,
-    time, mark, audio, video,
-    table.table, .table caption, .table tbody, .table tfoot, .table thead, .table tr, .table th, .table td
-    {
-    	margin: 0;
-    	padding: 0;
-    	border: 0;
-    	font-size: 100%;
-    	font: inherit;
-    	vertical-align: baseline;
-    }
-
-    /* HTML5 display-role reset for older browsers
-    ****************************************/
-    article, aside, details, figcaption, figure,
-    footer, header, hgroup, menu, nav, section { display: block; }
-    body { line-height: 1; }
-    ol, ul { list-style: none; }
-    blockquote, q { quotes: none; }
-    blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
-    table { border-collapse: collapse; border-spacing: 0; }
+    // @style_body_background          : #19334D;
+    // @style_body_font_size           : 13px;
+    // @style_body_font_color          : #FFF;
+    // @style_body_font_family         : 'Tahoma, Arial, Verdana, sans-serif';
     
     
     
-    /* Global
+    /* Body
     ****************************************/
     html { min-height: 100%; }
 
     body {
-    	background: #19334d;
-    	font-family: @eqdkpBodyFontFamily;
-    	font-size: @eqdkpBodyFontSize;
-    	color: @eqdkpBodyFontColor;
+    	background: #19334D;
+    	font-family: Tahoma, Arial, Verdana, sans-serif;
+    	font-size: 13px;
+    	color: #FFF;
     	text-align: center;
     }
-
     body.simple-header {
-    	background: @eqdkpContainerBackgroundColor;
+    	background: #000;
     	margin: 5px;
     }
 
@@ -97,33 +95,13 @@
     	margin-top: 5px;
     	color: @eqdkpContentFontColorHeadings;
     }
-
     h1 { font-size: 20px; }
     h2 { font-size: 18px; }
     h3 { font-size: 14px; border-bottom: none; margin-bottom: 5px; }
     
     
     
-    
-    
-    
-    
-    
-    
-    
-
-     /* Icons
-     ****************************************/
-    .icon-sm1 { font-size: .8em; }
-    .icon-sm2 { font-size: .6em; }
-    .icon-sm3 { font-size: .5em; }
-    
-    .icon-grey { color: #6E6E6E; }
-    .icon-red { color: #F00; }
-    
-    
-    
-    /* AdminControlPanel
+    /* ControlPanel
     ****************************************/
     #controlPanel {
     	position: absolute;
@@ -145,7 +123,6 @@
     	background: none;
     	box-shadow: none;
     }
-    
     
     /* Personal Area
     ****************************************/
@@ -181,7 +158,7 @@
     	display: flex;
     	height: 100%;
     }
-    // set the a tag height relative to this
+    //TODO: set the a tag height relative to this
     #personalAreaUser > ul > li {
     	padding: 7px 12px 0 12px;
     	transition: all .3s ease-out;
@@ -549,7 +526,7 @@
         left: 20px;
         background: #25272A;
     }
-    #debug-console .queries {
+    #debug-console .quick-bar {
         display: inline-block;
         padding: 0 15px 0 30px;
         position: absolute;
@@ -560,9 +537,21 @@
     	background: #25272A;
     	transform: skew(45deg);
     }
-    #debug-console .queries > span {
-    	display: block;
+    #debug-console .quick-bar > span {
+    	display: inline-block;
     	transform: skew(-45deg);
+    }
+    #debug-console .quick-bar .issues {
+        padding-right: 20px;
+        color: #0F0;
+        font-weight: bold;
+        
+        &[data-php-error] { color: #F00; }
+        &[data-sql-error] { color: #F00; }
+        
+        &:before { padding-right: 5px; content: "\f00c"; font-family: 'FontAwesome'; }
+        &[data-php-error]:before { content: "\f00d"; }
+        &[data-sql-error]:before { content: "\f00d"; }
     }
     
     
@@ -578,16 +567,14 @@
     
     
     
-    
-    
+    //TODO: need a rewrite with this, personalArea notfiy container, adminmenu update_available
+    //TODO: add a pulse effect on hover and let the non-hover color not darken()
     /* Notifications */
     //TODO: put these bubbles into header stuff !
     @style_bubble_red       : #F00;
     @style_bubble_yellow    : #FFCF00;
     @style_bubble_green     : #3F0;
-    .bubble-red,
-    .bubble-yellow,
-    .bubble-green {
+    .bubble-red, .bubble-yellow, .bubble-green {
         display: inline-block;
         padding: 0px 15px 0px 0px;
         position: relative;
@@ -600,9 +587,7 @@
         text-shadow: 1px 1px 0px #000;
         white-space: nowrap;
     }
-    .bubble-red:hover,
-    .bubble-yellow:hover,
-    .bubble-green:hover { color: #FFF; }
+    .bubble-red:hover, .bubble-yellow:hover, .bubble-green:hover { color: #FFF; }
     .bubble_before(@color) {
         display: block;
         height: 16px;

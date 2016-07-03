@@ -12,8 +12,7 @@ $(document).ready(function(){
     
     
     // acp_console
-    if(acp_console == 'open') acp_console_handle('open', false);
-    
+    if(acp_console == 'open' || (acp_console === null && $('#debug-console > button').data('handle') == 'close')) acp_console_handle('open', false);
     
     // mainmenu - open/close -
     if(acp_mainmenu === null || acp_mainmenu == 'close' || acp_mainmenu == false){
@@ -55,23 +54,16 @@ function acp_mainmenu_handle(handle, duration = 1000){
     if(localstorage_test) localStorage.setItem('acp_mainmenu', acp_mainmenu);
 }
 
-//TODO: need to rewrite, still buggy == inconsistent
 function acp_console_handle(handle, scroll = false){
     if(handle == 'open'){
-        $('#debug-console .console').slideDown(400, function(){
-            // $('#debug-console').addClass('open');
-            
-            
-            if(scroll) $('html, body').animate({ scrollTop: $(document).height() }, 1000);
-        });
-        $('#debug-console > button').attr('data-handle', 'close');
         acp_console = 'open';
+        $('#debug-console > button').data('handle', 'close');
+        $('#debug-console .console').slideDown( (scroll)? 1000 : 0 );
+        
     }else{
-        $('#debug-console .console').slideUp(400, function(){
-            
-        });
-        $('#debug-console > button').attr('data-handle', 'open');
         acp_console = 'close';
+        $('#debug-console > button').data('handle', 'open');
+        $('#debug-console .console').slideUp( (scroll)? 1000 : 0 );
     }
     if(localstorage_test) sessionStorage.setItem('acp_console', acp_console);
 }

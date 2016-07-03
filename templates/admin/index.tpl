@@ -203,7 +203,7 @@
 						<a href=""><i class="fa fa-gitlab"></i></a>
 					</div>
 					
-					{ADMIN_MENU}
+					{ADMIN_MENU} <!-- TODO: <responsive> check how to set the mobile_admin_menu var -->
 				</div>
 			</div>
 		</header>
@@ -267,12 +267,13 @@
 			<!-- IF S_SHOW_DEBUG || S_SHOW_QUERIES -->
 			<div id="debug-console">
 				<!-- IF S_SHOW_QUERIES -->
-				<button onclick="acp_console_handle( $(this).data('handle'), true);" data-handle="open" type="button"><span>{L_CONSOLE}</span></button>
+				<button onclick="acp_console_handle( $(this).data('handle'), true);" data-handle="close" type="button"><span>{L_CONSOLE}</span></button>
 				<div class="console">{DEBUG_TABS}</div>
 				<!-- ENDIF -->
 				<!-- IF S_SHOW_DEBUG -->
-				<div class="queries">
-					<span>SQL Querys: {EQDKP_QUERYCOUNT} | in {EQDKP_RENDERTIME} | {EQDKP_MEM_PEAK} | <a href="http://validator.w3.org/check/referer" target="_top">XHTML Validate</a></span>
+				<div class="quick-bar">
+					<!-- TODO: this issues detecting need JS extends & maybe php .. check css to see default color themes for it -->
+					<span><!-- IF S_SHOW_QUERIES --><span class="issues">No Issues</span><!-- ENDIF -->SQL Querys: {EQDKP_QUERYCOUNT} | in {EQDKP_RENDERTIME} | {EQDKP_MEM_PEAK} | <a href="http://validator.w3.org/check/referer" target="_top">XHTML Validate</a></span>
 				</div>
 				<!-- ENDIF -->
 			</div>
@@ -383,19 +384,19 @@
 			//
 			// 	notification_favicon(red, yellow, green);
 			// }
-			
-			$(document).ready(function(){
-				$('.notification-mark-all-read').on('click', function(){
-				    $('.notification-content ul').html({L_notification_none|jsencode});
-					$('.notification-bubble-red, .notification-bubble-yellow, .notification-bubble-green').hide();
-					notification_favicon(0, 0, 0);
-					$.get(mmocms_controller_path+"Notifications"+mmocms_seo_extension+mmocms_sid+"&markallread");
-				});
-				
-				//Update Favicon
-				favicon = new Favico({animation:'none'});
-				notification_favicon({NOTIFICATION_COUNT_RED}, {NOTIFICATION_COUNT_YELLOW}, {NOTIFICATION_COUNT_GREEN});
-			});
+			//
+			// $(document).ready(function(){
+			// 	$('.notification-mark-all-read').on('click', function(){
+			// 	    $('.notification-content ul').html({L_notification_none|jsencode});
+			// 		$('.notification-bubble-red, .notification-bubble-yellow, .notification-bubble-green').hide();
+			// 		notification_favicon(0, 0, 0);
+			// 		$.get(mmocms_controller_path+"Notifications"+mmocms_seo_extension+mmocms_sid+"&markallread");
+			// 	});
+			//
+			// 	//Update Favicon
+			// 	favicon = new Favico({animation:'none'});
+			// 	notification_favicon({NOTIFICATION_COUNT_RED}, {NOTIFICATION_COUNT_YELLOW}, {NOTIFICATION_COUNT_GREEN});
+			// });
 			<!-- ELSE -->
 				<!-- JS for simple header. Above is for normal header only -->
 			<!-- ENDIF -->
