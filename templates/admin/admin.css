@@ -104,13 +104,19 @@ table { border-collapse: collapse; border-spacing: 0; }
     /* ControlPanel
     ****************************************/
     #controlPanel {
-    	position: absolute;
-    	top: 0;
-    	left: 0;
-    	right: 0;
-        z-index: 900;
+    	position: relative;
+    	z-index: 900;
         pointer-events: none;
+        opacity: 0.5;
+        
+        //-// workaround for reltaive to body, cause #wrapper margin will crash it
+        top: -55px; //like the wrapper margin
+        //-// or
+        // min-height: 1px;
+        //-// or
+        // display: flex;
     }
+    #controlPanel > div { position: absolute; top: 0; left: 0; right: 0; }
     #controlPanel * {
         z-index: 1;
     }
