@@ -57,6 +57,27 @@ function acp_mainmenu_handle(handle, duration = 1000){
     if(localstorage_test) localStorage.setItem('acp_mainmenu', acp_mainmenu);
 }
 
+function acp_adminmenu_handle(){
+    if( $('#adminmenu').hasClass('menu-closed')){
+        $('#adminmenu').removeClass('menu-closed');
+        // $('#adminmenu .menu-indicator').hide();
+        $('#adminmenu .menu-content').show("slide", { direction: "left" }, 2000, function(){
+            //TODO: maybe lets add via sessionStorage (last opened sub-menu) which we save at hiding
+        });
+        
+    }else{
+        // $('#adminmenu').addClass('menu-closed');
+        $('#adminmenu .menu-content').hide("slide", { direction: "left" }, 2000, function(){
+            $('#adminmenu .menu-content > li > a').each(function(){
+                if( $(this).hasClass('open')) $(this).removeClass('open');
+            });
+            $('#adminmenu .menu-indicator').css('height', $('#wrapper').height()+'px');
+            $('#adminmenu').addClass('menu-closed');
+            // $('#adminmenu .menu-indicator').show();
+        });
+    }
+}
+
 function acp_console_handle(handle, scroll = false){
     if(handle == 'open'){
         acp_console = 'open';

@@ -209,9 +209,10 @@
 				<!-- <div> -->
 					<div class="menu-header">
 						<a href=""><img src="{EQDKP_ROOT_PATH}templates/admin/images/logo.svg" /></a></li>
-						<a href=""><i class="fa fa-gitlab"></i></a>
+						<a href="javascript:acp_adminmenu_handle();"><i class="fa fa-gitlab"></i></a>
 					</div>
 					<nav class="menu-content">{ADMIN_MENU}</nav>
+					<a class="menu-indicator" href="javascript:acp_adminmenu_handle();"></a>
 				<!-- </div> -->
 			</aside>
 			
