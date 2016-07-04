@@ -1,15 +1,18 @@
+// Runtime Error Handler
+window.onerror = function(msg, file, line, col, trace){
+    //TODO: need to rewrite later for the eqdkp+ debug-console _> issues counter
+    // console.log(msg);
+    // console.log(file);
+    // console.log(line);
+    // console.log(col);
+    // console.log(trace);
+}
+
 var localstorage_test = (test_localstorage());
 var acp_mainmenu = localStorage.getItem('acp_mainmenu');
 var acp_console = sessionStorage.getItem('acp_console');
 
 $(document).ready(function(){
-    
-    // DEBUGGING
-    $('ul.adminmenu').addClass('menu-content').removeClass('adminmenu');
-    
-    
-    
-    
     
     // acp_console
     if(acp_console == 'open' || (acp_console === null && $('#debug-console > button').data('handle') == 'close')) acp_console_handle('open', false);
@@ -31,7 +34,7 @@ $(document).ready(function(){
     $('#mainmenu .mainmenu').addClass('skew');
     
     
-    //TODO: uncomment it -- only for debugging disabled
+    //NOTE: maybe we don't need it anymore
     // footer position
     // setInterval(function(){
     //     if($('#wrapper').height() > $('#controlPanel').height()){
