@@ -351,78 +351,80 @@
 		
 		<script type="text/javascript">
 			//<![CDATA[
-			
 			<!-- IF not S_LOGGED_IN -->
-			$(document).ready(function(){
-				/* Login Dialog */
-				$( "#dialog-login" ).dialog({
-					height: <!-- IF S_BRIDGE_INFO -->450<!-- ELSE -->350<!-- ENDIF -->,
-					width: 530,
-					modal: true,
-					autoOpen: false,
+				$(document).ready(function(){
+					/* Login Dialog */
+					$( "#dialog-login" ).dialog({
+						height: <!-- IF S_BRIDGE_INFO -->450<!-- ELSE -->350<!-- ENDIF -->,
+						width: 530,
+						modal: true,
+						autoOpen: false,
+					});
 				});
-			});
 			<!-- ENDIF -->
 			
 			<!-- IF S_NORMAL_HEADER -->
-			var user_clock_format = "dddd, "+mmocms_user_dateformat_long+" "+ mmocms_user_timeformat;
-			var mymoment = moment(mmocms_user_timestamp_atom).utcOffset(mmocms_user_timezone);
-			
-			// function recalculate_notification_bubbles(){
-			// 	var red = 0; var green = 0; var yellow = 0;
-			// 	$('.notification-content ul li').each(function( index ) {
-			// 		var myclass = $(this).attr('class');
-			// 		var count = $(this).data('count');
-			//
-			// 		if (myclass == 'prio_0') green += parseInt(count);
-			// 		if(myclass == 'prio_1') yellow += parseInt(count);
-			// 		if(myclass == 'prio_2') red += parseInt(count);
-			// 	});
-			// 	if (green > 0) {
-			// 		$('.notification-bubble-green').html(green).show();
-			// 	} else {
-			// 		$('.notification-bubble-green').html(green).hide();
-			// 	}
-			// 	if (yellow > 0) {
-			// 		$('.notification-bubble-yellow').html(yellow).show();
-			// 	} else {
-			// 		$('.notification-bubble-yellow').html(yellow).hide();
-			// 	}
-			// 	if (red > 0) {
-			// 		$('.notification-bubble-red').html(red).show();
-			// 	} else {
-			// 		$('.notification-bubble-red').html(red).hide();
-			// 	}
-			//
-			// 	if (yellow ==0 && green==0 && red==0){
-			// 		$('.notification-content ul').html({L_notification_none|jsencode});
-			// 	}
-			//
-			// 	notification_favicon(red, yellow, green);
-			// }
-			//
-			// $(document).ready(function(){
-			// 	$('.notification-mark-all-read').on('click', function(){
-			// 	    $('.notification-content ul').html({L_notification_none|jsencode});
-			// 		$('.notification-bubble-red, .notification-bubble-yellow, .notification-bubble-green').hide();
-			// 		notification_favicon(0, 0, 0);
-			// 		$.get(mmocms_controller_path+"Notifications"+mmocms_seo_extension+mmocms_sid+"&markallread");
-			// 	});
-			//
-			// 	//Update Favicon
-			// 	favicon = new Favico({animation:'none'});
-			// 	notification_favicon({NOTIFICATION_COUNT_RED}, {NOTIFICATION_COUNT_YELLOW}, {NOTIFICATION_COUNT_GREEN});
-			// });
+				var user_clock_format	= "dddd, "+mmocms_user_dateformat_long+" "+ mmocms_user_timeformat;
+				var mymoment			= moment(mmocms_user_timestamp_atom).utcOffset(mmocms_user_timezone);
+				
+				$(document).ready(function(){
+					// Notify: Event Handler (read all)
+					$('.notification-mark-all-read').on('click', function(){
+					    $('.notification-content ul').html({L_notification_none|jsencode});
+						$('.notification-bubble-red, .notification-bubble-yellow, .notification-bubble-green').hide();
+						notification_favicon(0, 0, 0);
+						$.get(mmocms_controller_path+"Notifications"+mmocms_seo_extension+mmocms_sid+"&markallread");
+					});
+				
+					// Notify: Change Favicon
+					favicon = new Favico({animation:'none'});
+					notification_favicon({NOTIFICATION_COUNT_RED}, {NOTIFICATION_COUNT_YELLOW}, {NOTIFICATION_COUNT_GREEN});
+				});
+				
+				// Notify: Check & Show Notify Bubbles
+				function recalculate_notification_bubbles(){
+					var red = 0; var green = 0; var yellow = 0;
+					$('.notification-content ul li').each(function( index ) {
+						var myclass = $(this).attr('class');
+						var count = $(this).data('count');
+				
+						if (myclass == 'prio_0') green += parseInt(count);
+						if(myclass == 'prio_1') yellow += parseInt(count);
+						if(myclass == 'prio_2') red += parseInt(count);
+					});
+					if (green > 0) {
+						$('.notification-bubble-green').html(green).show();
+					} else {
+						$('.notification-bubble-green').html(green).hide();
+					}
+					if (yellow > 0) {
+						$('.notification-bubble-yellow').html(yellow).show();
+					} else {
+						$('.notification-bubble-yellow').html(yellow).hide();
+					}
+					if (red > 0) {
+						$('.notification-bubble-red').html(red).show();
+					} else {
+						$('.notification-bubble-red').html(red).hide();
+					}
+				
+					if (yellow ==0 && green==0 && red==0){
+						$('.notification-content ul').html({L_notification_none|jsencode});
+					}
+				
+					notification_favicon(red, yellow, green);
+				}
+				
 			<!-- ELSE -->
 				<!-- JS for simple header. Above is for normal header only -->
 			<!-- ENDIF -->
+			
 			{JS_CODE_EOP}
 			
-			//Reset Favicon, for Bookmarks
+			// Reset Favicon, for Bookmarks
 			$(window).on('unload', function(){
 	            if (typeof favicon !== 'undefined'){ favicon.reset(); }
 	   		 });
-			 
 	   		 //]]>
 		</script>
 		
