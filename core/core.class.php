@@ -1079,6 +1079,22 @@ class core extends gen_class {
 					));
 				}
 				
+				//debug error counter
+				if(defined('IN_ADMIN') && IN_ADMIN == true){
+					$debug_count_sql_error		= count($log['sql_error']);
+					$debug_count_unknown_error	= count($log['unknown']);
+					$debug_count_php_error		= 0;
+					foreach($log['php_error'] as $log_entries){
+						if($log_entries['args'][0] != 'NOTICE' && $log_entries['args'][0] != 'WARNING') $debug_count_php_error++;
+					}
+					$this->tpl->assign_vars([
+						'DEBUG_COUNT_ERRORS'		=> ($debug_count_sql_error + $debug_count_unknown_error + $debug_count_php_error),
+						'DEBUG_COUNT_PHP_ERROR'		=> $debug_count_php_error,
+						'DEBUG_COUNT_SQL_ERROR'		=> $debug_count_sql_error,
+						'DEBUG_COUNT_UNKNOWN_ERROR'	=> $debug_count_unknown_error,
+					]);
+				}
+				
 			} else {
 				$this->tpl->assign_vars(array(
 					'S_SHOW_DEBUG'		=> false,

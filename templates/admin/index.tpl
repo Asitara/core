@@ -275,13 +275,21 @@
 			<!-- IF S_SHOW_DEBUG || S_SHOW_QUERIES -->
 			<div id="debug-console">
 				<!-- IF S_SHOW_QUERIES -->
-				<button onclick="acp_console_handle( $(this).data('handle'), true);" data-handle="close" type="button"><span>{L_CONSOLE}</span></button>
+				<button onclick="acp_console_handle( $(this).data('handle'), true);" data-handle="close" type="button"><span>Debug Console</span></button>
 				<div class="console">{DEBUG_TABS}</div>
 				<!-- ENDIF -->
 				<!-- IF S_SHOW_DEBUG -->
 				<div class="quick-bar">
-					<!-- TODO: this issues detecting need JS extends & maybe php .. check css to see default color themes for it -->
-					<span><!-- IF S_SHOW_QUERIES --><span class="issues">No Issues</span><!-- ENDIF -->SQL Querys: {EQDKP_QUERYCOUNT} | in {EQDKP_RENDERTIME} | {EQDKP_MEM_PEAK} | <a href="http://validator.w3.org/check/referer" target="_top">XHTML Validate</a></span>
+					<span>
+						<!-- IF S_SHOW_QUERIES -->
+						<span class="issues"
+							<!-- IF DEBUG_COUNT_PHP_ERROR > 0 --> data-php-error="{DEBUG_COUNT_PHP_ERROR}"<!-- ENDIF -->
+							<!-- IF DEBUG_COUNT_SQL_ERROR > 0 --> data-sql-error="{DEBUG_COUNT_SQL_ERROR}"<!-- ENDIF -->
+							<!-- IF DEBUG_COUNT_UNKNOWN_ERROR > 0 --> data-unknown-error="{DEBUG_COUNT_UNKNOWN_ERROR}"<!-- ENDIF -->
+						><!-- IF DEBUG_COUNT_ERRORS > 0 -->{DEBUG_COUNT_ERRORS}<!-- ELSE -->No<!-- ENDIF --> Issues</span>
+						<!-- ENDIF -->
+						SQL Querys: {EQDKP_QUERYCOUNT} | in {EQDKP_RENDERTIME} | {EQDKP_MEM_PEAK} | <a href="http://validator.w3.org/check/referer" target="_top">XHTML Validate</a>
+					</span>
 				</div>
 				<!-- ENDIF -->
 			</div>
