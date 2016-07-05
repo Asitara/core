@@ -1,11 +1,31 @@
 // Runtime Error Handler
 window.onerror = function(msg, file, line, col, trace){
-    //TODO: need to rewrite later for the eqdkp+ debug-console _> issues counter
-    // console.log(msg);
-    // console.log(file);
-    // console.log(line);
-    // console.log(col);
-    // console.log(trace);
+    acp_error_handler({'msg':msg, 'file':file, 'line':line, 'col':col, 'trace':trace});
+}
+function acp_error_handler(obj_error = {'msg':''}){
+    var error_count     = 0;
+    var return_string   = '';
+    
+    if(obj_error.msg.length > 0){
+        if($('#debug-console .issues').data('js-error') == null){
+            $('#debug-console .issues').attr('data-js-error', 0).data('js-error', 0);
+        }
+    }
+    
+    $.each($('#debug-console .issues').data(), function(key){
+        var value = this;
+        var match = key.match(/([a-z]+)Error/);
+        
+        if(match != null && value >= 0){
+            if(match[1] == 'js'){ value++; $('#debug-console .issues').attr('data-js-error', value).data('js-error', value); }
+            
+            return_string += '<span class="error-type" data-type="'+match[1]+'">'+value+'</span>';
+            error_count += value;
+        }
+        if(error_count > 0){
+            $('#debug-console .issues').html(error_count+' Issues: '+return_string);
+        }
+    });
 }
 
 var localstorage_test = (test_localstorage());
@@ -13,7 +33,6 @@ var acp_mainmenu = localStorage.getItem('acp_mainmenu');
 var acp_console = sessionStorage.getItem('acp_console');
 
 $(document).ready(function(){
-    
     // acp_console
     if(acp_console == 'open' || (acp_console === null && $('#debug-console > button').data('handle') == 'close')) acp_console_handle('open', false);
     
@@ -43,6 +62,8 @@ $(document).ready(function(){
     //         if($('#footer').hasClass('max-size')) $('#footer').removeClass('max-size');
     //     }
     // }, 3000);
+    
+    acp_error_handler();
 });
 
 function acp_mainmenu_handle(handle, duration = 1000){

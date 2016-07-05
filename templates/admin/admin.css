@@ -537,9 +537,9 @@ table { border-collapse: collapse; border-spacing: 0; }
     	background: none;
     	box-shadow: none;
     }
-    #footer .footer-left { text-align: left; margin-right: auto; }
+    #footer .footer-left { text-align: left; margin-right: auto; margin-left: 15px; }
     #footer .footer-center { text-align: center; }
-    #footer .footer-right { text-align: right; margin-left: auto; }
+    #footer .footer-right { text-align: right; margin-left: auto; margin-right: 15px; }
     
     #debug-console {
         position: absolute;
@@ -598,14 +598,38 @@ table { border-collapse: collapse; border-spacing: 0; }
         color: #0F0;
         font-weight: bold;
         
-        &[data-php-error] { color: #F00; }
-        &[data-sql-error] { color: #F00; }
+        &[data-php-error]       { color: #F00; }
+        &[data-sql-error]       { color: #F00; }
+        &[data-js-error]        { color: #F00; }
+        &[data-unknown-error]   { color: #F00; }
         
-        &:before { padding-right: 5px; content: "\f00c"; font-family: 'FontAwesome'; }
-        &[data-php-error]:before { content: "\f00d"; }
-        &[data-sql-error]:before { content: "\f00d"; }
+        &:before                        { content: "\f00c"; font-family: 'FontAwesome'; padding-right: 5px; }
+        &[data-php-error]:before        { content: "\f00d"; }
+        &[data-sql-error]:before        { content: "\f00d"; }
+        &[data-js-error]:before         { content: "\f00d"; }
+        &[data-unknown-error]:before    { content: "\f00d"; }
     }
-    
+    #debug-console .quick-bar .issues .error-type {
+        margin-left: 3px;
+    	padding: 0 2px;
+    	color: #FFF;
+    	border: 1px solid #FFF;
+        background: rgba(255, 255, 255, .3);
+    	font-size: 8px;
+    	border-radius: 2px;
+    	vertical-align: top;
+        
+        &[data-type="php"]      { border-color: #5D31B2; background: fade(#5D31B2, 30); }
+        &[data-type="sql"]      { border-color: #B1308D; background: fade(#B1308D, 30); }
+        &[data-type="js"]       { border-color: #FFED00; background: fade(#FFED00, 30); }
+        &[data-type="unknown"]  { border-color: #838383; background: fade(#838383, 30); }
+        
+        &:after                       { color: #FFF; content: attr(data-type); padding-left: 2px; text-transform: uppercase; }
+        // &[data-type="php"]:after      { color: #5D31B2; }
+        // &[data-type="sql"]:after      { color: #B1308D; }
+        // &[data-type="js"]:after       { color: #FFED00; }
+        // &[data-type="unknown"]:after  { color: #838383; }
+    }
     
     
     
