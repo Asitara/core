@@ -36,7 +36,7 @@ class admin_functions extends gen_class {
 						'countryName'	=> $unserialized['geoplugin_countryName'],
 					);
 
-					if (!strlen($out['countryName'])) $out = false; 
+					if (!strlen($out['countryName'])) $out = false;
 				}
 			}
 		}
@@ -55,7 +55,7 @@ class admin_functions extends gen_class {
 		if( preg_match("/opera/i",$string)){
 			return "<div class=\"coretip-left browser-icon opera\" data-coretip=\"".$string."\"><i class=\"fa fa-lg fa-opera\"></i></div>";
 		}else if( preg_match("/msie/i",$string)){
-			return "<div class=\"coretip-left browser-icon ie\" data-coretip=\"".$string."\"><i class=\"fa fa-lg fa-internet-explorer\"></i></div>";	
+			return "<div class=\"coretip-left browser-icon ie\" data-coretip=\"".$string."\"><i class=\"fa fa-lg fa-internet-explorer\"></i></div>";
 		}else if( preg_match("/edge/i",$string)){
 			return "<div class=\"coretip-left browser-icon edge\" data-coretip=\"".$string."\"><i class=\"fa fa-lg fa-edge\"></i></div>";
 		}else if( preg_match("/chrome/i", $string)){
@@ -136,7 +136,7 @@ class admin_functions extends gen_class {
 					if ($result){
 						$arrMenuEntry = arraykey_for_array($result, $admin_menu);
 						if ($arrMenuEntry) $strOut = '<a href="'.$this->root_path.$arrMenuEntry['link'].'">'.$arrMenuEntry['text'].'</a>';
-					}				
+					}
 				}
 			}
 			
@@ -153,7 +153,7 @@ class admin_functions extends gen_class {
 					$intCategoryID = $this->pdh->get('article_categories', 'resolve_alias', array(str_replace(".html", "", utf8_strtolower($arrPath[0]))));
 					
 					// Suche in Artikeln mit nächstem Index, denn könnte ein dynamischer Systemartikel sein
-					if (!$intCategoryID && isset($arrPath[1])) {					
+					if (!$intCategoryID && isset($arrPath[1])) {
 						$intArticleID = $this->pdh->get('articles', 'resolve_alias', array(str_replace(".html", "", utf8_strtolower($arrPath[1]))));
 					}
 				}
@@ -164,7 +164,7 @@ class admin_functions extends gen_class {
 					$strOut = $this->user->lang('category').': <a href="'.$this->server_path.$this->pdh->get('article_categories', 'path', array($intCategoryID)).'">'.$this->pdh->get('article_categories', 'name', array($intCategoryID)).'</a>';
 				} elseif (register('routing')->staticRoute($arrPath[0]) || register('routing')->staticRoute($arrPath[1])) {
 					$strPageObject = register('routing')->staticRoute($arrPath[0]);
-					if (!$strPageObject) {			
+					if (!$strPageObject) {
 						$strPageObject = register('routing')->staticRoute($arrPath[1]);
 					}
 					
@@ -212,13 +212,13 @@ class admin_functions extends gen_class {
 									$strOut = $this->user->lang('viewing_wrapper').': <a href="'.$this->routing->build('External', $this->pdh->get('links', 'name', array(intval($myVar))), intval($myVar)).'">'.$this->pdh->get('links', 'name', array(intval($myVar))).'</a>';
 								} else {
 									$strOut = $this->user->lang('viewing_wrapper');
-								}								
+								}
 							}
 								break;
 							case 'tag': $strOut .= $this->user->lang('tag').': <a href="'.$this->routing->build('tag', sanitize($arrFolder[1])).'">'.sanitize($arrFolder[1]).'</a>';
 								break;
 						}
-					}		
+					}
 				} else {
 					// Some special frontend pages
 					switch($strPath){
@@ -305,7 +305,7 @@ class admin_functions extends gen_class {
 				3		=> array('link' => 'admin/manage_backup.php'.$this->SID,			'text' => $this->user->lang('backup'),			'check' => 'a_backup',		'icon' => 'fa-floppy-o fa-lg fa-fw'),
 				4		=> array('link' => 'admin/manage_reset.php'.$this->SID,			'text' => $this->user->lang('reset'),				'check' => 'a_config_man',	'icon' => 'fa-retweet fa-lg fa-fw'),
 				5		=> array('link' => 'admin/manage_cache.php'.$this->SID,			'text' => $this->user->lang('pdc_manager'),		'check' => 'a_config_man',	'icon' => 'fa-briefcase fa-lg fa-fw'),
-				6		=> array('link' => 'admin/info_database.php'.$this->SID,			'text' => $this->user->lang('mysql_info'),		'check' => 'a_config_man',	'icon' => 'fa-database fa-lg fa-fw'),				
+				6		=> array('link' => 'admin/info_database.php'.$this->SID,			'text' => $this->user->lang('mysql_info'),		'check' => 'a_config_man',	'icon' => 'fa-database fa-lg fa-fw'),
 			),
 		);
 
@@ -356,6 +356,108 @@ class admin_functions extends gen_class {
 				);
 			}
 		}
+		
+		#######################################################################################################################
+		#######################################################################################################################
+		#######################################################################################################################
+		
+		$admin_menu = array(
+			'system'=> array(
+				'icon'=> 'fa-wrench fa-lg fa-fw',
+				'text'=> '--SYSTEM--',
+				'check'=> '',
+				'sub_menu'=> array(
+					'settings'=> array(
+						'icon'=> 'fa-wrench fa-lg fa-fw',
+						'text'=> '--SETTINGS--',
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_settings.php'.$this->SID,
+							'icon'=> '',
+							'text'=> '--GENERAL--',
+							'check'=> '',
+						],[
+							'link'=> ''.$this->SID,
+							'icon'=> '',
+							'text'=> '--USERS--',
+							'check'=> '',
+						],[
+							'link'=> ''.$this->SID,
+							'icon'=> '',
+							'text'=> '--GAME--',
+							'check'=> '',
+						],[
+							'link'=> 'admin/manage_bridge.php'.$this->SID,
+							'icon'=> '',
+							'text'=> '--BRIDGE--',
+							'check'=> '',
+						]),
+					),
+					'extensions'=> array(
+						'icon'=> '',
+						'text'=> '--EXTENSIONS--',
+						'check'=> '',
+						'links'=> array([
+							'link'=> ''.$this->SID,
+							'icon'=> '',
+							'text'=> '----',
+							'check'=> '',
+						],[
+							'link'=> ''.$this->SID,
+							'icon'=> '',
+							'text'=> '----',
+							'check'=> '',
+						]),
+					),
+					'maintenance'=> array(
+						'icon'=> '',
+						'text'=> '--MAINTENANCE--',
+						'check'=> '',
+						'links'=> array([
+							'link'=> ''.$this->SID,
+							'icon'=> '',
+							'text'=> '----',
+							'check'=> '',
+						],[
+							'link'=> ''.$this->SID,
+							'icon'=> '',
+							'text'=> '----',
+							'check'=> '',
+						]),
+					),
+				),
+			),
+			'users'=> array(
+				'icon'=> 'fa-group fa-lg fa-fw',
+				'text'=> '--USERS--',
+				'check'=> '',
+				'sub_menu'=> array(
+					'user'=> array(
+						'icon'=> '',
+						'text'=> '--USER--',
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_users.php'.$this->SID,
+							'icon'=> '',
+							'text'=> '--MANAGE--',
+							'check'=> '',
+							'sub_links'=> array([
+								'link'=> 'admin/manage_users.php'.$this->SID.'&add_user',
+								'icon'=> 'fa-cog',
+								'text'=> '--ADD--',#--is only shown as tooltip
+								'check'=> '',
+							]),
+						]),
+					),
+					####
+				),
+			),
+			// 'content'=> array(),
+			// 'apperance'=> array(),
+			// 'characters'=> array(),
+			// 'points'=> array(),
+		);
+		
 
 		return $admin_menu;
 	}

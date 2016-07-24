@@ -205,14 +205,14 @@
 		</header>
 		
 		<main id="wrapper">
-			<aside id="adminmenu">
+			<aside id="adminmenu" data-state="1">
 				<!-- <div> -->
 					<div class="menu-header">
 						<a href=""><img src="{EQDKP_ROOT_PATH}templates/admin/images/logo.svg" /></a></li>
-						<a href="javascript:acp_adminmenu_handle();"><i class="fa fa-gitlab"></i></a>
+						<a href="javascript:acp_adminmenu_toggle();"><i class="fa fa-gitlab"></i></a>
 					</div>
 					<nav class="menu-content">{ADMIN_MENU}</nav>
-					<a class="menu-indicator" href="javascript:acp_adminmenu_handle();"></a>
+					<a class="menu-pseudo" href="javascript:acp_adminmenu_toggle();"></a>
 				<!-- </div> -->
 			</aside>
 			
@@ -275,7 +275,7 @@
 			<!-- IF S_SHOW_DEBUG || S_SHOW_QUERIES -->
 			<div id="debug-console">
 				<!-- IF S_SHOW_QUERIES -->
-				<button onclick="acp_console_handle( $(this).data('handle'), true);" data-handle="close" type="button"><span>Debug Console</span></button>
+				<button onclick="acp_console_toggle( $(this).data('handle'), true);" data-handle="open" type="button"><span>Debug Console</span></button>
 				<div class="console">{DEBUG_TABS}</div>
 				<!-- ENDIF -->
 				<!-- IF S_SHOW_DEBUG -->
@@ -370,7 +370,7 @@
 				$(document).ready(function(){
 					// Notify: Event Handler (read all)
 					$('.notification-mark-all-read').on('click', function(){
-					    $('.notification-content ul').html({L_notification_none|jsencode});
+						$('.notification-content ul').html({L_notification_none|jsencode});
 						$('.notification-bubble-red, .notification-bubble-yellow, .notification-bubble-green').hide();
 						notification_favicon(0, 0, 0);
 						$.get(mmocms_controller_path+"Notifications"+mmocms_seo_extension+mmocms_sid+"&markallread");
@@ -423,9 +423,9 @@
 			
 			// Reset Favicon, for Bookmarks
 			$(window).on('unload', function(){
-	            if (typeof favicon !== 'undefined'){ favicon.reset(); }
-	   		 });
-	   		 //]]>
+				if (typeof favicon !== 'undefined'){ favicon.reset(); }
+			});
+			//]]>
 		</script>
 		
 		<!-- LISTENER body_bottom -->
