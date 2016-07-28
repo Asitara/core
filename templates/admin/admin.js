@@ -1,34 +1,3 @@
-// ACP: Error Handler
-window.onerror = function(msg, file, line, col, trace){
-	acp_error_handler({'msg':msg, 'file':file, 'line':line, 'col':col, 'trace':trace});
-}
-function acp_error_handler(obj_error = {'msg':''}){
-	var error_count	 = 0;
-	var return_string   = '';
-	
-	//TODO: REmove the JS error handling,handle only php, sql,..
-	
-	if(obj_error.msg.length > 0){
-		if($('#debug-console .issues').data('js-error') == null){
-			$('#debug-console .issues').attr('data-js-error', 0).data('js-error', 0);
-		}
-	}
-	$.each($('#debug-console .issues').data(), function(key){
-		var value = this;
-		var match = key.match(/([a-z]+)Error/);
-	
-		if(match != null && value >= 0){
-			if(match[1] == 'js'){ value++; $('#debug-console .issues').attr('data-js-error', value).data('js-error', value); }
-	
-			return_string += '<span class="error-type" data-type="'+match[1]+'">'+value+'</span>';
-			error_count += value;
-		}
-		if(error_count > 0){
-			$('#debug-console .issues').html(error_count+' Issues: '+return_string);
-		}
-	});
-}
-
 
 // Global Vars
 var localstorage_test   = (test_localstorage());
@@ -42,51 +11,9 @@ $(document).ready(function(){
 	if(mmocms_header_type == 'full'){
 		user_clock();
 		
-		// User: Open Dialog
-		$( ".openLoginModal" ).on('click', function() {
-			$( "#dialog-login" ).dialog( "open" );
-		});
-		
-		// User: Toggle Tooltip
-		$('.tooltip-trigger').on('click', function(event){
-			event.preventDefault();
-			var mytooltip = $(this).data('tooltip');
-			$("#"+mytooltip).show('fast');
-			$(document).on('click', function(event) {
-				var count = $(event.target).parents('.'+mytooltip+'-container').length;
-				if (count == 0){
-					$("#"+mytooltip).hide('fast');
-				}
-			});
-		});
-		
-		// User: DoubleClick Event Handler
-		$('.user-tooltip-trigger').on('dblclick', function(event){
-			$("#user-tooltip").hide('fast');
-			window.location=mmocms_controller_path+"Settings"+mmocms_seo_extension+mmocms_sid;
-		});
-		
-		// User: My Chars Points
-		$('.mychars-points-tooltip .char').on('click', function(){
-			$(this).parent().parent().children('tr').removeClass("active");
-			$(this).parent().addClass("active");
-			var current = $(this).parent().find('.current').html();
-			var icons = $(this).parent().find('.icons').html();
-			$(".mychars-points-target").html(icons + " "+current);
-			var id = $(this).parent().attr('id');
-			if(test_localstorage()) localStorage.setItem('mcp_'+mmocms_userid, id);
-		});
-		if(mcp_saved && mcp_saved != "" && $('#'+mcp_saved).find('.current').html() != undefined){
-			$('#'+mcp_saved).addClass("active");
-			var current = $('#'+mcp_saved).find('.current').html();
-			var icons = $('#'+mcp_saved).find('.icons').html();
-			$(".mychars-points-target").html(icons + " "+current);
-		}else{
-			$('.mychars-points-tooltip .main').addClass("active");
-			var current = $('.mychars-points-tooltip .main').find('.current').html();
-			var icons = $('.mychars-points-tooltip .main').find('.icons').html();
-			$(".mychars-points-target").html(icons + " "+current);
-		}
+		// ACP: Style addition (to move breadcrumb)
+		$('#controlPanel .breadcrumb-container').html( $('#wrapper .breadcrumb-container').html() );
+		$('#wrapper .breadcrumb-container').remove();
 		
 		// ACP: Adminmenu Handler
 		if(acp_adminmenu === null){
@@ -143,6 +70,12 @@ $(document).ready(function(){
 			if(localstorage_test) localStorage.setItem('acp_adminmenu', JSON.stringify(acp_adminmenu));
 		});
 		
+		// ACP: Style addition (to skew mainmenu items)
+		$('#mainmenu .mainmenu > li > a').each(function(){
+			$(this).html('<span><span>'+$(this).html()+'</span></span>');
+		});
+		$('#mainmenu .mainmenu').addClass('skew');
+		
 		// ACP: Mainmenu Handler
 		if(acp_mainmenu === null || acp_mainmenu == 'close' || acp_mainmenu == false){
 			acp_mainmenu_toggle('close', 0);
@@ -152,20 +85,58 @@ $(document).ready(function(){
 			else						{ acp_mainmenu_toggle('open');  }
 		});
 		
-		
-		// ACP: Style addition (to skew mainmenu items)
-		$('#mainmenu .mainmenu > li > a').each(function(){
-			$(this).html('<span><span>'+$(this).html()+'</span></span>');
-		});
-		$('#mainmenu .mainmenu').addClass('skew');
-		
-		// ACP: Style addition (to move breadcrumb)
-		$('#controlPanel .breadcrumb-container').html( $('#wrapper .breadcrumb-container').html() );
-		$('#wrapper .breadcrumb-container').remove();
-		
+		// ACP: Style addition (to count the issues)
+		acp_issues_counter();
 		
 		// ACP: EQdkp+ Console Handler
 		if(acp_console == 'open' || (acp_console === null && $('#debug-console > button').data('handle') == 'close')) acp_console_toggle('open', false);
+		
+		
+		// User: Open Dialog
+		$( ".openLoginModal" ).on('click', function() {
+			$( "#dialog-login" ).dialog( "open" );
+		});
+		
+		// User: Toggle Tooltip
+		$('.tooltip-trigger').on('click', function(event){
+			event.preventDefault();
+			var mytooltip = $(this).data('tooltip');
+			$("#"+mytooltip).show('fast');
+			$(document).on('click', function(event) {
+				var count = $(event.target).parents('.'+mytooltip+'-container').length;
+				if (count == 0){
+					$("#"+mytooltip).hide('fast');
+				}
+			});
+		});
+		
+		// User: DoubleClick Event Handler
+		$('.user-tooltip-trigger').on('dblclick', function(event){
+			$("#user-tooltip").hide('fast');
+			window.location=mmocms_controller_path+"Settings"+mmocms_seo_extension+mmocms_sid;
+		});
+		
+		// User: My Chars Points
+		$('.mychars-points-tooltip .char').on('click', function(){
+			$(this).parent().parent().children('tr').removeClass("active");
+			$(this).parent().addClass("active");
+			var current = $(this).parent().find('.current').html();
+			var icons = $(this).parent().find('.icons').html();
+			$(".mychars-points-target").html(icons + " "+current);
+			var id = $(this).parent().attr('id');
+			if(test_localstorage()) localStorage.setItem('mcp_'+mmocms_userid, id);
+		});
+		if(mcp_saved && mcp_saved != "" && $('#'+mcp_saved).find('.current').html() != undefined){
+			$('#'+mcp_saved).addClass("active");
+			var current = $('#'+mcp_saved).find('.current').html();
+			var icons = $('#'+mcp_saved).find('.icons').html();
+			$(".mychars-points-target").html(icons + " "+current);
+		}else{
+			$('.mychars-points-tooltip .main').addClass("active");
+			var current = $('.mychars-points-tooltip .main').find('.current').html();
+			var icons = $('.mychars-points-tooltip .main').find('.icons').html();
+			$(".mychars-points-target").html(icons + " "+current);
+		}
 		
 		
 		// Notify: Event Handler
@@ -211,10 +182,6 @@ $(document).ready(function(){
 		
 		// Notify: Update Notify List in 5 Minutes
 		window.setTimeout("notification_update()", 1000*60*5);
-		
-		
-		// ACP: Init Error Handler
-		acp_error_handler();
 	}
 });
 
@@ -281,6 +248,25 @@ function acp_console_toggle(handle, scroll = false){
 		$('#debug-console .console').slideUp( (scroll)? 1000 : 0 );
 	}
 	if(localstorage_test) sessionStorage.setItem('acp_console', acp_console);
+}
+
+// ACP: Console Issues Counter
+function acp_issues_counter(){
+	var error_count		= 0;
+	var return_string	= '';
+	
+	$.each($('#debug-console .issues').data(), function(key){
+		var value	= this;
+		var match	= key.match(/([a-z]+)Error/);
+	
+		if(match != null && value >= 0){
+			return_string += '<span class="error-type" data-type="'+match[1]+'">'+value+'</span>';
+			error_count += value;
+		}
+		if(error_count > 0){
+			$('#debug-console .issues').html(error_count+' Issues: '+return_string);
+		}
+	});
 }
 
 

@@ -659,13 +659,11 @@ table { border-collapse: collapse; border-spacing: 0; }
 		
 		&[data-php-error]	   { color: #F00; }
 		&[data-sql-error]	   { color: #F00; }
-		&[data-js-error]		{ color: #F00; }
 		&[data-unknown-error]   { color: #F00; }
 		
 		&:before						{ content: "\f00c"; font-family: 'FontAwesome'; padding-right: 5px; }
 		&[data-php-error]:before		{ content: "\f00d"; }
 		&[data-sql-error]:before		{ content: "\f00d"; }
-		&[data-js-error]:before		 { content: "\f00d"; }
 		&[data-unknown-error]:before	{ content: "\f00d"; }
 	}
 	#debug-console .quick-bar .issues .error-type {
@@ -680,14 +678,9 @@ table { border-collapse: collapse; border-spacing: 0; }
 		
 		&[data-type="php"]	  { border-color: #5D31B2; background: fade(#5D31B2, 30); }
 		&[data-type="sql"]	  { border-color: #B1308D; background: fade(#B1308D, 30); }
-		&[data-type="js"]	   { border-color: #FFED00; background: fade(#FFED00, 30); }
 		&[data-type="unknown"]  { border-color: #838383; background: fade(#838383, 30); }
 		
 		&:after					   { color: #FFF; content: attr(data-type); padding-left: 2px; text-transform: uppercase; }
-		// &[data-type="php"]:after	  { color: #5D31B2; }
-		// &[data-type="sql"]:after	  { color: #B1308D; }
-		// &[data-type="js"]:after	   { color: #FFED00; }
-		// &[data-type="unknown"]:after  { color: #838383; }
 	}
 	
 	
