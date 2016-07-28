@@ -19,7 +19,7 @@
  *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//tbody not allowed withoud thead, 
+//tbody not allowed withoud thead,
 
 define('EQDKP_INC', true);
 define('IN_ADMIN', true);
@@ -83,7 +83,7 @@ class Manage_Export extends page_generic {
 				
 		$this->core->set_vars(array(
 			'page_title'		=> $this->user->lang('manexport_title'),
-			'template_file'		=> 'admin/manage_export.html',
+			'template_file'		=> 'templates/manage_export.html',
 			'display'			=> true)
 		);
 	}

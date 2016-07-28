@@ -109,28 +109,6 @@ table { border-collapse: collapse; border-spacing: 0; }
 	
 	/* ControlPanel
 	****************************************/
-	// #controlPanel {
-	// 	position: relative;
-	// 	z-index: 900;
-	//	 pointer-events: none;
-	//
-	//
-	//	 // opacity: 0.5;
-	//
-	//	 //-// workaround for reltaive to body, cause #wrapper margin will crash it
-	//	 // top: -55px; //like the wrapper margin
-	//	 //-// or
-	//	 min-height: 1px;
-	//	 //-// or
-	//	 // display: flex;
-	// }
-	// #controlPanel > div { position: absolute; top: 0; left: 0; right: 0; }
-	// // #controlPanel * {
-	// //	 z-index: 1;
-	// // }
-	
-	#controlPanel { z-index: 1025; }
-	
 	//TODO: remove it when we add the inputs,.. this is only for personalarea seahrc and mainmenu toggle buttons
 	#controlPanel button {
 		margin: 0;
@@ -240,14 +218,14 @@ table { border-collapse: collapse; border-spacing: 0; }
 	
 	/* Quick Bar
 	****************************************/
-	#quickbar {
+	#quickbar .quickbar-top {
 		height: 18px;
 		position: relative;
 		background: #25272A;
 		border-bottom: 2px solid #15171A;
 		box-sizing: border-box;
 	}
-	#quickbar .dashbar {
+	#quickbar .quickbar-top .quick-info {
 		display: flex;
 		height: 100%;
 		position: absolute;
@@ -255,9 +233,59 @@ table { border-collapse: collapse; border-spacing: 0; }
 		left: 0px;
 		right: 0px
 	}
-	#quickbar .dashbar-left { text-align: left; margin-right: auto; }
-	#quickbar .dashbar-center { text-align: center; }
-	#quickbar .dashbar-right { text-align: right; margin-left: auto; }
+	#quickbar .quickbar-top .quick-info-left { text-align: left; margin-right: auto; }
+	#quickbar .quickbar-top .quick-info-center { text-align: center; }
+	#quickbar .quickbar-top .quick-info-right { text-align: right; margin-left: auto; }
+	
+	#quickbar .quickbar-bottom {
+		display: flex;
+		position: relative;
+	}
+	#quickbar .quickbar-bottom .adminmenu-head {
+		height: 40px;
+		width: 210px;
+		display: flex;
+		position: relative;
+		left: -20px;
+		background: linear-gradient(to bottom, #25272A 5%, #444 100%);
+		border-right: 2px solid #15171A;
+		border-bottom: 2px solid #15171A;
+		transform: skew(-45deg);
+		text-align: left;
+		overflow: hidden;
+		z-index: 1;
+	}
+	#quickbar .quickbar-bottom .adminmenu-head > a:first-child {
+		width: 130px;
+		flex: 3 0 auto;
+		border-right: 1px solid #15171A;
+	}
+	#quickbar .quickbar-bottom .adminmenu-head > a:first-child > img {
+		height: 35px;
+		position: relative;
+		top: 1px;
+		left: 30px;
+		transform: skew(45deg);
+	}
+	#quickbar .quickbar-bottom .adminmenu-head > a:last-child {
+		width: 49px;
+		flex: 0 0 auto;
+		font-size: 22px;
+		border-left: 1px solid #15171A;
+	}
+	#quickbar .quickbar-bottom .adminmenu-head > a:last-child > i {
+		position: relative;
+		top: 5px;
+		left: 11px;
+		transform: skew(45deg);
+	}
+	#quickbar .quickbar-bottom .adminmenu-head > a {
+		color: #AAA;
+	}
+	#quickbar .quickbar-bottom .adminmenu-head > a:hover {
+		color: #111;
+		background: linear-gradient(to top, #444 5%, #AAA 100%);
+	}
 	
 	/* Main Menu
 	****************************************/
@@ -308,6 +336,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 		border-top: 1px solid #15171A;
 		border-bottom: 2px solid #15171A;
 		white-space: nowrap;
+		z-index: 1;
 	}
 	#mainmenu .mainmenu .sub-menu li {
 		border-right: 1px solid #15171A;
@@ -366,56 +395,12 @@ table { border-collapse: collapse; border-spacing: 0; }
 	/* Admin Menu
 	****************************************/
 	#adminmenu {
-		width: 122px;
-		margin-bottom: 30px; //NOTE: calculated by the footer
-		z-index: 1050;
-	}
-	#adminmenu .menu-header {
-		height: 40px;
-		width: 210px;
 		display: flex;
-		position: relative;
-		left: -20px;
-		background: linear-gradient(to bottom, #25272A 5%, #444 100%);
-		border-right: 2px solid #15171A;
-		border-bottom: 2px solid #15171A;
-		transform: skew(-45deg);
-		text-align: left;
-		overflow: hidden;
-	}
-	#adminmenu .menu-header > a:first-child {
-		width: 130px;
-		flex: 3 0 auto;
-		border-right: 1px solid #15171A;
-	}
-	#adminmenu .menu-header > a:first-child > img {
-		height: 35px;
-		position: relative;
-		top: 1px;
-		left: 30px;
-		transform: skew(45deg);
-	}
-	#adminmenu .menu-header > a:last-child {
-		width: 49px;
-		flex: 0 0 auto;
-		font-size: 22px;
-		border-left: 1px solid #15171A;
-	}
-	#adminmenu .menu-header > a:last-child > i {
-		position: relative;
-		top: 5px;
-		left: 11px;
-		transform: skew(45deg);
-	}
-	#adminmenu .menu-header > a {
-		color: #AAA;
-	}
-	#adminmenu .menu-header > a:hover {
-		color: #111;
-		background: linear-gradient(to top, #444 5%, #AAA 100%);
+		margin-bottom: 30px; //NOTE: calculated by the footer
 	}
 	
 	#adminmenu .menu-content {
+		flex: 0 0 auto;
 		width: 120px;
 		position: relative;
 		background: linear-gradient(to bottom, #444 0%, #19334D 20%);
@@ -441,72 +426,58 @@ table { border-collapse: collapse; border-spacing: 0; }
 		background: #336699;
 	}
 	
-	//TODO: check if we should handle the position (absolute, relative) of (content, header, pseudo) 'lil better cause <article>
-	//		like #adminmenu get relative and all be relative to #adminmenu instead each sub-element of adminmenu
-	#adminmenu .adminmenu li.open .sub-menu {
-		left: 120px;
-		animation: adminmenu-sub-menu .2s ease;
-	}
-	@keyframes adminmenu-sub-menu { from { left: -250px} to { left: 120px } }
-	
-	#adminmenu .adminmenu .sub-menu {
-		display: block;
-		height: 100%;
+	#adminmenu .sub-menu-content {
+		display: none;
+		flex: 0 0 auto;
 		width: 230px;
-		position: absolute;
-		top: -2px;
-		left: -250px;
 		padding: 15px 0 0 10px;
 		background: #25272A;
 		border: 2px solid #15171A;
 		text-align: left;
-		z-index: -1;
 	}
-	#adminmenu .adminmenu .sub-menu h4 {
+	#adminmenu .sub-menu-content .sub-menu { display: none; }
+	#adminmenu .sub-menu-content .sub-menu.open { display:block; }
+	#adminmenu .sub-menu-content .sub-menu h4 {
 		color: #777;
 		font-size: 14px;
 		text-transform: uppercase;
 	}
-	#adminmenu .adminmenu .sub-menu h4 > i {
+	#adminmenu .sub-menu-content .sub-menu h4 > i {
 		font-size: 14px;
 		vertical-align: 0;
 	}
-	#adminmenu .adminmenu .sub-menu ul {
+	#adminmenu .sub-menu-content .sub-menu ul {
 		padding: 5px 0 15px 15px;
 	}
-	#adminmenu .adminmenu .sub-menu ul > li {
+	#adminmenu .sub-menu-content .sub-menu ul > li {
 		display: flex;
 	}
-	#adminmenu .adminmenu .sub-menu ul > li > a {
+	#adminmenu .sub-menu-content .sub-menu ul > li > a {
 		display: block;
 		flex: 1 1 auto;
 		padding: 5px 10px;
 		background: rgba(255,255,255,.2);
 	}
-	#adminmenu .adminmenu .sub-menu ul > li > a:hover {
+	#adminmenu .sub-menu-content .sub-menu ul > li > a:hover {
 		color: #444;
 		background: rgba(255,255,255,.5);
 	}
-	#adminmenu .adminmenu .sub-menu .sub-link {
+	#adminmenu .sub-menu-content .sub-menu .sub-link {
 		flex: 0 0 auto;
 	}
 	
 	
-	
-	
-	
 	// Menu States			(0 => closed, 1 => open, 2 => open with sub-menu)
-	#adminmenu .menu-pseudo { display: none; }
-	
-	#adminmenu[data-state="0"] .menu-pseudo {
+	#adminmenu .menu-indicator { display: none; }
+	#adminmenu[data-state="0"] .menu-indicator {
 		display: block;
-		height: 0;
+		height: 80%;
 		width: 10px;
 		margin-bottom: 30px;
 		position: relative;
 		cursor: pointer;
 	}
-	#adminmenu[data-state="0"] .menu-pseudo:before {
+	#adminmenu[data-state="0"] .menu-indicator:before {
 		display: block;
 		content: '';
 		height: 100%;
@@ -515,7 +486,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 		border-left: 10px solid #15171A;
 		border-bottom: 10px solid transparent;
 	}
-	#adminmenu[data-state="0"] .menu-pseudo:after {
+	#adminmenu[data-state="0"] .menu-indicator:after {
 		display: block;
 		content: '';
 		height: 100%;
@@ -524,63 +495,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 		border-left: 8px solid #444;
 		border-bottom: 8px solid transparent;
 	}
-	#adminmenu[data-state="0"] .menu-pseudo:hover:after { border-left-color: #777; }
-	
-	#adminmenu[data-state="2"] .menu-pseudo {
-		display: block;
-		height: 0px;
-		width: 295px;
-		position: relative;
-		bottom: calc(100% - 50px);
-		pointer-events: none;
-		cursor: none;
-	}
-	
-	
-	//----------------------------------------
-	//NOTE: deprecated -- remove it!
-	// #adminmenu .pseudo-sub-menu {
-	// 	display: none;
-	// 	height: 0px;
-	// 	width: 295px;
-	// 	position: relative;
-	// 	bottom: calc(100% - 50px);
-	// }
-	//
-	//
-	//
-	// #adminmenu .menu-indicator {
-	// 	display: none;
-	// 	height: 0;
-	// 	width: 0;
-	// 	margin-bottom: 30px;
-	// 	position: relative;
-	// 	cursor: pointer;
-	// }
-	// #adminmenu .menu-indicator:before {
-	// 	display: block;
-	// 	content: '';
-	// 	height: 100%;
-	// 	width: 0;
-	// 	position: absolute;
-	// 	border-left: 10px solid #15171A;
-	// 	border-bottom: 10px solid transparent;
-	// }
-	// #adminmenu .menu-indicator:after {
-	// 	display: block;
-	// 	content: '';
-	// 	height: 100%;
-	// 	width: 0;
-	// 	position: absolute;
-	// 	border-left: 8px solid #444;
-	// 	border-bottom: 8px solid transparent;
-	// }
-	// #adminmenu .menu-indicator:hover:after { border-left-color: #777; }
-	// #adminmenu.menu-closed .menu-indicator { display: block; }
-	
-	
-	
-	
+	#adminmenu[data-state="0"] .menu-indicator:hover:after { border-left-color: #777; }
 	
 	
 	#adminmenu .update_available,
@@ -619,15 +534,47 @@ table { border-collapse: collapse; border-spacing: 0; }
 	/* Wrapper
 	****************************************/
 	#wrapper { display:flex; }
+	#wrapper > .page-content { flex: 1 1 auto; }
+	
+	/* Breadcrumb
+	****************************************/
+	ul.breamcrumb {
+		display: flex;
+		width: 100%;
+		margin: 5px 10px;
+	}
+	ul.breamcrumb > li {
+		border: 1px solid #15171A;
+		background: #25272A;
+		box-shadow: 0px 0px 2px 1px rgba(255,255,255,.1) inset;
+		transform: skew(-45deg);
+	}
+	ul.breamcrumb > li.current {
+		background: #333;
+		box-shadow: 0px 0px 4px 2px rgba(255,255,255,.1) inset;
+	}
+	ul.breamcrumb > li:hover {
+		background: #444;
+		box-shadow: 0px 0px 4px 2px rgba(255,255,255,.2) inset;
+		transition: transform .2s;
+		transform: skew(-45deg) scale(1.2);
+		z-index: 1;
+	}
+	ul.breamcrumb > li > a {
+		display: inline-block;
+		padding: 5px 15px 5px 10px;
+		text-shadow: 1px 1px 1px #000;
+		transform: skew(35deg);
+	}
+	ul.breamcrumb > li:first-child > a {
+		padding-left: 13px;
+	}
 	
 	/* Footer
 	****************************************/
 	#footer {
 		display: flex;
 		position: relative;
-		// left: 0;
-		// right: 0;
-		// margin-top: 22px;
 		padding: 5px 0 10px;
 		color: #444;
 		font-size: 12px;
@@ -635,7 +582,6 @@ table { border-collapse: collapse; border-spacing: 0; }
 		background: #25272A;
 		border-top: 2px solid #15171A;
 		line-height: 20px;
-		z-index: 1075;
 	}
 	#footer a { color: #444; }
 	#footer a:hover { color: #AAA; }
@@ -652,6 +598,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 	#footer .footer-center { text-align: center; }
 	#footer .footer-right { text-align: right; margin-left: auto; margin-right: 15px; }
 	
+	//TODO: the position absolute will break the viewport height
 	#debug-console {
 		position: absolute;
 		top: -32px;

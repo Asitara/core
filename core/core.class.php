@@ -672,17 +672,6 @@ class core extends gen_class {
 		 */
 		public function build_menu_ul($arrMenuItems, $strCssClass = '', $blnAdminMenu = false, $strImagePath = '', $blnDefaultImage = false){
 			$strCssClass = (empty($strCssClass) && !$blnAdminMenu)? 'mainmenu' : (($blnAdminMenu && empty($strCssClass))? 'adminmenu' : $strCssClass);
-			$html  = '<ul class="'.$strCssClass.'">';
-			
-			
-			
-			// $factorial = function( $n ) use ( &$factorial ){
-			// 	if( $n == 1 ) return 1;
-			//
-			// 	return $factorial( $n - 1 ) * $n;
-			// };
-			// d( $factorial(5) );
-			
 			
 			// Adminmenu
 			if($blnAdminMenu){
@@ -709,14 +698,18 @@ class core extends gen_class {
 				// d('-- current_page');
 				// d($this->env->current_page);
 				
+				$html			= '<nav class="menu-content"><ul class="'.$strCssClass.'">';
+				$html_sub_menu	= '<nav class="sub-menu-content">';
+				
 				foreach($arrMenuItems as $strCategory => $arrCategory){
 					if($func_check_permission($arrCategory['check'])){
-						$html .= '<li><a href="#">'.$this->icon_font($arrCategory['icon']).$arrCategory['text'].'</a><ul class="sub-menu">';
+						$html .= '<li data-category="'.$strCategory.'"><a href="#">'.$this->icon_font($arrCategory['icon']).$arrCategory['text'].'</a></li>';
+						$html_sub_menu .= '<ul class="sub-menu" data-category="'.$strCategory.'">';
 						
 						//Sub-Categories
 						foreach($arrCategory['sub_menu'] as $strSubCategory => $arrSubCategory){
 							if($func_check_permission($arrSubCategory['check'])){
-								$html .= '<li><h4>'.$this->icon_font($arrSubCategory['icon']).$arrSubCategory['text'].'</h4><ul>';
+								$html_sub_menu .= '<li><h4>'.$this->icon_font($arrSubCategory['icon']).$arrSubCategory['text'].'</h4><ul>';
 								
 								//Links
 								foreach($arrSubCategory['links'] as $intLinkID => $arrLink){
@@ -730,16 +723,18 @@ class core extends gen_class {
 											}
 										}//end of Sub-Links
 										
-										$html .= '<li><a href="'.$arrLink['link'].'">'.$this->icon_font($arrLink['icon']).$arrLink['text'].'</a>'.$html_sub_links.'</li>';
+										$html_sub_menu .= '<li><a href="'.$arrLink['link'].'">'.$this->icon_font($arrLink['icon']).$arrLink['text'].'</a>'.$html_sub_links.'</li>';
 									}
 								}//end of Links
-								$html .= '</ul></li>';
+								$html_sub_menu .= '</ul></li>';
 							}
 						}//end of Sub-Categories
-						$html .= '</ul></li>';
+						$html_sub_menu .= '</ul>';
 					}
 				}
+				$html .= '</ul></nav>'.$html_sub_menu.'</nav>';
 				
+				return str_replace('<ul></ul>', '', $html);
 				
 			// Mainmenu
 			}else{
@@ -763,157 +758,17 @@ class core extends gen_class {
 					return;
 				};
 				
+				$html = '<ul class="'.$strCssClass.'">';
+				
 				foreach($arrMenuItems as $key => $arrMenuItem) {
 					if(!is_array($arrMenuItem)) continue;
 					
 					$func_gen_html($arrMenuItem);
 				}
+				
+				$html .= '</ul>';
+				return str_replace('<ul class="sub_menu"></ul>', '', $html);
 			}
-			
-			$html .= '</ul>';
-			return str_replace('<ul class="sub_menu"></ul>', '', $html);
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			// // Adminmenu
-			// if($blnAdminMenu){
-			// 	// Header row
-			// 	if(is_array($arrMenuItems)){
-			// 		foreach($arrMenuItems as $k => $v){
-			// 			// Restart next loop if the element isn't an array we can use
-			// 			if ( !is_array($v) ){continue;}
-			//
-			// 			$header_row = '<li><a href="#" class="sub-menu-arrow">'.$this->core->icon_font((isset($v['icon'])) ? $v['icon'] : ((isset($v['img']) ? $v['img'] : (($blnDefaultImage) ? 'fa-puzzle-piece' : ''))), 'fa-lg fa-fw', $strImagePath).' '.$v['name'].'</a>
-			// 								<ul class="sub-menu">';
-			//
-			// 			// Generate the Menues
-			// 			$sub_rows = '';
-			// 			if(is_array($v)){
-			// 				foreach ( $v as $k2 => $row ){
-			// 					$admnsubmenu = ((isset($row['link']) && $row['text']) ? false : true);
-			// 					// Ignore the first element (header)
-			// 					if ( ($k2 == 'name' || $k2 == 'icon') &&  !$admnsubmenu){
-			// 						continue;
-			// 					}
-			//
-			// 					// the extension submenues
-			// 					if($admnsubmenu) {
-			// 						// build the icons
-			// 						$icon = $this->core->icon_font((isset($row['icon'])) ? $row['icon'] : ((isset($row['img']) ? $row['img'] : (($blnDefaultImage) ? '' : 'fa-puzzle-piece'))), 'fa-lg fa-fw', $strImagePath);
-			// 						$plugin_header_row = '<li><a href="#" class="sub-menu-arrow">'.$icon.' '.((isset($row['name'])) ? $row['name'] : 'UNKNOWN').'</a>
-			// 											<ul class="sub-menu">';
-			// 						// Submenu
-			// 						$plugin_sub_row = '';
-			// 						if(!isset($row['link']) && !isset($row['text'])){
-			// 							if(is_array($row)){
-			// 								foreach($row as $k3 => $row2){
-			// 									if ($k3 == 'name' || $k3 =='icon'){
-			// 										continue;
-			// 									}
-			//
-			// 									if ($row2['check'] == '' || ((is_array($row2['check'])) ? $this->user->check_auths($row2['check'][1], $row2['check'][0], false) : $this->user->check_auth($row2['check'], false))){
-			// 										$subsub_icon = $this->core->icon_font((isset($row2['icon'])) ? $row2['icon'] : ((isset($row2['img']) ? $row2['img'] : (($blnDefaultImage) ? '' : ''))), 'fa-lg fa-fw', $strImagePath);
-			// 										$plugin_sub_row .= '<li><a href="'.$this->root_path.$row2['link'].'">';
-			// 										$plugin_sub_row .= $subsub_icon.' '.$row2['text'].'</a></li>';
-			// 									}
-			// 								}
-			// 							}
-			// 						}
-			// 						if(strlen($plugin_sub_row) > 0) $sub_rows .= $plugin_header_row.$plugin_sub_row.'</ul></li>';
-			// 					}else{
-			// 						if (($row['check'] == '' || ((is_array($row['check'])) ? $this->user->check_auths($row['check'][1], $row['check'][0], false) : $this->user->check_auth($row['check'], false))) && (!isset($row['check2']) || $row['check2'] == true)){
-			// 							$subicon	= $this->core->icon_font((isset($row['icon'])) ? $row['icon'] : ((isset($row['img']) ? $row['img'] : (($blnDefaultImage) ? '' : ''))), 'fa-lg fa-fw', $strImagePath);
-			// 							$sub_rows .= '<li><a href="'.$this->root_path.$row['link'].'">';
-			// 							$sub_rows .= $subicon.' '.$row['text'].'</a></li>';
-			// 						}
-			// 					}
-			// 				}
-			// 			}
-			//
-			// 			if(strlen($sub_rows)) $html .= $header_row.$sub_rows.'</ul></li>';
-			// 		}
-			// 	}
-			// 	$html .= '</ul>';
-			// 	return $html;
-			//
-			// // Mainmenu
-			// }else{
-			// 	foreach($arrMenuItems as $k => $v){
-			// 		if ( !is_array($v) )continue;
-			//
-			// 		if (!isset($v['childs'])){
-			// 			if ( $this->check_url_for_permission($v)) {
-			// 				$class = $this->clean_url($v['link']);
-			// 				if (!strlen($class)) $class = "entry_".$this->clean_url($v['text']);
-			// 				$html .= '<li class="link_li_'.$class.'"><i class="link_i_'.$class.'"></i>'.$this->createLink($v, 'link_'.$class).'</li>';
-			// 			} else {
-			// 				continue;
-			// 			}
-			//
-			// 		} else {
-			//
-			// 			if ( $this->check_url_for_permission($v)) {
-			// 				$class = $this->clean_url($v['link']);
-			// 				if (!strlen($class)) $class = "entry_".$this->clean_url($v['text']);
-			// 				$html .= '<li class="link_li_'.$class.'"><i class="link_i_'.$class.'"></i>'.$this->createLink($v, 'link_'.$class.' sub-menu-arrow').'<ul class="sub-menu">';
-			// 			} else {
-			// 				continue;
-			// 			}
-			//
-			// 			foreach($v['childs'] as $k2 => $v2){
-			// 				if (!isset($v2['childs'])){
-			// 					if ( $this->check_url_for_permission($v2)) {
-			// 						$class = $this->clean_url($v2['link']);
-			// 						if (!strlen($class)) $class = "entry_".$this->clean_url($v2['text']);
-			// 						$html .= '<li class="link_li_'.$class.'"><i class="link_i_'.$class.'"></i>'.$this->createLink($v2, 'link_'.$class).'</li>';
-			// 					} else {
-			// 						continue;
-			// 					}
-			// 				} else {
-			// 					if ( $this->check_url_for_permission($v2)) {
-			// 						$class = $this->clean_url($v2['link']);
-			// 						if (!strlen($class)) $class = "entry_".$this->clean_url($v2['text']);
-			// 						$html .= '<li class="link_li_'.$class.'"><i class="link_i_'.$class.'"></i>'.$this->createLink($v2, 'link_'.$class.' sub-menu-arrow').'<ul class="sub-menu">';
-			// 					} else {
-			// 						continue;
-			// 					}
-			//
-			// 					foreach($v2['childs'] as $k3 => $v3){
-			// 						if ( $this->check_url_for_permission($v3)) {
-			// 							$class = $this->clean_url($v3['link']);
-			// 							if (!strlen($class)) $class = "entry_".$this->clean_url($v3['text']);
-			// 							$html .= '<li class="link_li_'.$class.'"><i class="link_i_'.$class.'"></i>'.$this->createLink($v3, 'link_'.$class).'</li>';
-			// 						} else {
-			// 							continue;
-			// 						}
-			// 					}
-			//
-			// 					$html .= '</ul></li>';
-			// 				}
-			//
-			// 			}
-			//
-			// 			$html .= '</ul></li>';
-			// 		}
-			//
-			// 	}
-			//
-			// 	$html .= '</ul>';
-			// 	return str_replace("<ul></ul>", "", $html);
-			// }
 		}
 
 		/**
@@ -1113,7 +968,7 @@ class core extends gen_class {
 
 		public function page_tail(){
 			if(defined('IN_ADMIN') && IN_ADMIN == true){
-				$this->tpl->set_template('admin', '', (!empty($this->template_path))? $this->template_path : 'templates/admin/templates');
+				$this->tpl->set_template('admin', '', (!empty($this->template_path))? $this->template_path : 'templates/');
 			
 			}elseif(!empty($this->template_path)){
 				$this->tpl->set_template($this->user->style['template_path'], '', $this->template_path);

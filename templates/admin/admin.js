@@ -32,9 +32,10 @@ function acp_error_handler(obj_error = {'msg':''}){
 
 // Global Vars
 var localstorage_test   = (test_localstorage());
+var acp_adminmenu		= (localstorage_test)? JSON.parse(localStorage.getItem('acp_adminmenu')) : null;
 var acp_mainmenu		= (localstorage_test)? localStorage.getItem('acp_mainmenu') : null;
 var acp_console			= (localstorage_test)? sessionStorage.getItem('acp_console') : null;
-var mcp_saved			= (localstorage_test)? localStorage.getItem('mcp_'+mmocms_userid) : "";
+var mcp_saved			= (localstorage_test)? localStorage.getItem('mcp_'+mmocms_userid) : null;
 var favicon;
 
 $(document).ready(function(){
@@ -75,7 +76,7 @@ $(document).ready(function(){
 			var id = $(this).parent().attr('id');
 			if(test_localstorage()) localStorage.setItem('mcp_'+mmocms_userid, id);
 		});
-		if (mcp_saved && mcp_saved != "" && $('#'+mcp_saved).find('.current').html() != undefined){
+		if(mcp_saved && mcp_saved != "" && $('#'+mcp_saved).find('.current').html() != undefined){
 			$('#'+mcp_saved).addClass("active");
 			var current = $('#'+mcp_saved).find('.current').html();
 			var icons = $('#'+mcp_saved).find('.icons').html();
@@ -87,42 +88,81 @@ $(document).ready(function(){
 			$(".mychars-points-target").html(icons + " "+current);
 		}
 		
-		
-		//TODO: adminmenu, maybe some one will save her used'state
-		
-		// ACP: Adminmenu Height re-calc
-		var sub_menu_height = 0;
-		$('#adminmenu .adminmenu .sub-menu').each(function(){
-			sub_menu_height = ($(this).height() > sub_menu_height)? $(this).height() : sub_menu_height;
-		});
-		$('#adminmenu .adminmenu').css('height', sub_menu_height+'px');
-		
 		// ACP: Adminmenu Handler
-		$('#adminmenu .adminmenu > li > a').on('click', function(){
-			if( $(this).parent().hasClass('open')){
-				$(this).parent().removeClass('open');
+		if(acp_adminmenu === null){
+			acp_adminmenu = {'state':1,'sub_menu':null};
+			if(localstorage_test) localStorage.setItem('acp_adminmenu', JSON.stringify(acp_adminmenu));
+		}
+		switch(true){
+			case (acp_adminmenu.state == 2 && acp_adminmenu.sub_menu !== null):
+				$('#adminmenu .adminmenu > li[data-category="'+acp_adminmenu.sub_menu+'"]').addClass('open');
+				$('#adminmenu .sub-menu-content .sub-menu[data-category="'+acp_adminmenu.sub_menu+'"]').addClass('open');
+				$('#adminmenu .sub-menu-content').show(0);
+				$('#adminmenu').data('state', 2).attr('data-state', 2);
+				break;
+			case (acp_adminmenu.state == 0):
+				$('#adminmenu .menu-content').hide(0);
+				$('#adminmenu').data('state', 0).attr('data-state', 0);
+				break;
+		}
+		$('#adminmenu .adminmenu > li > a').on('click', function(event){
+			event.preventDefault()
+			
+			self			= this;
+			open_category	= $(this).parent().data('category');
+			close_category	= ($('#adminmenu .sub-menu-content .sub-menu.open').length > 0)? $('#adminmenu .sub-menu-content .sub-menu.open').data('category') : null;
+			
+			if( $('#adminmenu .sub-menu-content .sub-menu[data-category="'+open_category+'"]').hasClass('open') ){
+				acp_adminmenu = {'state':1,'sub_menu':null};
+				$('#adminmenu .sub-menu-content').hide('slide', {direction: 'left'}, 500, function(){
+					$('#adminmenu .sub-menu-content .sub-menu[data-category="'+open_category+'"]').removeClass('open');
+					$(self).parent().removeClass('open');
+					$('#adminmenu').data('state', 1).attr('data-state', 1);
+				});
+			}else if( close_category !== null ){
+				acp_adminmenu = {'state':2,'sub_menu':open_category};
+				$('#adminmenu .sub-menu-content').hide('slide', {direction: 'left'}, 500, function(){
+					$('#adminmenu .sub-menu-content .sub-menu.open').removeClass('open');
+					$('#adminmenu .adminmenu > li[data-category="'+close_category+'"]').removeClass('open');
+					$('#adminmenu').data('state', 1).attr('data-state', 1);
+					
+					$('#adminmenu .sub-menu-content .sub-menu[data-category="'+open_category+'"]').addClass('open');
+					$('#adminmenu .sub-menu-content').show('slide', {direction: 'left'}, 500, function(){
+						$(self).parent().addClass('open');
+						$('#adminmenu').data('state', 2).attr('data-state', 2);
+					});
+				});
 			}else{
-				$('#adminmenu .adminmenu > li.open').removeClass('open');
-				$(this).parent().addClass('open');
-				
-				//TODO: we need here the handling of the pseudo,. so maybe remove the css animation and use jquery on both
+				acp_adminmenu = {'state':2,'sub_menu':open_category};
+				$('#adminmenu .sub-menu-content .sub-menu[data-category="'+open_category+'"]').addClass('open');
+				$('#adminmenu .sub-menu-content').show('slide', {direction: 'left'}, 500, function(){
+					$(self).parent().addClass('open');
+					$('#adminmenu').data('state', 2).attr('data-state', 2);
+				});
 			}
+			if(localstorage_test) localStorage.setItem('acp_adminmenu', JSON.stringify(acp_adminmenu));
 		});
 		
 		// ACP: Mainmenu Handler
 		if(acp_mainmenu === null || acp_mainmenu == 'close' || acp_mainmenu == false){
 			acp_mainmenu_toggle('close', 0);
 		}
-		$('#personalAreaMenuButton').click(function(){
+		$('#personalAreaMenuButton').on('click', function(){
 			if(acp_mainmenu == 'open')  { acp_mainmenu_toggle('close'); }
 			else						{ acp_mainmenu_toggle('open');  }
 		});
+		
 		
 		// ACP: Style addition (to skew mainmenu items)
 		$('#mainmenu .mainmenu > li > a').each(function(){
 			$(this).html('<span><span>'+$(this).html()+'</span></span>');
 		});
 		$('#mainmenu .mainmenu').addClass('skew');
+		
+		// ACP: Style addition (to move breadcrumb)
+		$('#controlPanel .breadcrumb-container').html( $('#wrapper .breadcrumb-container').html() );
+		$('#wrapper .breadcrumb-container').remove();
+		
 		
 		// ACP: EQdkp+ Console Handler
 		if(acp_console == 'open' || (acp_console === null && $('#debug-console > button').data('handle') == 'close')) acp_console_toggle('open', false);
@@ -193,16 +233,39 @@ function acp_mainmenu_toggle(handle, duration = 1000){
 
 // ACP: Toggle Adminmenu
 function acp_adminmenu_toggle(){
-	if( $('#adminmenu').data('state') > 0){
-		$('#adminmenu .menu-content').hide('slide', {direction: 'left'}, 2000, function(){
-			$('#adminmenu .menu-pseudo').css('height', $('#wrapper').height()+'px');
-			$('#adminmenu').data('state', 0).attr('data-state', 0);
-		});
-		
-	}else{
-		$('#adminmenu').data('state', 1).attr('data-state', 1);
-		$('#adminmenu .menu-content').show("slide", { direction: "left" }, 2000);
+	var state = $('#adminmenu').data('state');
+	acp_adminmenu.sub_menu = ($('#adminmenu .sub-menu-content .sub-menu.open').length > 0)? $('#adminmenu .sub-menu-content .sub-menu.open').data('category') : null;
+	
+	switch(state){
+		case 2:
+			acp_adminmenu.state = 0;
+			$('#adminmenu .sub-menu-content').hide('slide', {direction: 'left'}, 500, function(){
+				$('#adminmenu').data('state', 1).attr('data-state', 1);
+				$('#adminmenu .menu-content').hide('slide', {direction: 'left'}, 500, function(){
+					$('#adminmenu').data('state', 0).attr('data-state', 0);
+					// $('#adminmenu .menu-indicator').slideDown(500);
+				});
+			});
+			break;
+		case 1:
+			acp_adminmenu.state = 0;
+			$('#adminmenu .menu-content').hide('slide', {direction: 'left'}, 500, function(){
+				$('#adminmenu').data('state', 0).attr('data-state', 0);
+				// $('#adminmenu .menu-indicator').slideDown(500);
+			});
+			break;
+		case 0:
+			acp_adminmenu.state = (acp_adminmenu.sub_menu !== null)? 2 : 1;
+			$('#adminmenu').data('state', 1).attr('data-state', 1);
+			$('#adminmenu .menu-content').show('slide', {direction: 'left'}, 500, function(){
+				if( acp_adminmenu.sub_menu !== null ){
+					$('#adminmenu').data('state', 2).attr('data-state', 2);
+					$('#adminmenu .sub-menu-content').show('slide', {direction: 'left'}, 500);
+				}
+			});
+			break;
 	}
+	if(localstorage_test) localStorage.setItem('acp_adminmenu', JSON.stringify(acp_adminmenu));
 }
 
 // ACP: Toggle EQdkp+ Console

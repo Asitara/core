@@ -37,7 +37,6 @@
 		{STATIC_HTMLCODE}
 
 <!-- TODO: check and rewrite the personalArea ul's -->
-<!-- TODO: maybe we need an innerWrapper class for #wrapper = position:relative;; .innerWrapper position:absolute; because debug informations and static html  -->
 		<header id="controlPanel">
 			<div id="personalArea">
 				<div class="personalAreaInnerLeft">
@@ -192,31 +191,35 @@
 			</div>
 			
 			<div id="quickbar">
-				<div class="dashbar">
-					<!-- TODO: like the footer, left-center-right for "users: x", "user online: x", "chars: x" ;.. -->
-					<div class="dashbar-left"></div>
-					<div class="dashbar-center">
-						Lol Blizzard, hier haben wir eine Quick-bar für ganz ganz lustige schnell-infos
+				<div class="quickbar-top">
+					<div class="quick-info">
+						<!-- TODO: like the footer, left-center-right for "users: x", "user online: x", "chars: x" ;.. -->
+						<div class="quick-info-left"></div>
+						<div class="quick-info-center">
+							Lol Blizzard, hier haben wir eine Quick-bar für ganz ganz lustige schnell-infos
+						</div>
+						<div class="quick-info-right"></div>
 					</div>
-					<div class="dashbar-right"></div>
+					<nav id="mainmenu">{MAIN_MENU}</nav>
 				</div>
-				<nav id="mainmenu">{MAIN_MENU}</nav>
+				
+				<div class="quickbar-bottom">
+					<div class="adminmenu-head">
+						<a href=""><img src="{EQDKP_ROOT_PATH}templates/admin/images/logo.svg" /></a>
+						<a href="javascript:acp_adminmenu_toggle();"><i class="fa fa-gitlab"></i></a>
+					</div>
+					<div class="breadcrumb-container"></div>
+				</div>
 			</div>
 		</header>
 		
 		<main id="wrapper">
 			<aside id="adminmenu" data-state="1">
-				<!-- <div> -->
-					<div class="menu-header">
-						<a href=""><img src="{EQDKP_ROOT_PATH}templates/admin/images/logo.svg" /></a></li>
-						<a href="javascript:acp_adminmenu_toggle();"><i class="fa fa-gitlab"></i></a>
-					</div>
-					<nav class="menu-content">{ADMIN_MENU}</nav>
-					<a class="menu-pseudo" href="javascript:acp_adminmenu_toggle();"></a>
-				<!-- </div> -->
+				{ADMIN_MENU}
+				<a class="menu-indicator" href="javascript:acp_adminmenu_toggle();"></a>
 			</aside>
 			
-			<article class="main-content {PAGE_CLASS}">
+			<article class="page-content {PAGE_CLASS}">
 				<!-- BEGIN global_warnings -->
 				
 				<!-- TODO: check the "header" segment, maybe it will colidate with page-templates,.. and breadcrumb.. and maybe we should move the global warnings from here to header/footer -->
@@ -237,7 +240,6 @@
 		</main>
 		
 <!-- TODO: add cookie hint in footer.. origin: https://github.com/EQdkpPlus/core/blob/master/templates/eqdkp_modern/index.tpl#L275-L280 -->
-<!-- TODO: make nicer dropdown menus for style_changes like global color definiton from localstorage or responsive switcher -->
 		<footer id="footer">
 			<div class="footer-left">
 				<!-- LISTENER footer_left_top -->
