@@ -30,6 +30,19 @@ if (!defined('EQDKP_INC')) {
 //Source-Language: german
 
 $lang = array(
+	// Global
+	'configuration'		=> 'Settings',
+	
+	// Adminmenu
+	'adminmenu_system'				=> 'System',
+	'adminmenu_configuration'		=> 'Settings',
+	'adminmenu_general'				=> 'General',
+	
+	
+	
+	
+	
+	
 	"php_warning" => 'The version of PHP on this server will probably no longer be supported by future versions of EQdkp Plus. You should update your PHP-Version at least to Version '.VERSION_PHP_REC.'. For any questions about updating your php version, please contact your hoster.',
 	"manitempool_title" => 'Itempool Management',
 	"addevent_title" => 'Add an event',

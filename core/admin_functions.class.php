@@ -308,7 +308,9 @@ class admin_functions extends gen_class {
 				6		=> array('link' => 'admin/info_database.php'.$this->SID,			'text' => $this->user->lang('mysql_info'),		'check' => 'a_config_man',	'icon' => 'fa-database fa-lg fa-fw'),
 			),
 		);
-
+		
+		//TODO: give the plugins the choose for own sub_menus and/or extend the other sub_menus
+		//			cause some plugins are style-plugins, portal-stuff or core/points-plugins like the RLI or dynamictemplate
 		// Now get plugin hooks for the menu
 		$admin_menu = (is_array($this->pm->get_menus('admin'))) ? array_merge_recursive($admin_menu, array('extensions'=>$this->pm->get_menus('admin'))) : $admin_menu;
 
@@ -364,64 +366,89 @@ class admin_functions extends gen_class {
 		$admin_menu = array(
 			'system'=> array(
 				'icon'=> 'fa-wrench fa-lg fa-fw',
-				'text'=> '--SYSTEM--',
+				'text'=> $this->user->lang('adminmenu_system').(($blnShowBadges) ? $extensionUpdates : ''),
 				'check'=> '',
 				'sub_menu'=> array(
 					'settings'=> array(
-						'icon'=> 'fa-wrench fa-lg fa-fw',
-						'text'=> '--SETTINGS--',
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_configuration'),
 						'check'=> '',
 						'links'=> array([
 							'link'=> 'admin/manage_settings.php'.$this->SID,
 							'icon'=> '',
-							'text'=> '--GENERAL--',
+							'text'=> $this->user->lang('adminmenu_general'),
 							'check'=> '',
 						],[
-							'link'=> ''.$this->SID,
+							'link'=> 'admin/manage_settings.php'.$this->SID.'#fragment-user',
 							'icon'=> '',
-							'text'=> '--USERS--',
+							'text'=> $this->user->lang('adminmenu_users'),
 							'check'=> '',
 						],[
-							'link'=> ''.$this->SID,
+							'link'=> 'admin/manage_settings.php'.$this->SID.'#fragment-game',
 							'icon'=> '',
-							'text'=> '--GAME--',
+							'text'=> $this->user->lang('adminmenu_game'),
 							'check'=> '',
 						],[
 							'link'=> 'admin/manage_bridge.php'.$this->SID,
 							'icon'=> '',
-							'text'=> '--BRIDGE--',
+							'text'=> $this->user->lang('adminmenu_manage_bridge'),
 							'check'=> '',
 						]),
 					),
 					'extensions'=> array(
 						'icon'=> '',
-						'text'=> '--EXTENSIONS--',
+						'text'=> $this->user->lang('adminmenu_extensions'),
 						'check'=> '',
 						'links'=> array([
-							'link'=> ''.$this->SID,
+							'link'=> 'admin/manage_extensions.php'.$this->SID,
 							'icon'=> '',
-							'text'=> '----',
-							'check'=> '',
-						],[
-							'link'=> ''.$this->SID,
-							'icon'=> '',
-							'text'=> '----',
+							'text'=> $this->user->lang('adminmenu_manage_extensions'),
 							'check'=> '',
 						]),
 					),
 					'maintenance'=> array(
 						'icon'=> '',
-						'text'=> '--MAINTENANCE--',
+						'text'=> $this->user->lang('adminmenu_maintenance'),
 						'check'=> '',
 						'links'=> array([
-							'link'=> ''.$this->SID,
+							'link'=> 'maintenance/'.$this->SID,
 							'icon'=> '',
-							'text'=> '----',
+							'text'=> $this->user->lang('adminmenu_maintenance_area'),
 							'check'=> '',
 						],[
-							'link'=> ''.$this->SID,
+							'link'=> 'admin/manage_live_update.php'.$this->SID,
 							'icon'=> '',
-							'text'=> '----',
+							'text'=> $this->user->lang('adminmenu_update'),
+							'check'=> '',
+						],[
+							'link'=> 'admin/manage_backup.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_backup'),
+							'check'=> '',
+						],[
+							'link'=> 'admin/manage_reset.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_reset'),
+							'check'=> '',
+						],[
+							'link'=> 'admin/info_database.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_database'),
+							'check'=> '',
+						],[
+							'link'=> 'admin/manage_cache.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_cache'),
+							'check'=> '',
+						],[
+							'link'=> 'admin/manage_crons.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_cronjobs'),
+							'check'=> '',
+						],[
+							'link'=> 'admin/manage_logs.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_logs'),
 							'check'=> '',
 						]),
 					),
@@ -429,33 +456,419 @@ class admin_functions extends gen_class {
 			),
 			'users'=> array(
 				'icon'=> 'fa-group fa-lg fa-fw',
-				'text'=> '--USERS--',
+				'text'=> $this->user->lang('adminmenu_users'),
 				'check'=> '',
 				'sub_menu'=> array(
 					'user'=> array(
 						'icon'=> '',
-						'text'=> '--USER--',
+						'text'=> $this->user->lang('adminmenu_users'),
 						'check'=> '',
 						'links'=> array([
 							'link'=> 'admin/manage_users.php'.$this->SID,
 							'icon'=> '',
-							'text'=> '--MANAGE--',
+							'text'=> $this->user->lang('adminmenu_manage_user'),
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/manage_users.php'.$this->SID.'&add_user',
 								'icon'=> 'fa-cog',
-								'text'=> '--ADD--',#--is only shown as tooltip
+								'text'=> $this->user->lang('adminmenu_add_user'),
 								'check'=> '',
 							]),
 						]),
 					),
-					####
+					'user_groups'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_user_groups'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_user_groups.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_user_groups'),
+							'check'=> '',
+							'sub_links'=> array([
+								'link'=> 'admin/manage_user_groups.php'.$this->SID.'&add_user_group',
+								'icon'=> 'fa-cog',
+								'text'=> $this->user->lang('adminmenu_add_user_group'),
+								'check'=> '',
+							]),
+						]),
+					),
+					'maintenance_user'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_maintenance_user'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_maintenance_user.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_maintenance_user'),
+							'check'=> '',
+						]),
+					),
+					'profilefields'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_profilefields'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_user_profilefields.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_profilefields'),
+							'check'=> '',
+							'sub_links'=> array([
+								'link'=> 'admin/manage_user_profilefields.php'.$this->SID.'&add_profilefield',
+								'icon'=> 'fa-cog',
+								'text'=> $this->user->lang('adminmenu_add_profilefield'),
+								'check'=> '',
+							]),
+						]),
+					),
+					'mass_mail'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_mass_mail'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_massmail.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_send_mass_mail'),
+							'check'=> '',
+						]),
+					),
+					'notifications'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_notifications'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_notifications.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_notifications'),
+							'check'=> '',
+						]),
+					),
 				),
 			),
-			// 'content'=> array(),
-			// 'apperance'=> array(),
-			// 'characters'=> array(),
-			// 'points'=> array(),
+			'content'=> array(
+				'icon'=> 'fa-file-text fa-lg fa-fw',
+				'text'=> $this->user->lang('adminmenu_content'),
+				'check'=> '',
+				'sub_menu'=> array(
+					'articles'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_articles'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_articles.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_articles'),
+							'check'=> '',
+						]),
+					),
+					'calendar'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_calendar'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_calendars.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_calendars'),
+							'check'=> '',
+						],[
+							'link'=> 'admin/manage_calevents.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_calevents'),
+							'check'=> '',
+						]),
+					),
+					'media'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_media'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_media.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_media'),
+							'check'=> '',
+						]),
+					),
+				),
+			),
+			'apperance'=> array(
+				'icon'=> 'fa-desktop fa-lg fa-fw',
+				'text'=> $this->user->lang('adminmenu_apperance'),
+				'check'=> '',
+				'sub_menu'=> array(
+					'portal'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_portal'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_portal.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_portallayout'),
+							'check'=> '',
+						],[
+							'link'=> 'admin/manage_portal.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_portalboxes'),
+							'check'=> '',
+						]),
+					),
+					'styles'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_styles'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_styles.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_styles'),
+							'check'=> '',
+						]),
+					),
+					'menus'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_menus'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_menus.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_menus'),
+							'check'=> '',
+						]),
+					),
+					'table_points'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_table_points'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage__pagelayouts.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_table_points'),
+							'check'=> '',
+						]),
+					),
+				),
+			),
+			'characters'=> array(
+				'icon'=> 'fa-user fa-lg fa-fw',
+				'text'=> $this->user->lang('adminmenu_characters'),
+				'check'=> '',
+				'sub_menu'=> array(
+					'members'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_members'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_members.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_members'),
+							'check'=> '',
+							'sub_links'=> array([
+								'link'=> 'admin/manage_members.php'.$this->SID,
+								'icon'=> 'fa-cog',
+								'text'=> $this->user->lang('adminmenu_add_member'),
+								'check'=> '',
+							]),
+						]),
+					),
+					'ranks'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_ranks'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_ranks.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_ranks'),
+							'check'=> '',
+							'sub_links'=> array([
+								'link'=> 'admin/manage_ranks.php'.$this->SID,
+								'icon'=> 'fa-cog',
+								'text'=> $this->user->lang('adminmenu_add_ranks'),
+								'check'=> '',
+							]),
+						]),
+					),
+					'profilefields'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_profilefields'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_profilefields.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_profilefields'),
+							'check'=> '',
+							'sub_links'=> array([
+								'link'=> 'admin/manage_profilefields.php'.$this->SID,
+								'icon'=> 'fa-cog',
+								'text'=> $this->user->lang('adminmenu_add_profilefield'),
+								'check'=> '',
+							]),
+						]),
+					),
+					'roles'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_roles'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_roles.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_roles'),
+							'check'=> '',
+							'sub_links'=> array([
+								'link'=> 'admin/manage_roles.php'.$this->SID,
+								'icon'=> 'fa-cog',
+								'text'=> $this->user->lang('adminmenu_add_role'),
+								'check'=> '',
+							]),
+						]),
+					),
+				),
+			),
+			'raids_points'=> array(
+				'icon'=> 'fa-trophy fa-lg fa-fw',
+				'text'=> $this->user->lang('adminmenu_raids_points'),
+				'check'=> '',
+				'sub_menu'=> array(
+					'raids'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_raids'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_raids.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_raids'),
+							'check'=> '',
+							'sub_links'=> array([
+								'link'=> 'admin/manage_raids.php'.$this->SID,
+								'icon'=> 'fa-cog',
+								'text'=> $this->user->lang('adminmenu_add_raids'),
+								'check'=> '',
+							]),
+						]),
+					),
+					'items'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_items'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_items.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_items'),
+							'check'=> '',
+							'sub_links'=> array([
+								'link'=> 'admin/manage_items.php'.$this->SID,
+								'icon'=> 'fa-cog',
+								'text'=> $this->user->lang('adminmenu_add_item'),
+								'check'=> '',
+							]),
+						]),
+					),
+					'adjustments'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_adjustments'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_adjustments.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_adjustments'),
+							'check'=> '',
+							'sub_links'=> array([
+								'link'=> 'admin/manage_adjustments.php'.$this->SID,
+								'icon'=> 'fa-cog',
+								'text'=> $this->user->lang('adminmenu_add_adjustment'),
+								'check'=> '',
+							]),
+						]),
+					),
+					'auto_points'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_auto_points'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_auto_points.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_auto_points'),
+							'check'=> '',
+						]),
+					),
+					'events'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_events'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_events.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_events'),
+							'check'=> '',
+							'sub_links'=> array([
+								'link'=> 'admin/manage_events.php'.$this->SID,
+								'icon'=> 'fa-cog',
+								'text'=> $this->user->lang('adminmenu_add_event'),
+								'check'=> '',
+							]),
+						]),
+					),
+					'pools'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_pools'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/_____.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_pools'),
+							'check'=> '',
+							'sub_links'=> array([
+								'link'=> 'admin/_____.php'.$this->SID,
+								'icon'=> 'fa-cog',
+								'text'=> $this->user->lang('adminmenu_add_pool'),
+								'check'=> '',
+							]),
+						]),
+					),
+					'itempools'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_itempools'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_itempools.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_itempools'),
+							'check'=> '',
+							'sub_links'=> array([
+								'link'=> 'admin/manage_itempools.php'.$this->SID,
+								'icon'=> 'fa-cog',
+								'text'=> $this->user->lang('adminmenu_add_itempool'),
+								'check'=> '',
+							]),
+						]),
+					),
+					'raid_groups'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_raid_groups'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_raid_groups.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_raid_groups'),
+							'check'=> '',
+							'sub_links'=> array([
+								'link'=> 'admin/manage_raid_groups.php'.$this->SID,
+								'icon'=> 'fa-cog',
+								'text'=> $this->user->lang('adminmenu_add_raid_group'),
+								'check'=> '',
+							]),
+						]),
+					),
+					'export'=> array(
+						'icon'=> '',
+						'text'=> $this->user->lang('adminmenu_export'),
+						'check'=> '',
+						'links'=> array([
+							'link'=> 'admin/manage_export.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_exporting'),
+							'check'=> '',
+						]),
+					),
+				),
+			),
 		);
 		
 

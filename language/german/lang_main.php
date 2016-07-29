@@ -88,7 +88,6 @@ $lang = array(
 "class" => "Klasse",
 "type" => "Typ",
 "class_distribution" => "Klassenverteilung",
-"configuration" => "Einstellungen",
 "create_raid_summary" => "Raidzusammenfassung erstellen",
 "current" => "Jetzt",
 "date" => "Datum",

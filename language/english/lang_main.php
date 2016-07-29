@@ -145,7 +145,6 @@ $lang = array(
 	"class" => 'Class',
 	"type" => 'Type',
 	"class_distribution" => 'Class Distribution',
-	"configuration" => 'Settings',
 	"create_raid_summary" => 'Create raid summary',
 	"current" => 'Current',
 	"date" => 'Date',

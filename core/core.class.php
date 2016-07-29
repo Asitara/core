@@ -714,16 +714,17 @@ class core extends gen_class {
 								//Links
 								foreach($arrSubCategory['links'] as $intLinkID => $arrLink){
 									if($func_check_permission($arrLink['check'])){
-										
+										$blnActivePage = (stripos($arrLink['link'], $this->env->request_page) !== false);
 										//Sub-Links
 										$html_sub_links = '';
 										foreach($arrLink['sub_links'] as $intSubLinkID => $arrSubLink){
 											if($func_check_permission($arrSubLink['check'])){
+												$blnActivePage = ($blnActivePage || stripos($arrLink['link'], $this->env->request_page) !== false);
 												$html_sub_links .= '<a class="sub-link" href="'.$arrSubLink['link'].'" data-tooltip="'.$arrSubLink['text'].'">'.$this->icon_font($arrSubLink['icon']).'</a>';
 											}
 										}//end of Sub-Links
 										
-										$html_sub_menu .= '<li><a href="'.$arrLink['link'].'">'.$this->icon_font($arrLink['icon']).$arrLink['text'].'</a>'.$html_sub_links.'</li>';
+										$html_sub_menu .= '<li'.(($blnActivePage)?' class="active"':'').'><a href="'.$arrLink['link'].'">'.$this->icon_font($arrLink['icon']).$arrLink['text'].'</a>'.$html_sub_links.'</li>';
 									}
 								}//end of Links
 								$html_sub_menu .= '</ul></li>';
