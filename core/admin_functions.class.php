@@ -470,7 +470,7 @@ class admin_functions extends gen_class {
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/manage_users.php'.$this->SID.'&add_user',
-								'icon'=> 'fa-cog',
+								'icon'=> 'fa-plus',
 								'text'=> $this->user->lang('adminmenu_add_user'),
 								'check'=> '',
 							]),
@@ -487,7 +487,7 @@ class admin_functions extends gen_class {
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/manage_user_groups.php'.$this->SID.'&add_user_group',
-								'icon'=> 'fa-cog',
+								'icon'=> 'fa-plus',
 								'text'=> $this->user->lang('adminmenu_add_user_group'),
 								'check'=> '',
 							]),
@@ -515,7 +515,7 @@ class admin_functions extends gen_class {
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/manage_user_profilefields.php'.$this->SID.'&add_profilefield',
-								'icon'=> 'fa-cog',
+								'icon'=> 'fa-plus',
 								'text'=> $this->user->lang('adminmenu_add_profilefield'),
 								'check'=> '',
 							]),
@@ -662,7 +662,7 @@ class admin_functions extends gen_class {
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/manage_members.php'.$this->SID,
-								'icon'=> 'fa-cog',
+								'icon'=> 'fa-plus',
 								'text'=> $this->user->lang('adminmenu_add_member'),
 								'check'=> '',
 							]),
@@ -679,7 +679,7 @@ class admin_functions extends gen_class {
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/manage_ranks.php'.$this->SID,
-								'icon'=> 'fa-cog',
+								'icon'=> 'fa-plus',
 								'text'=> $this->user->lang('adminmenu_add_ranks'),
 								'check'=> '',
 							]),
@@ -696,7 +696,7 @@ class admin_functions extends gen_class {
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/manage_profilefields.php'.$this->SID,
-								'icon'=> 'fa-cog',
+								'icon'=> 'fa-plus',
 								'text'=> $this->user->lang('adminmenu_add_profilefield'),
 								'check'=> '',
 							]),
@@ -713,7 +713,7 @@ class admin_functions extends gen_class {
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/manage_roles.php'.$this->SID,
-								'icon'=> 'fa-cog',
+								'icon'=> 'fa-plus',
 								'text'=> $this->user->lang('adminmenu_add_role'),
 								'check'=> '',
 							]),
@@ -737,7 +737,7 @@ class admin_functions extends gen_class {
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/manage_raids.php'.$this->SID,
-								'icon'=> 'fa-cog',
+								'icon'=> 'fa-plus',
 								'text'=> $this->user->lang('adminmenu_add_raids'),
 								'check'=> '',
 							]),
@@ -754,7 +754,7 @@ class admin_functions extends gen_class {
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/manage_items.php'.$this->SID,
-								'icon'=> 'fa-cog',
+								'icon'=> 'fa-plus',
 								'text'=> $this->user->lang('adminmenu_add_item'),
 								'check'=> '',
 							]),
@@ -771,7 +771,7 @@ class admin_functions extends gen_class {
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/manage_adjustments.php'.$this->SID,
-								'icon'=> 'fa-cog',
+								'icon'=> 'fa-plus',
 								'text'=> $this->user->lang('adminmenu_add_adjustment'),
 								'check'=> '',
 							]),
@@ -799,7 +799,7 @@ class admin_functions extends gen_class {
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/manage_events.php'.$this->SID,
-								'icon'=> 'fa-cog',
+								'icon'=> 'fa-plus',
 								'text'=> $this->user->lang('adminmenu_add_event'),
 								'check'=> '',
 							]),
@@ -816,7 +816,7 @@ class admin_functions extends gen_class {
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/_____.php'.$this->SID,
-								'icon'=> 'fa-cog',
+								'icon'=> 'fa-plus',
 								'text'=> $this->user->lang('adminmenu_add_pool'),
 								'check'=> '',
 							]),
@@ -833,7 +833,7 @@ class admin_functions extends gen_class {
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/manage_itempools.php'.$this->SID,
-								'icon'=> 'fa-cog',
+								'icon'=> 'fa-plus',
 								'text'=> $this->user->lang('adminmenu_add_itempool'),
 								'check'=> '',
 							]),
@@ -850,7 +850,7 @@ class admin_functions extends gen_class {
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/manage_raid_groups.php'.$this->SID,
-								'icon'=> 'fa-cog',
+								'icon'=> 'fa-plus',
 								'text'=> $this->user->lang('adminmenu_add_raid_group'),
 								'check'=> '',
 							]),

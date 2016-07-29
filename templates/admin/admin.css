@@ -396,12 +396,13 @@ table { border-collapse: collapse; border-spacing: 0; }
 	****************************************/
 	#adminmenu {
 		display: flex;
-		margin-bottom: 30px; //NOTE: calculated by the footer
+		margin-bottom: 18px;
 	}
 	
 	#adminmenu .menu-content {
 		flex: 0 0 auto;
 		width: 120px;
+		padding-bottom: 12px;
 		position: relative;
 		background: linear-gradient(to bottom, #444 0%, #19334D 20%);
 		border-right: 2px solid #15171A;
@@ -429,14 +430,18 @@ table { border-collapse: collapse; border-spacing: 0; }
 	#adminmenu .sub-menu-content {
 		display: none;
 		flex: 0 0 auto;
-		width: 230px;
-		padding: 15px 0 0 10px;
+		width: 255px;
+		padding: 10px 0 0 5px;
+		position: relative;
+		top: -2px;
 		background: #25272A;
 		border: 2px solid #15171A;
+		border-left: none;
 		text-align: left;
 	}
 	#adminmenu .sub-menu-content .sub-menu { display: none; }
 	#adminmenu .sub-menu-content .sub-menu.open { display:block; }
+	#adminmenu .sub-menu-content .sub-menu > li { padding: 0 0 15px; }
 	#adminmenu .sub-menu-content .sub-menu h4 {
 		color: #777;
 		font-size: 14px;
@@ -447,7 +452,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 		vertical-align: 0;
 	}
 	#adminmenu .sub-menu-content .sub-menu ul {
-		padding: 5px 0 15px 15px;
+		padding: 5px 0 0 10px;
 	}
 	#adminmenu .sub-menu-content .sub-menu ul > li {
 		display: flex;
@@ -456,11 +461,13 @@ table { border-collapse: collapse; border-spacing: 0; }
 		display: block;
 		flex: 1 1 auto;
 		padding: 5px 10px;
-		background: rgba(255,255,255,.2);
 	}
-	#adminmenu .sub-menu-content .sub-menu ul > li > a:hover {
-		color: #444;
-		background: rgba(255,255,255,.5);
+	#adminmenu .sub-menu-content .sub-menu ul > li > a:hover,
+	#adminmenu .sub-menu-content .sub-menu ul > li > a:hover ~ .sub-link,
+	#adminmenu .sub-menu-content .sub-menu ul > li.active > a,
+	#adminmenu .sub-menu-content .sub-menu ul > li.active > a.sub-link {
+		color: #FFF;
+		background: rgba(255,255,255,.1);
 	}
 	#adminmenu .sub-menu-content .sub-menu .sub-link {
 		flex: 0 0 auto;
