@@ -362,6 +362,8 @@ class admin_functions extends gen_class {
 		#######################################################################################################################
 		#######################################################################################################################
 		#######################################################################################################################
+		//TODO: we need to check the core_update & extension_update badges, we will not have <span>1</span><span>2</span>
+		//TODO: favorites will be added to the link-arrays via 'favorite'=> true-false  ..and then we check if isset(array['favorite'])
 		
 		$admin_menu = array(
 			'system'=> array(
@@ -397,7 +399,7 @@ class admin_functions extends gen_class {
 					),
 					'extensions'=> array(
 						'icon'=> '',
-						'text'=> $this->user->lang('adminmenu_extensions'),
+						'text'=> $this->user->lang('adminmenu_extensions').(($blnShowBadges) ? $extensionUpdates : ''),
 						'check'=> '',
 						'links'=> array([
 							'link'=> 'admin/manage_extensions.php'.$this->SID,

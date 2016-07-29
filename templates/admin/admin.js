@@ -69,6 +69,23 @@ $(document).ready(function(){
 			}
 			if(localstorage_test) localStorage.setItem('acp_adminmenu', JSON.stringify(acp_adminmenu));
 		});
+		$('#adminmenu .sub-menu-content .sub-menu .fav-link').on('click', function(event){
+			event.preventDefault();
+			var fav_link	= $(this);
+			var fav_state	= $(this).data('favorite');
+			if(fav_state == '...') return;
+			
+			fav_link.data('favorite', '...').attr('data-favorite', '...');
+			
+			$.post('manage_exportsssssss.php'+mmocms_sid+'&run_husten_process', {
+				'husten_key_1': 'value_1',
+			}).done(function(response){
+				fav_state = (fav_state == false)? 'true' : 'false';
+			}).always(function(){
+				fav_link.data('favorite', fav_state).attr('data-favorite', fav_state);
+			});
+			return;
+		});
 		
 		// ACP: Style addition (to skew mainmenu items)
 		$('#mainmenu .mainmenu > li > a').each(function(){

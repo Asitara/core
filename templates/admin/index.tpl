@@ -185,7 +185,7 @@
 							<!-- ENDIF -->
 						</ul>
 					</div>
-					<button id="personalAreaMenuButton" type="button"><i class="fa fa-gitlab"></i></button>
+					<button id="personalAreaMenuButton" type="button"><i class="fa fa-bars"></i></button>
 				</div>
 				<div class="clear"></div>
 			</div>

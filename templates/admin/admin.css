@@ -106,7 +106,6 @@ table { border-collapse: collapse; border-spacing: 0; }
 	h3 { font-size: 14px; border-bottom: none; margin-bottom: 5px; }
 	
 	
-	
 	/* ControlPanel
 	****************************************/
 	//TODO: remove it when we add the inputs,.. this is only for personalarea seahrc and mainmenu toggle buttons
@@ -119,6 +118,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 		background: none;
 		box-shadow: none;
 	}
+	
 	
 	/* Personal Area
 	****************************************/
@@ -216,13 +216,15 @@ table { border-collapse: collapse; border-spacing: 0; }
 		transform: rotate(180deg);
 	}
 	
+	
 	/* Quick Bar
 	****************************************/
 	#quickbar .quickbar-top {
 		height: 18px;
 		position: relative;
-		background: #25272A;
 		border-bottom: 2px solid #15171A;
+		background: #25272A;
+		box-shadow: 0 0 3px 0 #000;
 		box-sizing: border-box;
 	}
 	#quickbar .quickbar-top .quick-info {
@@ -247,9 +249,10 @@ table { border-collapse: collapse; border-spacing: 0; }
 		display: flex;
 		position: relative;
 		left: -20px;
-		background: linear-gradient(to bottom, #25272A 5%, #444 100%);
 		border-right: 2px solid #15171A;
 		border-bottom: 2px solid #15171A;
+		background: linear-gradient(to bottom, #25272A 5%, #444 100%);
+		box-shadow: 0 0 3px 0 #000;
 		transform: skew(-45deg);
 		text-align: left;
 		overflow: hidden;
@@ -286,6 +289,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 		color: #111;
 		background: linear-gradient(to top, #444 5%, #AAA 100%);
 	}
+	
 	
 	/* Main Menu
 	****************************************/
@@ -330,11 +334,12 @@ table { border-collapse: collapse; border-spacing: 0; }
 	#mainmenu .mainmenu .sub-menu {
 		display: none;
 		position: absolute;
-		left: 120px;
+		left: 122px;
 		right: 0;
-		background: #25272a;
 		border-top: 1px solid #15171A;
 		border-bottom: 2px solid #15171A;
+		background: #25272a;
+		box-shadow: 2px 2px 3px -2px #000;
 		white-space: nowrap;
 		z-index: 1;
 	}
@@ -392,6 +397,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 	#mainmenu .mainmenu.skew > li > a.link_indexphp > span > span,
 	#mainmenu .mainmenu.skew > li > a.link_entry_home > span > span { margin-left: 16px; }
 	
+	
 	/* Admin Menu
 	****************************************/
 	#adminmenu {
@@ -404,8 +410,9 @@ table { border-collapse: collapse; border-spacing: 0; }
 		width: 120px;
 		padding-bottom: 12px;
 		position: relative;
-		background: linear-gradient(to bottom, #444 0%, #19334D 20%);
 		border-right: 2px solid #15171A;
+		background: linear-gradient(to bottom, #444 0%, #19334D 20%);
+		box-shadow: 0 0 3px 0 #000;
 		text-align: center;
 	}
 	#adminmenu .adminmenu > li > a {
@@ -434,8 +441,9 @@ table { border-collapse: collapse; border-spacing: 0; }
 		padding: 10px 0 0 5px;
 		position: relative;
 		top: -2px;
-		background: #25272A;
 		border: 2px solid #15171A;
+		background: #25272A;
+		box-shadow: 0 0 3px 0 #000;
 		border-left: none;
 		text-align: left;
 	}
@@ -452,7 +460,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 		vertical-align: 0;
 	}
 	#adminmenu .sub-menu-content .sub-menu ul {
-		padding: 5px 0 0 10px;
+		padding-top: 5px;
 	}
 	#adminmenu .sub-menu-content .sub-menu ul > li {
 		display: flex;
@@ -469,12 +477,55 @@ table { border-collapse: collapse; border-spacing: 0; }
 		color: #FFF;
 		background: rgba(255,255,255,.1);
 	}
-	#adminmenu .sub-menu-content .sub-menu .sub-link {
+	#adminmenu .sub-menu-content .sub-menu .main-link { padding-left: 0; }
+	#adminmenu .sub-menu-content .sub-menu .sub-link { flex: 0 0 auto; }
+	
+	// Favorites
+	#adminmenu .sub-menu-content .sub-menu .fav-link {
 		flex: 0 0 auto;
+		background: none !important;
+		pointer-events: none;
+		cursor: none;
+	}
+	#adminmenu .sub-menu-content .sub-menu .fav-link:before {
+		display: block;
+		position: absolute;
+		left: 3px;
+		padding: 0 5px;
+		color: #777;
+		visibility: hidden;
+		font-family: 'FontAwesome';
+	}
+	#adminmenu .sub-menu-content .sub-menu .fav-link[data-favorite] {
+		flex: 0 0 auto;
+		pointer-events: all;
+		cursor: pointer;
+	}
+	#adminmenu .sub-menu-content .sub-menu .fav-link[data-favorite="true"]:before {
+		content: '\f005';
+		color: #D7B604;
+		opacity: 0.4;
+		visibility: visible;
+	}
+	#adminmenu .sub-menu-content .sub-menu .fav-link[data-favorite="false"]:before {
+		content: '\f006';
+		opacity: 0.2;
+		visibility: visible;
+	}
+	#adminmenu .sub-menu-content .sub-menu .fav-link[data-favorite="..."]:before {
+		content: '\f110';
+		color: #D7A004;
+		opacity: 0.8;
+		visibility: visible;
+		animation: fa-spin 2s infinite linear;
+	}
+	#adminmenu .sub-menu-content .sub-menu li:hover > .fav-link[data-favorite]:before {
+		opacity: 1;
+		transition: opacity .2s;
 	}
 	
 	
-	// Menu States			(0 => closed, 1 => open, 2 => open with sub-menu)
+	// Menu Indicator
 	#adminmenu .menu-indicator { display: none; }
 	#adminmenu[data-state="0"] .menu-indicator {
 		display: block;
@@ -482,6 +533,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 		width: 10px;
 		margin-bottom: 30px;
 		position: relative;
+		box-shadow: 0 0 3px 0 #000, 3px 7px 3px -3px rgba(0, 0, 0, 0.5), 0 10px 3px -3px rgba(0, 0, 0, 0.5), -3px 13px 3px -3px rgba(0, 0, 0, 0.5);
 		cursor: pointer;
 	}
 	#adminmenu[data-state="0"] .menu-indicator:before {
@@ -504,57 +556,89 @@ table { border-collapse: collapse; border-spacing: 0; }
 	}
 	#adminmenu[data-state="0"] .menu-indicator:hover:after { border-left-color: #777; }
 	
+	// Update badges
+	#adminmenu .menu-content {
+		.update_available_before(@color) {
+			display: block;
+			height: 16px;
+			width: 100%;
+			content: '';
+			position: absolute;
+			top: -2px;
+			left: -8px;
+			border: 1px solid @color;
+			border-radius: 2px;
+			background: fade(@color, 35);
+			transform: skew(-45deg);
+		}
+		
+		.update_available,
+		.update_available_yellow {
+			display: block;
+			padding: 0px 20px;
+			position: absolute;
+			top: 5px;
+			left: -10px;
+			color: #FFF;
+			font-size: 13px;
+			font-weight: bold;
+			font-family: 'Trebuchet MS', Arial, sans-serif;
+			text-shadow: -1px -1px 0px #000;
+			white-space: nowrap;
+		}
+		.update_available:before { .update_available_before( #F00 ); }
+		.update_available_yellow:before { .update_available_before( #FFCF00 ); }
+	}
+	#adminmenu .sub-menu-content {
+		.update_available_before(@color) {
+			display: inline-block;
+			height: 11px;
+			width: 100%;
+			content: '';
+			position: absolute;
+			top: -2px;
+			left: -8px;
+			border: 1px solid @color;
+			background: fade(@color, 35);
+		}
+		
+		.update_available,
+		.update_available_yellow {
+			display: inline-block;
+			padding: 0 14px 0 0;
+			position: relative;
+			top: -2px;
+			left: 20px;
+			color: #FFF;
+			font-size: 10px;
+			font-weight: bold;
+			font-family: 'Trebuchet MS', Arial, sans-serif;
+			text-shadow: -1px -1px 0px #000;
+			white-space: nowrap;
+		}
+		.update_available:before { .update_available_before( #F00 ); }
+		.update_available_yellow:before { .update_available_before( #FFCF00 ); }
+	}
 	
-	#adminmenu .update_available,
-	#adminmenu .update_available_yellow {
-		display: block;
-		padding: 0px 20px;
-		position: absolute;
-		top: 5px;
-		left: -10px;
-		color: #FFF;
-		font-size: 13px;
-		font-weight: bold;
-		font-family: 'Trebuchet MS', Arial, sans-serif;
-		text-shadow: -1px -1px 0px #000;
-		white-space: nowrap;
-	}.update_available_before(@color) {
-		display: block;
-		height: 16px;
-		width: 100%;
-		content: '';
-		position: absolute;
-		top: -2px;
-		left: -8px;
-		border: 1px solid @color;
-		border-radius: 2px;
-		background: fade(@color, 35);
-		transform: skew(-45deg);
-	}
-	#adminmenu .update_available:before {
-		.update_available_before( #F00 );
-	}
-	#adminmenu .update_available_yellow:before {
-		.update_available_before( #FFCF00 );
-	}
 	
 	/* Wrapper
 	****************************************/
 	#wrapper { display:flex; }
-	#wrapper > .page-content { flex: 1 1 auto; }
+	#wrapper > .page-content { flex: 1 1 auto; padding-left: 5px; }
+	
 	
 	/* Breadcrumb
 	****************************************/
 	ul.breamcrumb {
 		display: flex;
-		width: 100%;
 		margin: 5px 10px;
+		box-shadow: 2px 2px 3px -1px #000;
+		transform: skew(-45deg)
 	}
 	ul.breamcrumb > li {
 		border: 1px solid #15171A;
 		background: #25272A;
 		box-shadow: 0px 0px 2px 1px rgba(255,255,255,.1) inset;
-		transform: skew(-45deg);
 	}
 	ul.breamcrumb > li.current {
 		background: #333;
@@ -564,7 +648,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 		background: #444;
 		box-shadow: 0px 0px 4px 2px rgba(255,255,255,.2) inset;
 		transition: transform .2s;
-		transform: skew(-45deg) scale(1.2);
+		transform: scale(1.2);
 		z-index: 1;
 	}
 	ul.breamcrumb > li > a {
@@ -577,6 +661,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 		padding-left: 13px;
 	}
 	
+	
 	/* Footer
 	****************************************/
 	#footer {
@@ -586,8 +671,9 @@ table { border-collapse: collapse; border-spacing: 0; }
 		color: #444;
 		font-size: 12px;
 		font-family:'Trebuchet MS', Arial, sans-serif;
-		background: #25272A;
 		border-top: 2px solid #15171A;
+		background: #25272A;
+		box-shadow: 0 0 3px 0 #000;
 		line-height: 20px;
 	}
 	#footer a { color: #444; }
@@ -625,6 +711,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 		border-top: 2px solid #15171A;
 		border-right: 2px solid #15171A;
 		background: #25272A;
+		box-shadow: 0 0 3px 0 #000;
 		transition: all .3s ease;
 		transform: skew(45deg);
 		z-index: 1;
@@ -653,6 +740,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 		border-top: 2px solid #15171A;
 		border-right: 2px solid #15171A;
 		background: #25272A;
+		box-shadow: 0 0 3px 0 #000;
 		transform: skew(45deg);
 	}
 	#debug-console .quick-bar > span {

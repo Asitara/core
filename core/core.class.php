@@ -715,6 +715,7 @@ class core extends gen_class {
 								foreach($arrSubCategory['links'] as $intLinkID => $arrLink){
 									if($func_check_permission($arrLink['check'])){
 										$blnActivePage = (stripos($arrLink['link'], $this->env->request_page) !== false);
+										
 										//Sub-Links
 										$html_sub_links = '';
 										foreach($arrLink['sub_links'] as $intSubLinkID => $arrSubLink){
@@ -724,7 +725,7 @@ class core extends gen_class {
 											}
 										}//end of Sub-Links
 										
-										$html_sub_menu .= '<li'.(($blnActivePage)?' class="active"':'').'><a href="'.$arrLink['link'].'">'.$this->icon_font($arrLink['icon']).$arrLink['text'].'</a>'.$html_sub_links.'</li>';
+										$html_sub_menu .= '<li'.(($blnActivePage)?' class="active"':'').'><a class="fav-link" href="javascript:return;" data-favorite="false"></a><a class="main-link" href="'.$arrLink['link'].'">'.$this->icon_font($arrLink['icon']).$arrLink['text'].'</a>'.$html_sub_links.'</li>';
 									}
 								}//end of Links
 								$html_sub_menu .= '</ul></li>';
