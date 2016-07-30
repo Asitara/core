@@ -686,18 +686,6 @@ class core extends gen_class {
 					return false;
 				};
 				
-				//TODO: to request on which site we are... stripos($this->env, $arrData['link']) >= 0
-				// d('-- eqdkp_request_page');
-				// d($this->env->eqdkp_request_page);
-				// d('-- request_page');
-				// d($this->env->request_page);
-				// d('-- request');
-				// d($this->env->request);
-				// d('-- request_query');
-				// d($this->env->request_query);
-				// d('-- current_page');
-				// d($this->env->current_page);
-				
 				$html			= '<nav class="menu-content"><ul class="'.$strCssClass.'">';
 				$html_sub_menu	= '<nav class="sub-menu-content">';
 				

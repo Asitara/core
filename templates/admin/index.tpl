@@ -196,7 +196,7 @@
 						<!-- TODO: like the footer, left-center-right for "users: x", "user online: x", "chars: x" ;.. -->
 						<div class="quick-info-left"></div>
 						<div class="quick-info-center">
-							Lol Blizzard, hier haben wir eine Quick-bar für ganz ganz lustige schnell-infos
+							Lol Blizzard, hier haben wir eine Quick-bar -- schau am besten mal in die admin_index.class -> qickbar_output();
 						</div>
 						<div class="quick-info-right"></div>
 					</div>

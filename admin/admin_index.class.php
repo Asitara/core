@@ -46,6 +46,7 @@ class admin_index extends gen_class {
 
 		$this->updatecheck();
 		$this->adminmenu_output();
+		$this->quickbar_output();
 	}
 
 	private function resolve_ip(){
@@ -86,6 +87,52 @@ class admin_index extends gen_class {
 			'ADMIN_MENU'		=> $this->core->build_menu_ul($this->admin_menu, '', true, $this->root_path.'images/admin/', false),
 			'ADMIN_MENU_MOBILE' => $this->core->build_menu_ul($this->admin_functions->adminmenu(false, '', '', 'adminmenu-mobile'), 'adminmenu-mobile', true, $this->root_path.'images/admin/', false),
 		));
+	}
+
+	public function quickbar_output(){
+		
+		return;
+		//NOTE: if we want to keep the old statistics on admin_index, then storage all fetched informations -- no redundance
+		// //stored by quickbar_output -- $this->statistics;
+		
+		// Users
+		//NOTE: we should count the online users too
+		$intTotalUsers = count($this->pdh->get('user', 'id_list', array()));
+		$intInactiveUsers = count($this->pdh->get('user', 'inactive', array()));
+		
+		// Members
+		$intMembers			= count($this->pdh->get('member', 'id_list'));
+		$intMemberActive	= count($this->pdh->get('member', 'id_list', array(true)));
+		$intMemberInactive	= $intMembers - $intMemberActive;
+		
+		//NOTE: maybe we should do this via pdh, or cache it
+		$objTotalRaids			= $this->db->query('SELECT count(*) as count FROM __raids', true);
+		$intRaids				= $objTotalRaids['count'];
+		// $intRaidsPerDay			= sprintf('%.2f', ($intRaids / $days));
+		$objTotalItems			= $this->db->query('SELECT count(*) as count FROM __items', true);
+		$intItems				= $objTotalItems['count'];
+		// $items_per_day			= sprintf('%.2f', ($intItems / $days));
+		$intAdjustments  = count($this->pdh->get('adjustment', 'id_list', array()));
+		// $total_dkp_items = $total_adjustments + $total_raids + $total_items;
+		// $adjs_per_day	= sprintf("%.2f", ($total_adjustments / $days));
+		$objTotalLogs			= $this->db->query('SELECT count(*) as count FROM __logs', true);
+		$intLogs				= $objTotalLogs['count'];
+		
+		// if( (float)$intRaidsPerDay > (float)$intRaids) $intRaidsPerDay = $intRaids;
+		// if( (float)$items_per_day > (float)$intItems) $items_per_day = $intItems;
+		// if( (float)$adjs_per_day > (float)$intAdjustments) $adjs_per_day = $intAdjustments;
+		
+		
+		// Requirements
+		//NOTE: maybe we want here a tooltip, if something failed then show me what & why
+		$arrRequirementsFailed= 0;
+		foreach($this->requirements->getRequirements() as $arrRequirement){
+			if($arrRequirement['passfail'] || (isset($arrRequirement['adviced_fail'])) && $arrRequirement['adviced_fail']){
+				$arrRequirementsFailed++;
+			}
+		}
+		
+		// Output
 	}
 
 	public function ajax_twitterfeed(){

@@ -682,7 +682,7 @@ class admin_functions extends gen_class {
 							'sub_links'=> array([
 								'link'=> 'admin/manage_ranks.php'.$this->SID,
 								'icon'=> 'fa-plus',
-								'text'=> $this->user->lang('adminmenu_add_ranks'),
+								'text'=> $this->user->lang('adminmenu_add_rank'),
 								'check'=> '',
 							]),
 						]),
@@ -740,7 +740,7 @@ class admin_functions extends gen_class {
 							'sub_links'=> array([
 								'link'=> 'admin/manage_raids.php'.$this->SID,
 								'icon'=> 'fa-plus',
-								'text'=> $this->user->lang('adminmenu_add_raids'),
+								'text'=> $this->user->lang('adminmenu_add_raid'),
 								'check'=> '',
 							]),
 						]),
