@@ -721,11 +721,11 @@ class core extends gen_class {
 										foreach($arrLink['sub_links'] as $intSubLinkID => $arrSubLink){
 											if($func_check_permission($arrSubLink['check'])){
 												$blnActivePage = ($blnActivePage || stripos($arrLink['link'], $this->env->request_page) !== false);
-												$html_sub_links .= '<a class="sub-link" href="'.$arrSubLink['link'].'" data-tooltip="'.$arrSubLink['text'].'">'.$this->icon_font($arrSubLink['icon']).'</a>';
+												$html_sub_links .= '<a class="sub-link" href="'.$this->root_path.$arrSubLink['link'].'" data-tooltip="'.$arrSubLink['text'].'">'.$this->icon_font($arrSubLink['icon']).'</a>';
 											}
 										}//end of Sub-Links
 										
-										$html_sub_menu .= '<li'.(($blnActivePage)?' class="active"':'').'><a class="fav-link" href="javascript:return;" data-favorite="false"></a><a class="main-link" href="'.$arrLink['link'].'">'.$this->icon_font($arrLink['icon']).$arrLink['text'].'</a>'.$html_sub_links.'</li>';
+										$html_sub_menu .= '<li'.(($blnActivePage)?' class="active"':'').'><a class="fav-link" href="javascript:return;" data-favorite="false"></a><a class="main-link" href="'.$this->root_path.$arrLink['link'].'">'.$this->icon_font($arrLink['icon']).$arrLink['text'].'</a>'.$html_sub_links.'</li>';
 									}
 								}//end of Links
 								$html_sub_menu .= '</ul></li>';
@@ -1155,9 +1155,9 @@ class core extends gen_class {
 
 		
 		public function icon_font($icon, $size="", $pathext=""){
-			if(isset($icon) && pathinfo($icon, PATHINFO_EXTENSION) == 'png'){
+			if(!empty($icon) && pathinfo($icon, PATHINFO_EXTENSION) == 'png'){
 				return '<img src="'.$pathext.$icon.'" alt="img" />';
-			}elseif(isset($icon)){
+			}elseif(!empty($icon)){
 				return '<i class="fa '.$icon.(($size)? ' '.$size : '').'"></i>';
 			}else{
 				return '';

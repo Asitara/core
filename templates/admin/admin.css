@@ -411,7 +411,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 		padding-bottom: 12px;
 		position: relative;
 		border-right: 2px solid #15171A;
-		background: linear-gradient(to bottom, #444 0%, #19334D 20%);
+		background: #25272A;
 		box-shadow: 0 0 3px 0 #000;
 		text-align: center;
 	}
@@ -430,8 +430,9 @@ table { border-collapse: collapse; border-spacing: 0; }
 		font-size: 26px;
 		transition: all .2s ease-in;
 	}
-	#adminmenu .adminmenu > li:hover > a {
-		background: #336699;
+	#adminmenu .adminmenu > li:hover > a,
+	#adminmenu .adminmenu > li.open > a {
+		background: rgba(255,255,255,.1);
 	}
 	
 	#adminmenu .sub-menu-content {
@@ -470,15 +471,26 @@ table { border-collapse: collapse; border-spacing: 0; }
 		flex: 1 1 auto;
 		padding: 5px 10px;
 	}
-	#adminmenu .sub-menu-content .sub-menu ul > li > a:hover,
-	#adminmenu .sub-menu-content .sub-menu ul > li > a:hover ~ .sub-link,
-	#adminmenu .sub-menu-content .sub-menu ul > li.active > a,
+	#adminmenu .sub-menu-content .sub-menu ul > li > a:not(.fav-link):hover,
+	#adminmenu .sub-menu-content .sub-menu ul > li > a.main-link:hover ~ .sub-link,
+	#adminmenu .sub-menu-content .sub-menu ul > li.active > a.main-link,
 	#adminmenu .sub-menu-content .sub-menu ul > li.active > a.sub-link {
 		color: #FFF;
 		background: rgba(255,255,255,.1);
 	}
 	#adminmenu .sub-menu-content .sub-menu .main-link { padding-left: 0; }
-	#adminmenu .sub-menu-content .sub-menu .sub-link { flex: 0 0 auto; }
+	#adminmenu .sub-menu-content .sub-menu .sub-link { flex: 0 0 auto; position: relative; }
+	#adminmenu .sub-menu-content .sub-menu .sub-link:hover:before {
+		display: block;
+		content: attr(data-tooltip);
+		position: absolute;
+		top: -110%;
+		left: -100%;
+		padding: 5px 10px;
+		background: rgba(0,0,0,.7);
+		box-shadow: 0 0 3px #000;
+		white-space: nowrap;
+	}
 	
 	// Favorites
 	#adminmenu .sub-menu-content .sub-menu .fav-link {
