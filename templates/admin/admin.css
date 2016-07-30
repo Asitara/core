@@ -381,12 +381,11 @@ table { border-collapse: collapse; border-spacing: 0; }
 		z-index: 1;
 	}
 	
-	
+	// Skew style additions
 	#mainmenu .mainmenu.skew > li { background: none; border: none; }
 	#mainmenu .mainmenu.skew > li > a { margin: 0; padding: 0; position: relative; }
 	#mainmenu .mainmenu.skew > li > a > span { display: block; padding: 2px 15px; border-left: 2px solid #15171A; transform: skew(45deg); }
 	#mainmenu .mainmenu.skew > li > a > span > span { display: block; transform: skew(-45deg); }
-	
 	#mainmenu .mainmenu.skew > li:hover > a > span { background: #444; }
 	
 	#mainmenu .mainmenu.skew > li > a.sub-menu-arrow::after { position: absolute; top: 1px; right: 10px; }
@@ -536,7 +535,6 @@ table { border-collapse: collapse; border-spacing: 0; }
 		transition: opacity .2s;
 	}
 	
-	
 	// Menu Indicator
 	#adminmenu .menu-indicator { display: none; }
 	#adminmenu[data-state="0"] .menu-indicator {
@@ -635,6 +633,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 	
 	/* Wrapper
 	****************************************/
+	//TODO: if we have all layout box-size variables, then we can calculate "#wrapper {min-height: calc(100vh - 134px);}" to fix the footer & her absolute posi -> height-bug
 	#wrapper { display:flex; }
 	#wrapper > .page-content { flex: 1 1 auto; padding-left: 5px; }
 	
@@ -703,7 +702,6 @@ table { border-collapse: collapse; border-spacing: 0; }
 	#footer .footer-center { text-align: center; }
 	#footer .footer-right { text-align: right; margin-left: auto; margin-right: 15px; }
 	
-	//TODO: the position absolute will break the viewport height
 	#debug-console {
 		position: absolute;
 		top: -32px;

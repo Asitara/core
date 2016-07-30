@@ -309,8 +309,6 @@ class admin_functions extends gen_class {
 			),
 		);
 		
-		//TODO: give the plugins the choose for own sub_menus and/or extend the other sub_menus
-		//			cause some plugins are style-plugins, portal-stuff or core/points-plugins like the RLI or dynamictemplate
 		// Now get plugin hooks for the menu
 		$admin_menu = (is_array($this->pm->get_menus('admin'))) ? array_merge_recursive($admin_menu, array('extensions'=>$this->pm->get_menus('admin'))) : $admin_menu;
 
@@ -374,7 +372,7 @@ class admin_functions extends gen_class {
 					'settings'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_configuration'),
-						'check'=> '',
+						'check'=> 'a_config_man',
 						'links'=> array([
 							'link'=> 'admin/manage_settings.php'.$this->SID,
 							'icon'=> '',
@@ -400,7 +398,7 @@ class admin_functions extends gen_class {
 					'extensions'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_extensions').(($blnShowBadges) ? $extensionUpdates : ''),
-						'check'=> '',
+						'check'=> 'a_extensions_man',
 						'links'=> array([
 							'link'=> 'admin/manage_extensions.php'.$this->SID,
 							'icon'=> '',
@@ -416,42 +414,47 @@ class admin_functions extends gen_class {
 							'link'=> 'maintenance/'.$this->SID,
 							'icon'=> '',
 							'text'=> $this->user->lang('adminmenu_maintenance_area'),
-							'check'=> '',
+							'check'=> 'a_maintenance',
 						],[
 							'link'=> 'admin/manage_live_update.php'.$this->SID,
 							'icon'=> '',
 							'text'=> $this->user->lang('adminmenu_update'),
-							'check'=> '',
+							'check'=> 'a_maintenance',
 						],[
 							'link'=> 'admin/manage_backup.php'.$this->SID,
 							'icon'=> '',
 							'text'=> $this->user->lang('adminmenu_backup'),
-							'check'=> '',
+							'check'=> 'a_backup',
 						],[
 							'link'=> 'admin/manage_reset.php'.$this->SID,
 							'icon'=> '',
 							'text'=> $this->user->lang('adminmenu_reset'),
-							'check'=> '',
+							'check'=> 'a_config_man',
 						],[
 							'link'=> 'admin/info_database.php'.$this->SID,
 							'icon'=> '',
 							'text'=> $this->user->lang('adminmenu_database'),
-							'check'=> '',
+							'check'=> 'a_config_man',
 						],[
 							'link'=> 'admin/manage_cache.php'.$this->SID,
 							'icon'=> '',
 							'text'=> $this->user->lang('adminmenu_cache'),
-							'check'=> '',
+							'check'=> 'a_config_man',
 						],[
 							'link'=> 'admin/manage_crons.php'.$this->SID,
 							'icon'=> '',
 							'text'=> $this->user->lang('adminmenu_cronjobs'),
-							'check'=> '',
+							'check'=> 'a_config_man',
 						],[
 							'link'=> 'admin/manage_logs.php'.$this->SID,
 							'icon'=> '',
 							'text'=> $this->user->lang('adminmenu_logs'),
-							'check'=> '',
+							'check'=> 'a_logs_view',
+						],[
+							'link'=> 'admin/manage_tasks.php'.$this->SID,
+							'icon'=> '',
+							'text'=> $this->user->lang('adminmenu_manage_tasks'),
+							'check'=> array('OR', ['a_users_man', 'a_members_man']),
 						]),
 					),
 				),
@@ -464,7 +467,7 @@ class admin_functions extends gen_class {
 					'user'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_users'),
-						'check'=> '',
+						'check'=> 'a_users_man',
 						'links'=> array([
 							'link'=> 'admin/manage_users.php'.$this->SID,
 							'icon'=> '',
@@ -481,7 +484,7 @@ class admin_functions extends gen_class {
 					'user_groups'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_user_groups'),
-						'check'=> '',
+						'check'=> array('OR', array('a_usergroups_man', 'a_usergroups_grpleader')),
 						'links'=> array([
 							'link'=> 'admin/manage_user_groups.php'.$this->SID,
 							'icon'=> '',
@@ -498,7 +501,7 @@ class admin_functions extends gen_class {
 					'maintenance_user'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_maintenance_user'),
-						'check'=> '',
+						'check'=> 'a_maintenance',
 						'links'=> array([
 							'link'=> 'admin/manage_maintenance_user.php'.$this->SID,
 							'icon'=> '',
@@ -509,7 +512,7 @@ class admin_functions extends gen_class {
 					'profilefields'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_profilefields'),
-						'check'=> '',
+						'check'=> 'a_users_profilefields',
 						'links'=> array([
 							'link'=> 'admin/manage_user_profilefields.php'.$this->SID,
 							'icon'=> '',
@@ -526,7 +529,7 @@ class admin_functions extends gen_class {
 					'mass_mail'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_mass_mail'),
-						'check'=> '',
+						'check'=> 'a_users_massmail',
 						'links'=> array([
 							'link'=> 'admin/manage_massmail.php'.$this->SID,
 							'icon'=> '',
@@ -537,7 +540,7 @@ class admin_functions extends gen_class {
 					'notifications'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_notifications'),
-						'check'=> '',
+						'check'=> 'a_config_man',
 						'links'=> array([
 							'link'=> 'admin/manage_notifications.php'.$this->SID,
 							'icon'=> '',
@@ -555,7 +558,7 @@ class admin_functions extends gen_class {
 					'articles'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_articles'),
-						'check'=> '',
+						'check'=> array('OR', ['a_articles_man', 'a_article_categories_man']),
 						'links'=> array([
 							'link'=> 'admin/manage_articles.php'.$this->SID,
 							'icon'=> '',
@@ -566,23 +569,23 @@ class admin_functions extends gen_class {
 					'calendar'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_calendar'),
-						'check'=> '',
+						'check'=> array('OR', ['a_calendars_man', 'a_cal_events_man']),
 						'links'=> array([
 							'link'=> 'admin/manage_calendars.php'.$this->SID,
 							'icon'=> '',
 							'text'=> $this->user->lang('adminmenu_manage_calendars'),
-							'check'=> '',
+							'check'=> 'a_calendars_man',
 						],[
 							'link'=> 'admin/manage_calevents.php'.$this->SID,
 							'icon'=> '',
 							'text'=> $this->user->lang('adminmenu_manage_calevents'),
-							'check'=> '',
+							'check'=> 'a_cal_events_man',
 						]),
 					),
 					'media'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_media'),
-						'check'=> '',
+						'check'=> 'a_files_man',
 						'links'=> array([
 							'link'=> 'admin/manage_media.php'.$this->SID,
 							'icon'=> '',
@@ -600,7 +603,7 @@ class admin_functions extends gen_class {
 					'portal'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_portal'),
-						'check'=> '',
+						'check'=> 'a_extensions_man',
 						'links'=> array([
 							'link'=> 'admin/manage_portal.php'.$this->SID,
 							'icon'=> '',
@@ -616,7 +619,7 @@ class admin_functions extends gen_class {
 					'styles'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_styles'),
-						'check'=> '',
+						'check'=> 'a_extensions_man',
 						'links'=> array([
 							'link'=> 'admin/manage_styles.php'.$this->SID,
 							'icon'=> '',
@@ -627,7 +630,7 @@ class admin_functions extends gen_class {
 					'menus'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_menus'),
-						'check'=> '',
+						'check'=> 'a_config_man',
 						'links'=> array([
 							'link'=> 'admin/manage_menus.php'.$this->SID,
 							'icon'=> '',
@@ -638,7 +641,7 @@ class admin_functions extends gen_class {
 					'table_points'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_table_points'),
-						'check'=> '',
+						'check'=> 'a_config_man',
 						'links'=> array([
 							'link'=> 'admin/manage__pagelayouts.php'.$this->SID,
 							'icon'=> '',
@@ -656,7 +659,7 @@ class admin_functions extends gen_class {
 					'members'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_members'),
-						'check'=> '',
+						'check'=> 'a_members_man',
 						'links'=> array([
 							'link'=> 'admin/manage_members.php'.$this->SID,
 							'icon'=> '',
@@ -673,7 +676,7 @@ class admin_functions extends gen_class {
 					'ranks'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_ranks'),
-						'check'=> '',
+						'check'=> 'a_members_man',
 						'links'=> array([
 							'link'=> 'admin/manage_ranks.php'.$this->SID,
 							'icon'=> '',
@@ -690,7 +693,7 @@ class admin_functions extends gen_class {
 					'profilefields'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_profilefields'),
-						'check'=> '',
+						'check'=> 'a_config_man',
 						'links'=> array([
 							'link'=> 'admin/manage_profilefields.php'.$this->SID,
 							'icon'=> '',
@@ -707,7 +710,7 @@ class admin_functions extends gen_class {
 					'roles'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_roles'),
-						'check'=> '',
+						'check'=> 'a_config_man',
 						'links'=> array([
 							'link'=> 'admin/manage_roles.php'.$this->SID,
 							'icon'=> '',
@@ -726,12 +729,12 @@ class admin_functions extends gen_class {
 			'raids_points'=> array(
 				'icon'=> 'fa-trophy fa-lg fa-fw',
 				'text'=> $this->user->lang('adminmenu_raids_points'),
-				'check'=> '',
+				'check'=> 'a_config_man',
 				'sub_menu'=> array(
 					'raids'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_raids'),
-						'check'=> '',
+						'check'=> 'a_raid_add',
 						'links'=> array([
 							'link'=> 'admin/manage_raids.php'.$this->SID,
 							'icon'=> '',
@@ -748,7 +751,7 @@ class admin_functions extends gen_class {
 					'items'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_items'),
-						'check'=> '',
+						'check'=> 'a_item_',
 						'links'=> array([
 							'link'=> 'admin/manage_items.php'.$this->SID,
 							'icon'=> '',
@@ -765,7 +768,7 @@ class admin_functions extends gen_class {
 					'adjustments'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_adjustments'),
-						'check'=> '',
+						'check'=> 'a_indivadj_',
 						'links'=> array([
 							'link'=> 'admin/manage_adjustments.php'.$this->SID,
 							'icon'=> '',
@@ -782,7 +785,7 @@ class admin_functions extends gen_class {
 					'auto_points'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_auto_points'),
-						'check'=> '',
+						'check'=> 'a_config_man',
 						'links'=> array([
 							'link'=> 'admin/manage_auto_points.php'.$this->SID,
 							'icon'=> '',
@@ -793,7 +796,7 @@ class admin_functions extends gen_class {
 					'events'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_events'),
-						'check'=> '',
+						'check'=> 'a_event_upd',
 						'links'=> array([
 							'link'=> 'admin/manage_events.php'.$this->SID,
 							'icon'=> '',
@@ -814,7 +817,7 @@ class admin_functions extends gen_class {
 						'links'=> array([
 							'link'=> 'admin/_____.php'.$this->SID,
 							'icon'=> '',
-							'text'=> $this->user->lang('adminmenu_manage_pools'),
+							'text'=> 'MDKP?'.$this->user->lang('adminmenu_manage_pools'),
 							'check'=> '',
 							'sub_links'=> array([
 								'link'=> 'admin/_____.php'.$this->SID,
@@ -827,7 +830,7 @@ class admin_functions extends gen_class {
 					'itempools'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_itempools'),
-						'check'=> '',
+						'check'=> 'a_event_upd',
 						'links'=> array([
 							'link'=> 'admin/manage_itempools.php'.$this->SID,
 							'icon'=> '',
@@ -844,7 +847,7 @@ class admin_functions extends gen_class {
 					'raid_groups'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_raid_groups'),
-						'check'=> '',
+						'check'=> array('OR', ['a_raidgroups_man', 'a_raidgroups_grpleader']),
 						'links'=> array([
 							'link'=> 'admin/manage_raid_groups.php'.$this->SID,
 							'icon'=> '',
@@ -861,7 +864,7 @@ class admin_functions extends gen_class {
 					'export'=> array(
 						'icon'=> '',
 						'text'=> $this->user->lang('adminmenu_export'),
-						'check'=> '',
+						'check'=> 'a_',
 						'links'=> array([
 							'link'=> 'admin/manage_export.php'.$this->SID,
 							'icon'=> '',
@@ -872,6 +875,35 @@ class admin_functions extends gen_class {
 				),
 			),
 		);
+		
+		// Now get plugin hooks for the menu
+		if(is_array($this->pm->get_menus('admin'))) $admin_menu = array_merge_recursive($admin_menu, $this->pm->get_menus('admin'));
+		/* How to Build your Plugin Array:
+			// You can add your own sub_menu, sub_menu category, links and sub_links or extend exist sub_menu
+			// If you extend a menu-item then you can't edit the icon, check, etc for this menu-item
+			// Else feel free to choose your own icon, sub_menu category, or any other
+				
+				return array(
+					'system'=> array(
+						'sub_menu'=> array(			#<-- this is pre-defined
+							'settings'=> array(
+								'links'=> array([	#<-- this is pre-defined
+									'link'=> 'plugins/my_plugin/admin/manage_settings.php'.$this->SID,
+									'icon'=> 'fa-cog',
+									'text'=> $this->user->lang('adminmenu_general'),
+									'check'=> 'a_my_plugin_config',
+									'sub_links'=>array(	#<-- this is pre-defined
+										[...],
+										[...],
+									)
+								],
+								[... my other link ...],
+								),
+							),
+						),
+					),
+				);
+		*/
 		
 
 		return $admin_menu;

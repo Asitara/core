@@ -46,6 +46,7 @@ $lang = array(
 			'adminmenu_cache'				=> 'Cache',
 			'adminmenu_cronjobs'			=> 'Cronjobs',
 			'adminmenu_logs'				=> 'Logs',
+			'adminmenu_manage_tasks'		=> 'Aufgaben verwalten',
 	'adminmenu_users'				=> 'Benutzer',
 		'adminmenu_users'				=> 'Benutzer',
 			'adminmenu_manage_user'			=> 'Benutzer verwalten',
