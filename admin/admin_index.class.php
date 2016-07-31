@@ -34,9 +34,10 @@ class admin_index extends gen_class {
 
 	public function __construct(){
 		$this->user->check_auth('a_');
-		if($this->in->exists('rssajax')) {
-			if($this->in->get('rssajax') == 'twitter') $this->ajax_twitterfeed();
-			if($this->in->get('rssajax') == 'notification') $this->ajax_notification();
+		if($this->in->exists('ajax')) {
+			if($this->in->get('ajax') == 'twitter') $this->ajax_twitterfeed();
+			if($this->in->get('ajax') == 'notification') $this->ajax_notification();
+			if($this->in->get('ajax') == 'favorite_link') $this->ajax_favorite_link();
 		}
 
 		include_once($this->root_path.'core/admin_functions.class.php');
@@ -226,6 +227,36 @@ class admin_index extends gen_class {
 		exit;
 	}
 
+	public function ajax_favorite_link(){
+		$strCategory	= $this->in->get('category', '');
+		$strSubCategory	= $this->in->get('sub-category', '');
+		$strLinkID		= $this->in->get('link-id', '');
+		
+		if($strCategory != '' && $strSubCategory != '' && $strLinkID != ''){
+			$arrAdminFavs = $this->config->get('admin_favs');
+			if($arrAdminFavs && isset($arrAdminFavs[$strCategory]['sub_menu'][$strSubCategory]['links'][$strLinkID]['favorite'])){
+				unset($arrAdminFavs[$strCategory]['sub_menu'][$strSubCategory]['links'][$strLinkID]);
+				if(count($arrAdminFavs[$strCategory]['sub_menu'][$strSubCategory]['links']) == 0){
+					unset($arrAdminFavs[$strCategory]['sub_menu'][$strSubCategory]);
+					if(count($arrAdminFavs[$strCategory]['sub_menu']) == 0){
+						unset($arrAdminFavs[$strCategory]);
+					}
+				}
+			}else{
+				$arrAdminFavs[$strCategory]['sub_menu'][$strSubCategory]['links'][$strLinkID]['favorite'] = true;
+			}
+			$this->config->set('admin_favs', serialize($arrAdminFavs));
+			
+			die(json_encode([
+				'error' => false,
+			]));
+		}
+		
+		die(json_encode([
+			'error' => true,
+		]));
+	}
+
 	public function display(){
 		/****************************************************************
 		* STATISTICS
@@ -365,8 +396,8 @@ class admin_index extends gen_class {
 		if($req_count > 0){
 			$this->jquery->Tab_Select('admininfos_tabs', 2);
 		}
-		$this->jquery->rssFeeder('notifications',	"index.php".$this->SID."&rssajax=notification", '3', '999');
-		$this->jquery->rssFeeder('twitterfeed',	"index.php".$this->SID."&rssajax=twitter");
+		$this->jquery->rssFeeder('notifications',	"index.php".$this->SID."&ajax=notification", '3', '999');
+		$this->jquery->rssFeeder('twitterfeed',	"index.php".$this->SID."&ajax=twitter");
 
 		$this->tpl->js_file($this->root_path.'libraries/jquery/js/circles/circles.min.js');
 

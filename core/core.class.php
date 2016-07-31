@@ -697,7 +697,7 @@ class core extends gen_class {
 						//Sub-Categories
 						foreach($arrCategory['sub_menu'] as $strSubCategory => $arrSubCategory){
 							if($func_check_permission($arrSubCategory['check'])){
-								$html_sub_menu .= '<li><h4>'.$this->icon_font($arrSubCategory['icon']).$arrSubCategory['text'].'</h4><ul>';
+								$html_sub_menu .= '<li data-sub-category="'.$strSubCategory.'"><h4>'.$this->icon_font($arrSubCategory['icon']).$arrSubCategory['text'].'</h4><ul>';
 								
 								//Links
 								foreach($arrSubCategory['links'] as $intLinkID => $arrLink){
@@ -713,7 +713,10 @@ class core extends gen_class {
 											}
 										}//end of Sub-Links
 										
-										$html_sub_menu .= '<li'.(($blnActivePage)?' class="active"':'').'><a class="fav-link" href="javascript:return;" data-favorite="false"></a><a class="main-link" href="'.$this->root_path.$arrLink['link'].'">'.$this->icon_font($arrLink['icon']).$arrLink['text'].'</a>'.$html_sub_links.'</li>';
+										$html_sub_menu .= '<li'.(($blnActivePage)?' class="active"':'').' data-link-id="'.$intLinkID.'">
+											<a class="fav-link" data-favorite="'.((isset($arrLink['fav']))?'true':'false').'" href="javascript:return;"></a>
+											<a class="main-link" href="'.$this->root_path.$arrLink['link'].'">'.$this->icon_font($arrLink['icon']).$arrLink['text'].'</a>
+										'.$html_sub_links.'</li>';
 									}
 								}//end of Links
 								$html_sub_menu .= '</ul></li>';

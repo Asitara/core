@@ -73,12 +73,14 @@ $(document).ready(function(){
 			event.preventDefault();
 			var fav_link	= $(this);
 			var fav_state	= $(this).data('favorite');
-			if(fav_state == '...') return;
 			
+			if(fav_state == '...') return;
 			fav_link.data('favorite', '...').attr('data-favorite', '...');
 			
-			$.post('manage_exportsssssss.php'+mmocms_sid+'&run_husten_process', {
-				'husten_key_1': 'value_1',
+			$.post(mmocms_root_path+'admin/'+mmocms_sid+'&ajax=favorite_link', {
+				'category':		fav_link.parent().parent().parent().parent().data('category'),
+				'sub-category':	fav_link.parent().parent().parent().data('sub-category'),
+				'link-id':		fav_link.parent().data('link-id'),
 			}).done(function(response){
 				fav_state = (fav_state == false)? 'true' : 'false';
 			}).always(function(){

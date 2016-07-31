@@ -905,7 +905,33 @@ class admin_functions extends gen_class {
 				);
 		*/
 		
-
+		$blnRemoveUnknown = false;
+		$arrAdminFavs = $this->config->get('admin_favs');
+		foreach($arrAdminFavs as $strCategory => $arr_category){
+			if(isset($admin_menu[$strCategory])){
+				foreach($arr_category['sub_menu'] as $strSubCategory => $arr_sub_category){
+					if(isset($admin_menu[$strCategory]['sub_menu'][$strSubCategory])){
+						foreach($arr_sub_category['links'] as $intLinkID => $arrLink){
+							if(isset($admin_menu[$strCategory]['sub_menu'][$strSubCategory]['links'][$intLinkID])){
+								$admin_menu[$strCategory]['sub_menu'][$strSubCategory]['links'][$intLinkID]['fav'] = true;
+							}else{
+								$blnRemoveUnknown = true; unset($arrAdminFavs[$strCategory]['sub_menu'][$strSubCategory]['links'][$intLinkID]);
+							}
+						}
+					}else{
+						$blnRemoveUnknown = true; unset($arrAdminFavs[$strCategory]['sub_menu'][$strSubCategory]);
+					}
+				}
+			}else{
+				$blnRemoveUnknown = true; unset($arrAdminFavs[$strCategory]);
+			}
+		}
+		if($blnRemoveUnknown) $this->config->set('admin_favs', serialize($arrAdminFavs));
+		
+		
+		#d($this->config->get('admin_favs'));
+		#$this->config->set('admin_favs', null);
+		
 		return $admin_menu;
 	}
 	
