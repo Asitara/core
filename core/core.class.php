@@ -191,8 +191,6 @@ class core extends gen_class {
 			}
 			
 			// some style additions (header, background image..)
-			if(defined('IN_ADMIN') && IN_ADMIN == true) $this->tpl->set_template('admin');
-			
 			$favicon = $this->user->style['favicon_img'];
 			switch(pathinfo($favicon, PATHINFO_EXTENSION)){
 				case 'png': $favicon_type = 'image/png';
@@ -686,7 +684,7 @@ class core extends gen_class {
 					return false;
 				};
 				
-				$html			= '<nav class="menu-content"><ul class="'.$strCssClass.'">';
+				$html			= '<nav class="menu-content" data-csrf-token="'.$this->auth->csrfPostToken().'"><ul class="'.$strCssClass.'">';
 				$html_sub_menu	= '<nav class="sub-menu-content">';
 				
 				foreach($arrMenuItems as $strCategory => $arrCategory){
@@ -960,11 +958,9 @@ class core extends gen_class {
 		}
 
 		public function page_tail(){
-			if(defined('IN_ADMIN') && IN_ADMIN == true){
-				$this->tpl->set_template('admin', '', (!empty($this->template_path))? $this->template_path : 'templates/');
-			
-			}elseif(!empty($this->template_path)){
-				$this->tpl->set_template($this->user->style['template_path'], '', $this->template_path);
+			if(!empty($this->template_path)){
+				$style_code = (defined('IN_ADMIN') && IN_ADMIN == true)? 'admin' : $this->user->style['template_path'];
+				$this->tpl->set_template($style_code, '', $this->template_path);
 			}
 			
 			$this->tpl->set_filenames(array(

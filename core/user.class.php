@@ -200,8 +200,9 @@ class user extends gen_class {
 		$this->style['portal_width']			= ($this->style['portal_width'] != '0px' && $this->style['portal_width'] != '0%') ? $this->style['portal_width'] : 0;
 		$this->style['logo_position']			= ($this->style['logo_position'] != '') ? $this->style['logo_position'] : 'center';
 
-		if (!$this->lite_mode) {
-			$this->tpl->set_template($this->style['template_path']);
+		if(!$this->lite_mode){
+			$style_code = (defined('IN_ADMIN') && IN_ADMIN == true)? 'admin' : $this->style['template_path'];
+			$this->tpl->set_template($style_code);
 		}
 		//-----------------------------
 		//END Style

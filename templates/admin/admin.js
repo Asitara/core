@@ -78,11 +78,13 @@ $(document).ready(function(){
 			fav_link.data('favorite', '...').attr('data-favorite', '...');
 			
 			$.post(mmocms_root_path+'admin/'+mmocms_sid+'&ajax=favorite_link', {
+				'csrf-token':	$('#adminmenu .menu-content').data('csrf-token'),
 				'category':		fav_link.parent().parent().parent().parent().data('category'),
 				'sub-category':	fav_link.parent().parent().parent().data('sub-category'),
 				'link-id':		fav_link.parent().data('link-id'),
 			}).done(function(response){
-				fav_state = (fav_state == false)? 'true' : 'false';
+				response	= JSON.parse(response);
+				fav_state	= (!response.error && fav_state)? 'false' : 'true';
 			}).always(function(){
 				fav_link.data('favorite', fav_state).attr('data-favorite', fav_state);
 			});

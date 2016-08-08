@@ -236,6 +236,8 @@ class admin_functions extends gen_class {
 	}
 	
 	public function adminmenu($blnShowBadges = true, $coreUpdates="", $extensionUpdates="", $blnShowFavorites=false){
+		//remove the old stuff,.. if we finished with all the lang-vars, links, perms, icons...
+		/*
 		$admin_menu = array(
 			'members' => array(
 				'icon'	=> 'fa-user fa-lg fa-fw',
@@ -356,6 +358,7 @@ class admin_functions extends gen_class {
 				);
 			}
 		}
+		*/
 		
 		#######################################################################################################################
 		#######################################################################################################################
@@ -876,7 +879,7 @@ class admin_functions extends gen_class {
 			),
 		);
 		
-		// Now get plugin hooks for the menu
+		//get plugin hooks for the menu
 		if(is_array($this->pm->get_menus('admin'))) $admin_menu = array_merge_recursive($admin_menu, $this->pm->get_menus('admin'));
 		/* How to Build your Plugin Array:
 			// You can add your own sub_menu, sub_menu category, links and sub_links or extend exist sub_menu
@@ -905,6 +908,7 @@ class admin_functions extends gen_class {
 				);
 		*/
 		
+		//check which links are favored & remove unknown
 		$blnRemoveUnknown = false;
 		$arrAdminFavs = $this->config->get('admin_favs');
 		foreach($arrAdminFavs as $strCategory => $arr_category){
@@ -928,9 +932,6 @@ class admin_functions extends gen_class {
 		}
 		if($blnRemoveUnknown) $this->config->set('admin_favs', serialize($arrAdminFavs));
 		
-		
-		#d($this->config->get('admin_favs'));
-		#$this->config->set('admin_favs', null);
 		
 		return $admin_menu;
 	}

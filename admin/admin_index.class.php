@@ -98,31 +98,18 @@ class admin_index extends gen_class {
 		
 		// Users
 		//NOTE: we should count the online users too
-		$intTotalUsers = count($this->pdh->get('user', 'id_list', array()));
-		$intInactiveUsers = count($this->pdh->get('user', 'inactive', array()));
+		$intUsers			= count($this->pdh->get('user', 'id_list'));
+		$intUsersInactive	= count($this->pdh->get('user', 'inactive'));
 		
 		// Members
 		$intMembers			= count($this->pdh->get('member', 'id_list'));
-		$intMemberActive	= count($this->pdh->get('member', 'id_list', array(true)));
-		$intMemberInactive	= $intMembers - $intMemberActive;
+		$intMembersActive	= count($this->pdh->get('member', 'id_list', [true]));
+		$intMembersInactive	= $intMembers - $intMembersActive;
 		
-		//NOTE: maybe we should do this via pdh, or cache it
-		$objTotalRaids			= $this->db->query('SELECT count(*) as count FROM __raids', true);
-		$intRaids				= $objTotalRaids['count'];
-		// $intRaidsPerDay			= sprintf('%.2f', ($intRaids / $days));
-		$objTotalItems			= $this->db->query('SELECT count(*) as count FROM __items', true);
-		$intItems				= $objTotalItems['count'];
-		// $items_per_day			= sprintf('%.2f', ($intItems / $days));
-		$intAdjustments  = count($this->pdh->get('adjustment', 'id_list', array()));
-		// $total_dkp_items = $total_adjustments + $total_raids + $total_items;
-		// $adjs_per_day	= sprintf("%.2f", ($total_adjustments / $days));
-		$objTotalLogs			= $this->db->query('SELECT count(*) as count FROM __logs', true);
-		$intLogs				= $objTotalLogs['count'];
-		
-		// if( (float)$intRaidsPerDay > (float)$intRaids) $intRaidsPerDay = $intRaids;
-		// if( (float)$items_per_day > (float)$intItems) $items_per_day = $intItems;
-		// if( (float)$adjs_per_day > (float)$intAdjustments) $adjs_per_day = $intAdjustments;
-		
+		$intRaids			= count($this->pdh->get('raids', 'id_list'));
+		$intItems			= count($this->pdh->get('items', 'id_list'));
+		$intAdjustments		= count($this->pdh->get('adjustment', 'id_list'));
+		$intLogs			= count($this->pdh->get('logs', 'id_list'));
 		
 		// Requirements
 		//NOTE: maybe we want here a tooltip, if something failed then show me what & why
@@ -134,6 +121,24 @@ class admin_index extends gen_class {
 		}
 		
 		// Output
+		// $arrOutput	= array(
+		// 	'left'		=> array(),
+		// 	'center'	=> array(),
+		// 	'right'		=> array(),
+		// );
+		// foreach($arrOutput as $strSide => $arrItems){
+		// 	foreach($arrItems as $strItem){
+		// 		$this->tpl->assign_block_vars('quickbar_'.$strSide, [
+		// 			'TEXT'	=> $strItem,
+		// 		]);
+		// 	}
+		// }
+		
+		// $this->tpl->assign_vars([
+		// 	'quickbar_left'		=> '<span class="stats-users">'.$intUsers.'</span>',
+		// 	'quickbar_center'	=> '<span class="">'.'</span>',
+		// 	'quickbar_right'	=> '<span class="stats-logs" data-logs="'.$intLogs.'">'.$intLogs.'</span>',
+		// ]);
 	}
 
 	public function ajax_twitterfeed(){
@@ -228,11 +233,15 @@ class admin_index extends gen_class {
 	}
 
 	public function ajax_favorite_link(){
+		$strCsrfToken	= $this->in->get('csrf-token', '');
 		$strCategory	= $this->in->get('category', '');
 		$strSubCategory	= $this->in->get('sub-category', '');
 		$strLinkID		= $this->in->get('link-id', '');
 		
-		if($strCategory != '' && $strSubCategory != '' && $strLinkID != ''){
+		$blnPermCheck	= $this->user->check_auth('a_config_man', false);
+		$blnTokenCheck	= $this->auth->checkCsrfPostToken($strCsrfToken);
+		
+		if($blnPermCheck && $blnTokenCheck && $strCategory != '' && $strSubCategory != '' && $strLinkID != ''){
 			$arrAdminFavs = $this->config->get('admin_favs');
 			if($arrAdminFavs && isset($arrAdminFavs[$strCategory]['sub_menu'][$strSubCategory]['links'][$strLinkID]['favorite'])){
 				unset($arrAdminFavs[$strCategory]['sub_menu'][$strSubCategory]['links'][$strLinkID]);
